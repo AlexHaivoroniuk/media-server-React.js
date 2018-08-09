@@ -1,12 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import Toolbar from './components/Toolbar/Toolbar';
 import ContentContainer from './containers/Content/ContentContainer';
-import MoviesContainer from './containers/MoviesContainer';
-import MusicContainer from './containers/MusicContainer';
-import HomePage from './components/HomePage';
 
 import SideNav from './components/SideNav/SideNav';
-import { Switch, Route } from 'react-router-dom';
 
 class App extends Component {
   constructor(props) {
@@ -27,13 +23,7 @@ class App extends Component {
       <Fragment>
         <Toolbar toggle={this.toggleNav}/>
         <SideNav width={this.state.style} ></SideNav>
-        <ContentContainer>
-          <Switch>
-            <Route exact path="/" component={HomePage}/>
-            <Route exact path="/movies" component={MoviesContainer}/>
-            <Route exact path="/music" component={MusicContainer}/>
-          </Switch>
-        </ContentContainer>
+        <ContentContainer></ContentContainer>
       </Fragment>  
     );
   }
