@@ -1,16 +1,12 @@
 .Card{
     background-color: #007d6c;
-    width: 20%;
-    padding-top: 60px;
+    width: 23%;
     display: flex-block;
     box-shadow: 5px 3px 9px 0px grey;
     font-family: 'Ubuntu', sans-serif;
 }
 .CardContainer{
     padding: 20px;
-}
-.Topside img{
-    width: 20px;
 }
 .Poster{
     width: 100%;
@@ -33,4 +29,31 @@
     font-weight: bold;
     padding-right: 10px;
     font-size: 18px;
+}
+.Options{
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.Options button {
+    background-color: #026455;
+    border: none;
+    cursor: pointer;
+    color: #FFF;
+    font-size: 20px;
+    padding: 7px 14px;
+    font-family: 'Ubuntu', sans-serif;
+    border-radius: 7px;
+}
+.Options button:hover {
+    background-color: #013f36;
+    color: #05c4aa;
+}
+.Options a{
+    text-decoration: none;
+    color:#05ecca; 
+    padding-top: 10px;
+}
+.Options a:hover{
+    color:#013f36; 
 }
