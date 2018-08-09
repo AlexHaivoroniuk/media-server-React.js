@@ -8,6 +8,9 @@ export default class ContentContainer extends Component {
       <div className={styles.ContentContainer}> 
         <div className = {styles.Movies}>
            <Card/>
+           <Card/>
+           <Card/>
+           <Card/>
         </div>
       </div>
     )
