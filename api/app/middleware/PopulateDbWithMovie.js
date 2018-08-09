@@ -61,4 +61,8 @@ module.exports = function(req, res, next) {
     });
 
   next();
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> 2b2351d71642540b4bb8b8bbbb15cb7c20683fb3
