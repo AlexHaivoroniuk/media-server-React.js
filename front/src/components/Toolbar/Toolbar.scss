@@ -1,0 +1,35 @@
+.Toolbar {
+    background-color: #00897B;
+    color: white;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+    position: fixed;
+    box-shadow: 0 0 20px 0 black;
+    z-index: 100;
+    .Toolbar__menu {
+        padding: 20px 15px;
+        flex: 0 1 5%;
+        align-self: center;
+        &:hover {
+            cursor: pointer;
+            background-color: #26A694;
+        }
+    }
+    .Toolbar__title {
+        font-size: 1.2em;
+        padding: 0px 15px;
+        flex: 0 1 20%;
+        align-self: center;
+        &:hover {
+            cursor: pointer;
+        }
+        @media screen and (max-width: 650px) {
+            & {
+                flex: 0 1 50%;
+            }
+        }
+    }
+}
