@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Toolbar from './components/Toolbar/Toolbar';
-import ContentContainer from './containers/ContentContainer';
+import ContentContainer from './containers/Content/ContentContainer';
 import MoviesContainer from './containers/MoviesContainer';
 import MusicContainer from './containers/MusicContainer';
 import HomePage from './components/HomePage';
