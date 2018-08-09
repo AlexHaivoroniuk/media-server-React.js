@@ -1,0 +1,36 @@
+.Card{
+    background-color: #007d6c;
+    width: 20%;
+    padding-top: 60px;
+    display: flex-block;
+    box-shadow: 5px 3px 9px 0px grey;
+    font-family: 'Ubuntu', sans-serif;
+}
+.CardContainer{
+    padding: 20px;
+}
+.Topside img{
+    width: 20px;
+}
+.Poster{
+    width: 100%;
+    margin: auto;
+}
+.Poster img{
+    width: 100%;
+    margin: auto;
+}
+.Title{
+    font-size: 30px;
+    margin: 10px 0px;
+    display: inline;
+}
+.About{
+    display: block;
+    margin-top: 10px;
+}
+.About label{
+    font-weight: bold;
+    padding-right: 10px;
+    font-size: 18px;
+}
