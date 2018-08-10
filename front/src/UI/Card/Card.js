@@ -1,48 +1,45 @@
 import React from "react";
 import styles from './Card.scss';
-import idxStyles from './../../index.scss'
+// import idxStyles from './../../index.scss'
 
-const Card = () => {
+const Card = (props) => {
   return (
     <div className = {styles.Card}>
         <div className = {styles.CardContainer}>
         <div className={styles.Poster}>
             <img
-                src="https://m.media-amazon.com/images/M/MV5BYzc5MTU4N2EtYTkyMi00NjdhLTg3NWEtMTY4OTEyMzJhZTAzXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg"
+                src={props.movie.Poster}
                 alt=""
             />
             </div>
-            <div className = {styles.Topside}>
-                <h2 className={styles.Title}>Logan</h2>
+            <div className={styles.Topside}>
+                <h2 className={styles.Title}>{props.movie.Title}</h2>
             </div>
             <div className={styles.About}>
             <label htmlFor="">Description:</label>
             <span>
-                In the near future, a weary Logan cares for an ailing Professor X,
-                somewhere on the Mexican border. However, Logan's attempts to hide
-                from the world, and his legacy, are upended when a young mutant
-                arrives, pursued by dark forces.
+              {props.movie.Plot}
             </span>
             </div>
             <div className={styles.About}>
             <label htmlFor="">Year:</label>
-            <span>2017</span>
+            <span>{props.movie.Year}</span>
             </div>
             <div className={styles.About}>
             <label htmlFor="">Genre:</label>
-            <span>Action, Drama, Sci-Fi</span>
+            <span>{props.movie.Genre}</span>
             </div>
             <div className={styles.About}>
             <label htmlFor="">Director:</label>
-            <span>James Mangold</span>
+            <span>J{props.movie.Director}</span>
             </div>
             <div className={styles.About}>
             <label htmlFor="">Country:</label>
-            <span>USA</span>
+            <span>{props.movie.Country}</span>
             </div>
             <div className={styles.About}>
             <label htmlFor="">Actors:</label>
-            <span>Hugh Jackman, Patrick Stewart, Dafne Keen, Boyd Holbrook</span>
+            <span>{props.movie.Actors}</span>
             </div>
             <div className={styles.Options}>
                 <button>Watch</button>

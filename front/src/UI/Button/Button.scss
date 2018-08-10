@@ -1,11 +1,17 @@
 .Button {
-    background-color: transparent;
+    background-color: #026455;
+    border-radius: 7px;
     border: none;
     outline: none;
     cursor: pointer;
     padding: 10px;
     margin: 10px;
     font-weight: bold;
+}
+
+.Button:hover {
+    background-color: #013f36;
+    color: #05c4aa;
 }
 
 .Button:first-of-type {
