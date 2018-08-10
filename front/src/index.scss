@@ -20,4 +20,26 @@ body {
 }
 .taR {
   text-align: right;
-}   
+}
+
+.primary {
+  color: #ffffff;   
+}
+.secondary {
+  color: #009a9a;;   
+ }
+ .success {
+  color: #008000;   
+ }
+ .warning {
+  color: #ffa500;   
+ }
+ .danger {
+  color: #ff0000;   
+ }
+ 
+ .xs {font-size: 10px;}
+ .sm {font-size: 12px;}
+ .md {font-size: 16px;}
+ .lg {font-size: 20px;}
+ .xl {font-size: 24px;}
