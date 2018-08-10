@@ -24,7 +24,10 @@ module.exports = function(req, res, next) {
           function isSameYear(movie) {
             return movie.Year === movieReleaseYear;
           }
-          if (!movie.some(isSameName) || !movie.some(isSameYear)) {
+          function isMovie(movie) {
+            return movie.Type === movieReleaseYear;
+          }
+          if (!movie.some(isSameName) || (!movie.some(isSameYear) && moive.some(isMovie))) {
             const newMovie = {
               name: movieName,
               year: movieReleaseYear
