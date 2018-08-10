@@ -2,15 +2,19 @@
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
+    display: flex;
+
 }
 
 .Label {
     font-weight: bold;
     display: block;
     margin-bottom: 8px;
+    flex: 1 1 50%;
 }
 
 .InputElement {
+    flex: 1 1 50%;
     outline: none;
     border: 1px solid #ccc;
     background-color: white;

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styles from './ContentContainer.scss';
 import Card from '../../UI/Card/Card';
 import axios from 'axios';
+import Input from './../../UI/Input/Input';
 
 export default class ContentContainer extends Component {
 
@@ -9,7 +10,39 @@ export default class ContentContainer extends Component {
     super(props);
     this.state = {
       movies: [],
+      genre: [
+        'Action',
+        'Adventure',
+        'Fantasy',
+        'Drama',
+        'Romance',
+        'Family',
+        'Crime',
+        'Sci-Fi',
+        'Horror',
+        'Thriller'
+      ],
+      genreFilters: []
     }
+  }
+
+  genreHandler = (e) => {
+    let genreArr = [];
+    if(this.state.genreFilters) {
+      genreArr = [...this.state.genreFilters]
+    } else {
+      genreArr = []
+    }
+    if (genreArr.includes(e.target.value)) {
+      genreArr.splice(genreArr.indexOf(e.target.value), 1);
+    } else {
+      genreArr.push(e.target.value)
+    }
+    this.setState({
+      genreFilters: genreArr
+    });
+    console.log(e.target.value)
+    console.log(genreArr);
   }
 
   fetchMovies = () => {
@@ -31,15 +64,31 @@ export default class ContentContainer extends Component {
   componentDidMount = () => {
     this.fetchMovies();
   }
-  
+
 
   render() {
     return (
-      <div className={styles.ContentContainer}> 
-        <div className = {styles.Movies}>
-            {this.state.movies.map((movie, idx) => (
-              <Card key={idx} movie={movie}/>
-            ))}
+      <div className={styles.ContentContainer}>
+        <div>Filters
+        <fieldset>
+          <legend>Genre</legend>
+            <div className={styles.Genre}>
+              {this.state.genre.map((el, idx) => (
+                <Input
+                  type="checkbox"
+                  key={idx}
+                  label={el}
+                  value={el}
+                  changed={this.genreHandler}
+                />
+              ))}
+            </div>
+          </fieldset>
+        </div>
+        <div className={styles.Movies}>
+          {this.state.movies.map((movie, idx) => (
+            <Card key={idx} movie={movie} />
+          ))}
         </div>
       </div>
     )

@@ -52,6 +52,18 @@ const Input = (props) => {
             </select>
         )          
         break;
+      case ('checkbox'):
+        inputElement = (
+            <input
+                type={props.type}
+                className={inputStyles.join(' ')}
+                value={props.value}
+                {...props.elConfig}
+                autoComplete="on"
+                onChange={props.changed}
+            />
+        )          
+        break;
         
       default:
         inputElement = (

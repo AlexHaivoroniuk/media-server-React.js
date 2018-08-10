@@ -4,8 +4,8 @@
     height: 100%;
     margin-left: auto;
     margin-right: auto;
-    display: flex;
-    justify-content: center;
+    // display: flex;
+    // justify-content: center;
 
     .Movies{
         padding: 10px;
@@ -13,4 +13,12 @@
         flex-flow: row wrap;
         justify-content: space-between;
     }
+}
+
+.Genre {
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(5, 155px);
+    grid-template-rows: repeat(2, 70px);
+    font-family: 'Ubuntu', sans-serif;
 }
