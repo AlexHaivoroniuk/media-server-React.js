@@ -1,13 +1,19 @@
 .Card{
     background-color: #007d6c;
     width: 23%;
-    display: flex-block;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
     box-shadow: 5px 3px 9px 0px grey;
     margin-bottom: 20px;
     font-family: 'Ubuntu', sans-serif;
 }
 .CardContainer{
+    flex: 0 1 80%;
     padding: 20px;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
 }
 .Poster{
     width: 100%;
@@ -32,8 +38,9 @@
     font-size: 18px;
 }
 .Options{
-    padding-top: 20px;
-    display: flex;
+    padding: 10px 20px;
+    flex: 0 1 5%;
+    display: inline-flex;
     justify-content: space-between;
 }
 .Options button {
