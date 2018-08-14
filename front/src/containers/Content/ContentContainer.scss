@@ -4,21 +4,22 @@
     height: 100%;
     margin-left: auto;
     margin-right: auto;
-    // display: flex;
-    // justify-content: center;
-
+    display: flex;
+    flex-flow: column;
+    align-items: center;
     .Movies{
-        padding: 10px;
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: space-between;
+        padding: 20px;
+        display: inline-grid;
+        grid-template-columns: repeat(auto-fill, 280px);
+        grid-template-rows: repeat(auto-fill, 950px);
+        grid-gap: 2em 0.5em;
+        align-content: center;
+        justify-content: space-evenly;
+        box-sizing: border-box;
+        width: 100%;
     }
-}
-
-.Genre {
-    text-align: center;
-    display: grid;
-    grid-template-columns: repeat(5, 155px);
-    grid-template-rows: repeat(2, 70px);
-    font-family: 'Ubuntu', sans-serif;
+    fieldset {
+        border-color: #03cca7;
+        border-radius: 2%;
+    }
 }
