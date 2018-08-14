@@ -6,7 +6,7 @@ const Button = (props) => {
   return (
     <button
       className={ [styles.Button, idxStyles[props.btnSize], idxStyles[props.btnColor]].join(' ') }
-      onClick={props.click}
+      onClick={props.clicked}
       disabled={props.disabled}  
       >{props.children} 
     </button>

@@ -1,0 +1,21 @@
+
+.Filters {
+    box-shadow: 7px 4px 20px 0px #5d5c5c;
+    border-radius: 2%;
+    padding: 10px;
+    background-color: #80808042;
+}
+.Genre {
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 155px);
+    grid-template-rows: repeat(auto-fill, 70px);
+    font-family: 'Ubuntu', sans-serif;
+}
+.Range {
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    font-family: 'Ubuntu', sans-serif;
+}
