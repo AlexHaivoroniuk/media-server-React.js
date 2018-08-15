@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './Filters.scss';
-import Input from './../../UI/Input/Input';
-import Button from './../../UI/Button/Button';
-import Icon from './../../UI/Icon/Icon';
+import Input from './../UI/Input/Input';
+import Button from './../UI/Button/Button';
+import Icon from './../UI/Icon/Icon';
 
 const Filters = props => {
   let form = null; // form reference

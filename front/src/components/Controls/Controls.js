@@ -1,6 +1,6 @@
 import React from 'react';
-import Button from './../../UI/Button/Button';
-import Icon from './../../UI/Icon/Icon';
+import Button from './../UI/Button/Button';
+import Icon from './../UI/Icon/Icon';
 import styles from './Controls.scss';
 
 const Controls = props => {

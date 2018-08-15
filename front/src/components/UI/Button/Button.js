@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Button.scss';
-import idxStyles from './../../index.scss';
+import idxStyles from './../../../index.scss';
 
 const Button = props => {
   return (
@@ -19,5 +19,3 @@ const Button = props => {
 };
 
 export default Button;
-
-// <Button ></Button>

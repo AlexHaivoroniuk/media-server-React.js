@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
+import { Route } from 'react-router-dom';
 import Toolbar from './components/Toolbar/Toolbar';
+import MoviesContainer from './containers/Movies/MoviesContainer';
 import ContentContainer from './containers/Content/ContentContainer';
-
 import SideNav from './components/SideNav/SideNav';
 
 class App extends Component {
@@ -25,7 +26,9 @@ class App extends Component {
       <Fragment>
         <Toolbar toggle={this.toggleNav} />
         <SideNav width={this.state.style} />
-        <ContentContainer />
+        <ContentContainer>
+          <Route path="/" component={MoviesContainer} />
+        </ContentContainer>
       </Fragment>
     );
   }

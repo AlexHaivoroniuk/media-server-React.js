@@ -1,5 +1,5 @@
 import React from 'react';
-import idxStyles from './../../index.scss';
+import idxStyles from './../../../index.scss';
 
 const Icon = props => {
   return (
