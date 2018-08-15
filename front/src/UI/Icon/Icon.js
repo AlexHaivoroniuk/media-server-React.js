@@ -1,10 +1,16 @@
 import React from 'react';
 import idxStyles from './../../index.scss';
 
-const Icon = (props) => {
+const Icon = props => {
   return (
-    <i className={[props.children, idxStyles[props.iconSize], idxStyles[props.iconColor] ].join(' ')}></i>
-  )
-}
+    <i
+      className={[
+        props.children,
+        idxStyles[props.iconSize],
+        idxStyles[props.iconColor]
+      ].join(' ')}
+    />
+  );
+};
 
 export default Icon;

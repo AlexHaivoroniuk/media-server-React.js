@@ -6,7 +6,6 @@ import Filters from './../../components/Filters/Filters';
 import Controls from './../../components/Controls/Controls';
 
 export default class ContentContainer extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -21,29 +20,29 @@ export default class ContentContainer extends Component {
         }
       },
       filtersToggle: false
-    }
+    };
   }
 
   toggleFilters = () => {
     this.setState((prevState, props) => {
       return {
         filtersToggle: !prevState.filtersToggle
-      }
-    })
-  }
+      };
+    });
+  };
 
   filtersHandler = (e, filter) => {
     let newArr = [];
     // console.log(this.state.filters[filter]);
     if (this.state.filters[filter]) {
-      newArr = [...this.state.filters[filter]]
+      newArr = [...this.state.filters[filter]];
     } else {
-      newArr = []
+      newArr = [];
     }
     if (newArr.includes(e.target.value)) {
       newArr.splice(newArr.indexOf(e.target.value), 1);
     } else {
-      newArr.push(e.target.value)
+      newArr.push(e.target.value);
     }
     console.log('Checkboxes', newArr);
     this.setState({
@@ -51,20 +50,20 @@ export default class ContentContainer extends Component {
         ...this.state.filters,
         [filter]: newArr
       }
-    })
-  }
+    });
+  };
 
-  sortAZ = (sortOrder) => {
-    const moviesSorted = this.state.movies.slice().sort(function (a, b) {
-      if (sortOrder === 0) [b, a] = [a, b]
-      if (a.Title > b.Title) return -1
-      if (a.Title < b.Title) return 1
-      return 0
-    })
+  sortAZ = sortOrder => {
+    const moviesSorted = this.state.movies.slice().sort(function(a, b) {
+      if (sortOrder === 0) [b, a] = [a, b];
+      if (a.Title > b.Title) return -1;
+      if (a.Title < b.Title) return 1;
+      return 0;
+    });
     this.setState({
       movies: moviesSorted
-    })
-  }
+    });
+  };
 
   clearFilters = () => {
     this.setState((prevState, props) => ({
@@ -77,15 +76,18 @@ export default class ContentContainer extends Component {
           maxY: 2018
         }
       }
-    }))
-  }
+    }));
+  };
 
   filterMovies = () => {
     // const filteredMovies = this.filterBy(
     //   this.filterBy(this.filterBy(this.state.moviesDefault.slice(), 'genre'), 'country'),
     //   'year'
     // );
-    const filterGenre = this.filterBy(this.state.moviesDefault.slice(), 'genre');
+    const filterGenre = this.filterBy(
+      this.state.moviesDefault.slice(),
+      'genre'
+    );
     console.log('filterGenre :', filterGenre);
     const filterCountry = this.filterBy(filterGenre, 'country');
     console.log('filterCountry :', filterCountry);
@@ -95,20 +97,20 @@ export default class ContentContainer extends Component {
     // console.log(filteredMovies);
     this.setState({
       movies: filteredMovies
-    })
+    });
     setTimeout(() => {
       console.log('Movies', this.state.movies);
-    }, 500)
-  }
+    }, 500);
+  };
   /**
    * curMovies - list of movies (Array of Obj)
    * field     - string value to filter by (value from data > filters)
    */
   filterBy = (curMovies, field) => {
     // console.log(field)
-    console.log('curMovies', curMovies)
+    console.log('curMovies', curMovies);
     if (field === 'year') {
-      return curMovies.filter((elem) => {
+      return curMovies.filter(elem => {
         let Year = elem.Year;
         // console.log('year', Year)
         if (elem.Type === 'series') {
@@ -118,21 +120,34 @@ export default class ContentContainer extends Component {
           // console.log(Year < this.state.filters.year.maxY)
           // console.log(Year > this.state.filters.year.minY);
         }
-        if (Year < this.state.filters.year.maxY && Year > this.state.filters.year.minY) return true
-        else return false
-      })
+        if (
+          Year < this.state.filters.year.maxY &&
+          Year > this.state.filters.year.minY
+        )
+          return true;
+        else return false;
+      });
     }
-    if (this.state.filters[field].length === 0) return curMovies
-    return curMovies.filter((elem) => {
-      let fieldArr = elem[field[0].toUpperCase() + field.slice(1)].toLowerCase().split(',')
-      let hasField = fieldArr.map(el => {
-        return this.state.filters[field].join(',').toLowerCase().includes(el.trim())
-      }).filter(el => el === true).length === this.state.filters[field].length
+    if (this.state.filters[field].length === 0) return curMovies;
+    return curMovies.filter(elem => {
+      let fieldArr = elem[field[0].toUpperCase() + field.slice(1)]
+        .toLowerCase()
+        .split(',');
+      let hasField =
+        fieldArr
+          .map(el => {
+            return this.state.filters[field]
+              .join(',')
+              .toLowerCase()
+              .includes(el.trim());
+          })
+          .filter(el => el === true).length ===
+        this.state.filters[field].length;
 
-      if (hasField) return true
-      else return false
-    })
-  }
+      if (hasField) return true;
+      else return false;
+    });
+  };
 
   rangeHandler = (e, year) => {
     this.setState({
@@ -143,33 +158,33 @@ export default class ContentContainer extends Component {
           [year]: e.target.value
         }
       }
-    })
-  }
+    });
+  };
 
   fetchMovies = () => {
-    axios.get('http://localhost:4000/movies')
+    axios
+      .get('http://localhost:4000/movies')
       .then(res => res.data)
       .then(data => {
         this.setState({
-          movies: data.filter((movie) => {
-            if (movie.Title !== undefined) return true
+          movies: data.filter(movie => {
+            if (movie.Title !== undefined) return true;
             return false;
-          }),
-        })
+          })
+        });
         this.setState((prevState, props) => ({
           moviesDefault: prevState.movies
-        }))
+        }));
         console.log('movies', this.state.movies);
         console.log('moviesDefault', this.state.moviesDefault);
         return null;
       })
       .catch(err => console.error(err));
-  }
+  };
 
   componentDidMount = () => {
     this.fetchMovies();
-  }
-
+  };
 
   render() {
     return (
@@ -189,6 +204,6 @@ export default class ContentContainer extends Component {
           ))}
         </div>
       </div>
-    )
+    );
   }
 }
