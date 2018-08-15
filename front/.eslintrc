@@ -1,0 +1,27 @@
+{
+    "extends": ["react-app", "prettier"],
+    "env": {
+        "es6": true,
+        "browser": true,
+        "node": true
+    },
+    "rules": {
+        "quotes": "off",
+        "no-console": "off",
+        "no-debugger": "off",
+        "require-jsdoc": "off",
+        "lines-around-comment": "off",
+        "newline-after-var": "off",
+        "no-undefined": "off",
+        "no-confusing-arrow": "off",
+        "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
+        "no-trailing-spaces": ["error", { "skipBlankLines": true }],
+        "prettier/prettier": [
+            "error",
+            {
+                "singleQuote": true
+            }
+        ]
+    },
+    "plugins": ["prettier"]
+}

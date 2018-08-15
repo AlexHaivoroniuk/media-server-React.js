@@ -1,27 +1,22 @@
-import React from "react";
+import React from 'react';
 import styles from './Card.scss';
 import { Link } from "react-router-dom";
 // import idxStyles from './../../index.scss'
 
-const Card = (props) => {
+const Card = props => {
   return (
     <div className={styles.Card}>
       <div className={styles.CardContainer}>
         <div className={styles.Info}>
           <div className={styles.Poster}>
-            <img
-              src={props.movie.Poster}
-              alt=""
-            />
+            <img src={props.movie.Poster} alt="" />
           </div>
           <div className={styles.Topside}>
             <h2 className={styles.Title}>{props.movie.Title}</h2>
           </div>
           <div className={styles.About}>
             <label htmlFor="">Description:</label>
-            <span>
-              {props.movie.Plot}
-            </span>
+            <span>{props.movie.Plot}</span>
           </div>
           <div className={styles.About}>
             <label htmlFor="">Year:</label>
@@ -44,7 +39,6 @@ const Card = (props) => {
             <span>{props.movie.Actors}</span>
           </div>
         </div>
-        
       </div>
       <div className={styles.Options}>
           <button>Watch</button>
