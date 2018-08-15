@@ -1,8 +1,8 @@
-
 .Filters {
     box-shadow: 7px 4px 20px 0px #5d5c5c;
     border-radius: 2%;
     padding: 10px;
+    width: 90%;
     background-color: #80808042;
 }
 .Genre {
@@ -18,4 +18,9 @@
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
     font-family: 'Ubuntu', sans-serif;
+}
+
+fieldset {
+    border-color: #03cca7;
+    border-radius: 2%;
 }

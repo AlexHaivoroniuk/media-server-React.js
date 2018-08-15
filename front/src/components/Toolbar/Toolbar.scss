@@ -1,11 +1,12 @@
 .Toolbar {
-    background-color: #00897B;
+    background-color: #00897b;
     color: white;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    box-sizing: border-box;
     height: 3em;
     position: fixed;
     box-shadow: 0 0 20px 0 black;
@@ -16,7 +17,7 @@
         align-self: center;
         &:hover {
             cursor: pointer;
-            background-color: #26A694;
+            background-color: #26a694;
         }
     }
     .Toolbar__title {
@@ -27,7 +28,6 @@
         &:hover {
             cursor: pointer;
         }
-
     }
     @media screen and (max-width: 650px) {
         .Toolbar__title {
