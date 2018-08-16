@@ -1,5 +1,5 @@
 const Movie = require("../models/Movie");
-const testFolder = new URL('file:///home/ohaivoroniuk/Movies');
+const testFolder = "C:/Users/ycherniavskyi.EXADEL/media-server/media-files";
 const fs = require("fs");
 const axios = require("axios");
 const api = require("../../config/config");

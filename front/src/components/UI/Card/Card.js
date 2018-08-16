@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Card.scss';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 // import idxStyles from './../../index.scss'
 
 const Card = props => {
@@ -41,9 +41,9 @@ const Card = props => {
         </div>
       </div>
       <div className={styles.Options}>
-          <button>Watch</button>
-          <Link to={`/${props.movie._id}`}>Read more...</Link>
-        </div>
+        <button>Watch</button>
+        <Link to={`/${props.movie._id}`}>Read more...</Link>
+      </div>
     </div>
   );
 };
