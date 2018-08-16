@@ -1,5 +1,5 @@
 const Movie = require("../models/Movie");
-const testFolder = new URL('file:///home/ohaivoroniuk/Movies');
+const testFolder = "C:/Users/ycherniavskyi.EXADEL/media-server/media-files";
 const fs = require("fs");
 const axios = require("axios");
 const api = require("../../config/config");
@@ -24,7 +24,10 @@ module.exports = function(req, res, next) {
           function isSameYear(movie) {
             return movie.Year === movieReleaseYear;
           }
-          if (!movie.some(isSameName) || !movie.some(isSameYear)) {
+          function isMovie(movie) {
+            return movie.Type === movieReleaseYear;
+          }
+          if (!movie.some(isSameName) || (!movie.some(isSameYear) && moive.some(isMovie))) {
             const newMovie = {
               name: movieName,
               year: movieReleaseYear
