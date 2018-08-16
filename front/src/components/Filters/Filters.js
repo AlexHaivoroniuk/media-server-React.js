@@ -3,6 +3,14 @@ import styles from './Filters.scss';
 import Input from './../UI/Input/Input';
 import Button from './../UI/Button/Button';
 import Icon from './../UI/Icon/Icon';
+import { connect } from 'react-redux';
+import {
+  clearFilters,
+  handleFiltersInput,
+  handleRangeInput
+} from './../../store/actions/filters';
+import { filterMovies } from './../../store/actions/movies';
+import throttle from 'lodash/throttle';
 
 const Filters = props => {
   let form = null; // form reference
@@ -25,12 +33,16 @@ const Filters = props => {
 
   const resetFilters = e => {
     e.preventDefault();
-    props.clearFilters();
+    props.clear();
     form.reset();
   };
 
+  const throttledRange = throttle((val, year) => {
+    props.handleRange(val, year);
+  }, 1000);
+
   let filters = null;
-  if (props.toggle) {
+  if (props.display) {
     filters = (
       <div className={styles.Filters}>
         <form
@@ -48,7 +60,7 @@ const Filters = props => {
                   key={idx}
                   label={el}
                   value={el}
-                  changed={e => props.filtersHandler(e, 'genre')}
+                  changed={e => props.handleInput(e, 'genre')}
                 />
               ))}
             </div>
@@ -62,7 +74,7 @@ const Filters = props => {
                   key={idx}
                   label={el}
                   value={el}
-                  changed={e => props.filtersHandler(e, 'country')}
+                  changed={e => props.handleInput(e, 'country')}
                 />
               ))}
             </div>
@@ -75,33 +87,33 @@ const Filters = props => {
                 label="Min year"
                 min="1900"
                 max="2018"
-                value={props.filters.year.minY}
-                changed={e => props.rangeHandler(e, 'minY')}
+                value={props.year.minY}
+                changed={e => throttledRange(e.target.value, 'minY')}
               />
               <Input
                 type="text"
-                value={props.filters.year.minY}
-                changed={e => props.rangeHandler(e, 'minY')}
+                value={props.year.minY}
+                changed={e => throttledRange(e.target.value, 'minY')}
               />
               <Input
                 type="range"
                 label="Max year"
                 min="1900"
                 max="2018"
-                value={props.filters.year.maxY}
-                changed={e => props.rangeHandler(e, 'maxY')}
+                value={props.year.maxY}
+                changed={e => throttledRange(e.target.value, 'maxY')}
               />
               <Input
                 type="text"
-                value={props.filters.year.maxY}
-                changed={e => props.rangeHandler(e, 'maxY')}
+                value={props.year.maxY}
+                changed={e => throttledRange(e.target.value, 'maxY')}
               />
             </div>
           </fieldset>
           <Button
             clicked={e => {
               e.preventDefault();
-              props.filterMovies();
+              props.filter();
             }}
             btnSize="md"
           >
@@ -126,4 +138,29 @@ const Filters = props => {
   return filters;
 };
 
-export default Filters;
+const mapStateToProps = state => ({
+  display: state.filters.toggleFilters,
+  year: state.filters.year,
+  genre: state.filters.genre,
+  country: state.filters.toggleFilters
+});
+
+const mapDispatchToProps = dispatch => ({
+  clear: () => {
+    dispatch(clearFilters());
+  },
+  filter: () => {
+    dispatch(filterMovies());
+  },
+  handleInput: (e, filter) => {
+    dispatch(handleFiltersInput(e, filter));
+  },
+  handleRange: (val, year) => {
+    dispatch(handleRangeInput(val, year));
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Filters);

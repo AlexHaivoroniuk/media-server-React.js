@@ -15,8 +15,14 @@ const Toolbar = props => {
       >
         <i className={classes.bars} />
       </div>
+      <div className={styles.Logo}>
+        <div />
+        <div />
+        <div />
+        <div />
+      </div>
       <div className={`${styles.Toolbar__title}  ${idxStyles.taR}`}>
-        MediaServer <i className={classes.film} />
+        MediaServer
       </div>
     </div>
   );
