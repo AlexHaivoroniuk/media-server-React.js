@@ -4,11 +4,15 @@ import Button from './../UI/Button/Button';
 import Icon from './../UI/Icon/Icon';
 import styles from './Controls.scss';
 import { toggleFiltersPanel } from './../../store/actions/filters';
+import { fetchMovies } from './../../store/actions/movies';
 import actions from './../../store/actionsTypes';
 
 const Controls = props => {
   return (
     <div className={styles.Controls}>
+      <Button btnSize="lg" clicked={props.fetch}>
+        <Icon>fa fa-sync</Icon>
+      </Button>
       <Button btnSize="lg" clicked={() => props.sortAZdesc()}>
         <Icon>fa fa-sort-alpha-down</Icon>
       </Button>
@@ -33,6 +37,9 @@ const mapDispatchToProps = dispatch => ({
   },
   sortAZasc: () => {
     dispatch({ type: actions.SORT_ALPHA_ASC });
+  },
+  fetch: () => {
+    dispatch(fetchMovies());
   }
 });
 
