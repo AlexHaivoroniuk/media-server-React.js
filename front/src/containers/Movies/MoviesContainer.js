@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import styles from './MoviesContainer.scss';
 import Card from './../../components/UI/Card/Card';
-import axios from 'axios';
 import Filters from './../../components/Filters/Filters';
 import Controls from './../../components/Controls/Controls';
 import Spinner from './../../components/UI/Spinner/Spinner';

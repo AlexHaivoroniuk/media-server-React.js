@@ -8,13 +8,15 @@ const Movie = props => {
     <div className={styles.MovieContainer}>
       <div className={styles.BackLink}>
         <Link to={`/`}>
-          <button>&lt;</button>
+          <button>
+            <i className="fa fa-chevron-left" />
+          </button>
         </Link>
       </div>
       <div className={styles.Movie}>
         <div className={styles.EditIcon}>
           <button>
-            <i class="fas fa-edit" />
+            <i className="fas fa-edit" />
           </button>
         </div>
         <div className={styles.LeftSide}>

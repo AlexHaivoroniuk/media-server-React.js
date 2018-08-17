@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import Movie from './../../components/UI/Movie/Movie';
+import Spinner from './../../components/UI/Spinner/Spinner';
 import axios from 'axios';
 
 class SingleMovie extends Component {
   constructor(props) {
     super(props);
-    console.log(this);
     this.state = {
       movie: []
     };
-    this.fetchMovies();
   }
   fetchMovies() {
     axios
@@ -25,12 +24,17 @@ class SingleMovie extends Component {
       .catch(err => console.error(err));
   }
 
-  // componentDidMount() {
-
-  // }
+  componentDidMount() {
+    this.fetchMovies();
+  }
 
   render() {
-    return <Movie movie={this.state.movie} />;
+    let movie = <Spinner />;
+    if (this.state.movie) {
+      movie = <Movie movie={this.state.movie} />;
+    }
+
+    return movie;
   }
 }
 

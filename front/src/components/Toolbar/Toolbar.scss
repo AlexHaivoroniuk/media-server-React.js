@@ -1,5 +1,5 @@
 .Toolbar {
-    background-color: #00897b;
+    background-color: #4daf9582;
     color: white;
     display: flex;
     flex-flow: row nowrap;
@@ -22,17 +22,17 @@
     }
     .Toolbar__title {
         font-size: 1.2em;
-        padding: 0px 15px;
-        flex: 0 1 20%;
-        align-self: center;
+        padding: 0 15px;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        height: 100%;
+        flex: 0 1 auto;
         &:hover {
             cursor: pointer;
         }
     }
     @media screen and (max-width: 650px) {
-        .Toolbar__title {
-            flex: 0 1 50%;
-        }
         .Toolbar__menu {
             flex: 0 1 15%;
         }
@@ -40,10 +40,16 @@
 }
 
 .Logo {
-    display: inline-block;
+    display: block;
     position: relative;
-    width: 64px;
-    height: 64px;
+    /* width: 64px; */
+    /* height: 64px; */
+    flex: 1 1 auto;
+    box-sizing: border-box;
+    height: 100%;
+    &:hover div {
+        animation: LogoRotate 2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    }
 }
 
 .Logo div {
@@ -52,26 +58,36 @@
     position: absolute;
     width: 34px;
     height: 34px;
-    margin: 6px;
     top: 5px;
-    left: 5px;
+    right: 0;
     /*   border: 6px solid teal; */
     border-radius: 50%;
-    /*   animation: lds-ring 2s cubic-bezier(0.5, 0, 0.5, 1) infinite; */
     box-shadow: 0px 0px 2px 0px #ffffff9c, inset -9px 2px 0px 0px #ffffff45;
-    /*   border-color: teal transparent transparent transparent; */
 }
 
 .Logo div:nth-child(1) {
     transform: rotate(10deg);
+    animation-delay: -0.8s;
 }
 .Logo div:nth-child(2) {
     transform: rotate(30deg);
+    animation-delay: -0.6s;
 }
 .Logo div:nth-child(3) {
     transform: rotate(60deg);
+    animation-delay: -0.4s;
 }
 
 .Logo div:nth-child(4) {
     transform: rotate(90deg);
+    animation-delay: -0.2s;
+}
+
+@keyframes LogoRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
