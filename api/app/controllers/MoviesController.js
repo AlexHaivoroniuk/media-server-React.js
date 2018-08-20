@@ -11,7 +11,7 @@ class MoviesController {
                 res.json(movie);
             }).catch(err => {
                 res.status(500).send({
-                    message: err.message || "Some error occurred while retrieving notes."
+                    message: err.message || "Some error occurred while retrieving movies."
                 });
             }); 
     }
@@ -20,7 +20,7 @@ class MoviesController {
             .then(movie => {
                 if(!movie) {
                     return res.status(404).send({
-                        message: "Note not found with id " + req.params.id
+                        message: "Movies not found with id " + req.params.id
                     })
                 }
                 res.send(movie)
@@ -28,7 +28,7 @@ class MoviesController {
             .catch(err => {
                 if (err.kind === 'ObjectId') {
                     return res.status(404).send({
-                        message: "Note not found with id" + req.params.id
+                        message: "Movies not found with id" + req.params.id
                     });
                 }
                 return res.status(500).send({
@@ -50,14 +50,14 @@ class MoviesController {
             .then(movie => {
                 if(!movie) {
                     return res.status(404).send({
-                        message: "Note not found with id " + req.params.id
+                        message: "Movie not found with id " + req.params.id
                     });
                 }
                 res.json(movie);
             }).catch(err => {
                 if(err.kind === 'ObjectId') {
                     return res.status(404).send({
-                        message: "Note not found with id " + req.params.id
+                        message: "Movie not found with id " + req.params.id
                     });                
                 }
                 return res.status(500).send({
