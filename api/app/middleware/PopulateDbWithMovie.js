@@ -1,9 +1,13 @@
 const Movie = require("../models/Movie");
-const testFolder = "C:/Users/ycherniavskyi.EXADEL/media-server/media-files";
+const { URL } = require('url');
+const logger = require('./../../config/winston');
+const testFolder = new URL('file:///home/ohaivoroniuk/Movies');
 const fs = require("fs");
 const axios = require("axios");
 const api = require("../../config/config");
 const apiKey = api.apiKey;
+const path = require('path');
+const scriptName = path.basename(__filename);
 
 module.exports = function(req, res, next) {
   res.set("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -27,7 +31,7 @@ module.exports = function(req, res, next) {
           function isMovie(movie) {
             return movie.Type === movieReleaseYear;
           }
-          if (!movie.some(isSameName) || (!movie.some(isSameYear) && moive.some(isMovie))) {
+          if (!movie.some(isSameName) || (!movie.some(isSameYear) && movie.some(isMovie))) {
             const newMovie = {
               name: movieName,
               year: movieReleaseYear
@@ -39,27 +43,35 @@ module.exports = function(req, res, next) {
                 }&y=${newMovie.year}`
               )
               .then(res => {
+                logger.info({ message: 'Movie fetch was successful', label: scriptName})
                 return new Movie(res.data)
                   .save()
-                  .then(data => data)
+                  .then(data => { logger.info({ message:'Movie fetch was successful', label: scriptName}); return data})
                   .catch(err => {
+                    logger.warning({ message:`Movie save failed with error: ${err.message}`,label: scriptName});
                     res.status(500).send({
                       message:
                         err.message ||
                         "Some error occurred while creating the Movie."
                     });
                   });
-              });
+              }).catch(err => {
+                logger.warn({ message: `Movie fetch failed with error: ${err.message}`, label: scriptName});
+              })
+              ;
           }
         });
         Promise.all(reqArr).then(data => {
           res.json(data);
         });
+      } else {
+        logger.info({ message: 'All up to date', label: scriptName})
       }
     })
     .catch(err => {
+      logger.warn({ message: `Movie retrieval from database failed with error: ${err.message}`, label: scriptName})
       res.status(500).send({
-        message: err.message || "Some error occurred while retrieving notes."
+        message: err.message || "Some error occurred while retrieving movies."
       });
     });
 
