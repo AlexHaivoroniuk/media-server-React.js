@@ -38,18 +38,16 @@ describe('<Button />', () => {
         Inner <b>text</b>
       </Button>
     );
-    expect(wrapper.find('.Button').html()).toEqual(
-      '<button class="Button xs primary">Inner <b>text</b></button>'
-    );
+    expect(wrapper.find('.Button').hasClass('Button')).toBeTruthy();
+    expect(wrapper.find('.Button').hasClass('xs')).toBeTruthy();
+    expect(wrapper.find('.Button').hasClass('primary')).toBeTruthy();
   });
 
   it('should display disabled', () => {
     const wrapper = shallow(
       <Button btnSize="xs" btnColor="primary" disabled />
     );
-    expect(wrapper.find('.Button').html()).toEqual(
-      '<button class="Button xs primary" disabled=""></button>'
-    );
+    expect(wrapper.find('.Button').prop('disabled')).toBeTruthy();
   });
 
   it('should handle the click event', () => {
