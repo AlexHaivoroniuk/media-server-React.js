@@ -57,12 +57,17 @@
     "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {
+    "collectCoverage": true,
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,mjs}"
+    ],
+    "coverageReporters": [
+      "html"
     ],
     "setupFiles": [
       "<rootDir>/config/polyfills.js"
     ],
+    "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js",
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
       "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"
@@ -78,7 +83,8 @@
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
     ],
     "moduleNameMapper": {
-      "^react-native$": "react-native-web"
+      "^react-native$": "react-native-web",
+      "\\.(css|scss|less)$": "identity-obj-proxy"
     },
     "moduleFileExtensions": [
       "web.js",
@@ -99,8 +105,12 @@
     "extends": "react-app"
   },
   "devDependencies": {
+    "enzyme": "^3.4.3",
+    "enzyme-adapter-react-16": "^1.2.0",
     "eslint-config-prettier": "^3.0.1",
     "eslint-plugin-prettier": "^2.6.2",
+    "identity-obj-proxy": "^3.0.0",
+    "jest-enzyme": "^6.0.3",
     "node-sass": "^4.9.2",
     "prettier": "^1.14.2",
     "sass-loader": "^7.1.0"
