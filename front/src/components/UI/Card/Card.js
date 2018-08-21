@@ -28,7 +28,7 @@ const Card = props => {
           </div>
           <div className={styles.About}>
             <label htmlFor="">Director:</label>
-            <span>J{props.movie.Director}</span>
+            <span>{props.movie.Director}</span>
           </div>
           <div className={styles.About}>
             <label htmlFor="">Country:</label>
