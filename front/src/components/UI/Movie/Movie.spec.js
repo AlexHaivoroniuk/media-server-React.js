@@ -47,12 +47,12 @@ describe('<Movie />', () => {
     expect(link.length).toEqual(1);
     expect(link.prop('to')).toEqual('/');
     expect(link.prop('replace')).toEqual(false);
-    expect(link.find('button').length).toEqual(1);
+    expect(link.find('Button').length).toEqual(1);
     expect(
       link
-        .find('button')
-        .find('i')
-        .prop('className')
+        .find('Button')
+        .find('Icon')
+        .prop('children')
     ).toEqual('fa fa-chevron-left');
   });
 

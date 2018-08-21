@@ -48,93 +48,93 @@ const Movie = props => {
             <div className={styles.SubValue}>
               <span>{props.movie.Year}</span>
             </div>
-            <div className={styles.About}>
-              <div className={styles.Subtitle}>
-                <label htmlFor="">Genre:</label>
-              </div>
-              <div className={styles.SubValue}>
-                <span>{props.movie.Genre}</span>
-              </div>
+          </div>
+          <div className={styles.About}>
+            <div className={styles.Subtitle}>
+              <label htmlFor="">Genre:</label>
             </div>
-            <div className={styles.About}>
-              <div className={styles.Subtitle}>
-                <label htmlFor="">Director:</label>
-              </div>
-              <div className={styles.SubValue}>
-                <span>{props.movie.Director}</span>
-              </div>
+            <div className={styles.SubValue}>
+              <span>{props.movie.Genre}</span>
             </div>
-            <div className={styles.About}>
-              <div className={styles.Subtitle}>
-                <label htmlFor="">Country:</label>
-              </div>
-              <div className={styles.SubValue}>
-                <span>{props.movie.Country}</span>
-              </div>
+          </div>
+          <div className={styles.About}>
+            <div className={styles.Subtitle}>
+              <label htmlFor="">Director:</label>
             </div>
-            <div className={styles.About}>
-              <div className={styles.Subtitle}>
-                <label htmlFor="">Actors:</label>
-              </div>
-              <div className={styles.SubValue}>
-                <span>{props.movie.Actors}</span>
-              </div>
+            <div className={styles.SubValue}>
+              <span>{props.movie.Director}</span>
             </div>
-            <div className={styles.About}>
-              <div className={styles.Subtitle}>
-                <label htmlFor="">Rated:</label>
-              </div>
-              <div className={styles.SubValue}>
-                <span>{props.movie.Rated}</span>
-              </div>
+          </div>
+          <div className={styles.About}>
+            <div className={styles.Subtitle}>
+              <label htmlFor="">Country:</label>
             </div>
-            <div className={styles.About}>
-              <div className={styles.Subtitle}>
-                <label htmlFor="">Writer:</label>
-              </div>
-              <div className={styles.SubValue}>
-                <span>{props.movie.Writer}</span>
-              </div>
+            <div className={styles.SubValue}>
+              <span>{props.movie.Country}</span>
             </div>
-            <div className={styles.About}>
-              <div className={styles.Subtitle}>
-                <label htmlFor="">Language:</label>
-              </div>
-              <div className={styles.SubValue}>
-                <span>{props.movie.Language}</span>
-              </div>
+          </div>
+          <div className={styles.About}>
+            <div className={styles.Subtitle}>
+              <label htmlFor="">Actors:</label>
             </div>
-            <div className={styles.About}>
-              <div className={styles.Subtitle}>
-                <label htmlFor="">Awards:</label>
-              </div>
-              <div className={styles.SubValue}>
-                <span>{props.movie.Awards}</span>
-              </div>
+            <div className={styles.SubValue}>
+              <span>{props.movie.Actors}</span>
             </div>
-            <div className={styles.About}>
-              <div className={styles.Subtitle}>
-                <label htmlFor="">IMBDRating:</label>
-              </div>
-              <div className={styles.SubValue}>
-                <span>{props.movie.imdbRating}</span>
-              </div>
+          </div>
+          <div className={styles.About}>
+            <div className={styles.Subtitle}>
+              <label htmlFor="">Rated:</label>
             </div>
-            <div className={styles.About}>
-              <div className={styles.Subtitle}>
-                <label htmlFor="">Production:</label>
-              </div>
-              <div className={styles.SubValue}>
-                <span>{props.movie.Production}</span>
-              </div>
+            <div className={styles.SubValue}>
+              <span>{props.movie.Rated}</span>
             </div>
-            <div className={styles.About}>
-              <div className={styles.Subtitle}>
-                <label htmlFor="">Released:</label>
-              </div>
-              <div className={styles.SubValue}>
-                <span>{props.movie.Released}</span>
-              </div>
+          </div>
+          <div className={styles.About}>
+            <div className={styles.Subtitle}>
+              <label htmlFor="">Writer:</label>
+            </div>
+            <div className={styles.SubValue}>
+              <span>{props.movie.Writer}</span>
+            </div>
+          </div>
+          <div className={styles.About}>
+            <div className={styles.Subtitle}>
+              <label htmlFor="">Language:</label>
+            </div>
+            <div className={styles.SubValue}>
+              <span>{props.movie.Language}</span>
+            </div>
+          </div>
+          <div className={styles.About}>
+            <div className={styles.Subtitle}>
+              <label htmlFor="">Awards:</label>
+            </div>
+            <div className={styles.SubValue}>
+              <span>{props.movie.Awards}</span>
+            </div>
+          </div>
+          <div className={styles.About}>
+            <div className={styles.Subtitle}>
+              <label htmlFor="">IMDBRating:</label>
+            </div>
+            <div className={styles.SubValue}>
+              <span>{props.movie.imdbRating}</span>
+            </div>
+          </div>
+          <div className={styles.About}>
+            <div className={styles.Subtitle}>
+              <label htmlFor="">Production:</label>
+            </div>
+            <div className={styles.SubValue}>
+              <span>{props.movie.Production}</span>
+            </div>
+          </div>
+          <div className={styles.About}>
+            <div className={styles.Subtitle}>
+              <label htmlFor="">Released:</label>
+            </div>
+            <div className={styles.SubValue}>
+              <span>{props.movie.Released}</span>
             </div>
           </div>
         </div>
