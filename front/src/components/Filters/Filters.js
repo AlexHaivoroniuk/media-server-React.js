@@ -60,7 +60,7 @@ const Filters = props => {
                   key={idx}
                   label={el}
                   value={el}
-                  changed={e => props.handleInput(e, 'genre')}
+                  changed={e => props.handleInput(e.target.value, 'genre')}
                 />
               ))}
             </div>
@@ -74,7 +74,7 @@ const Filters = props => {
                   key={idx}
                   label={el}
                   value={el}
-                  changed={e => props.handleInput(e, 'country')}
+                  changed={e => props.handleInput(e.target.value, 'country')}
                 />
               ))}
             </div>

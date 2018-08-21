@@ -23,17 +23,17 @@ const clearFilters = state => {
 };
 
 const filtersHandler = (state, action) => {
-  console.log(action);
+  // console.log(action);
   let newArr = [];
   if (state[action.filter]) {
     newArr = [...state[action.filter]];
   } else {
     newArr = [];
   }
-  if (newArr.includes(action.e.target.value)) {
-    newArr.splice(newArr.indexOf(action.e.target.value), 1);
+  if (newArr.includes(action.value)) {
+    newArr.splice(newArr.indexOf(action.value), 1);
   } else {
-    newArr.push(action.e.target.value);
+    newArr.push(action.value);
   }
   // console.log('Checkboxes', newArr);
   // console.log({

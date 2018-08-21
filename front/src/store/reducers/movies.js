@@ -44,18 +44,19 @@ const filterBy = (curMovies, field, filters) => {
 };
 
 const filterMovies = (state, action) => {
+  console.log(action.filters);
   const filterGenre = filterBy(
     state.moviesDefault.slice(),
     'genre',
     action.filters
   );
-  // console.log('filterGenre :', filterGenre);
+  console.log('filterGenre :', filterGenre);
   const filterCountry = filterBy(filterGenre, 'country', action.filters);
-  // console.log('filterCountry :', filterCountry);
+  console.log('filterCountry :', filterCountry);
   const filterYear = filterBy(filterCountry, 'year', action.filters);
-  // console.log('filterYear :', filterYear);
+  console.log('filterYear :', filterYear);
   const filteredMovies = filterYear;
-  // console.log(filteredMovies);
+  console.log(filteredMovies);
   return {
     ...state,
     movies: filteredMovies

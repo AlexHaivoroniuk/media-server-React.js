@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './Movie.scss';
 import { Link } from 'react-router-dom';
+import Button from './../Button/Button';
+import Icon from './../Icon/Icon';
 
 const Movie = props => {
   console.log(props);
@@ -8,9 +10,9 @@ const Movie = props => {
     <div className={styles.MovieContainer}>
       <div className={styles.BackLink}>
         <Link to={`/`}>
-          <button>
-            <i className="fa fa-chevron-left" />
-          </button>
+          <Button>
+            <Icon iconSize="md">fa fa-chevron-left</Icon>
+          </Button>
         </Link>
       </div>
       <div className={styles.Movie}>

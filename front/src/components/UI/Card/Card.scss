@@ -1,4 +1,4 @@
-.Card{
+.Card {
     background-color: #007d6c;
     display: flex;
     flex-flow: column;
@@ -7,36 +7,36 @@
     margin-bottom: 20px;
     font-family: 'Ubuntu', sans-serif;
 }
-.CardContainer{
+.CardContainer {
     flex: 0 1 80%;
     padding: 20px;
     display: flex;
     flex-flow: column;
     justify-content: space-between;
 }
-.Poster{
+.Poster {
     width: 100%;
     margin: auto;
 }
-.Poster img{
+.Poster img {
     width: 100%;
     margin: auto;
 }
-.Title{
+.Title {
     font-size: 30px;
     margin: 10px 0px;
     display: inline;
 }
-.About{
+.About {
     display: block;
     margin-top: 10px;
 }
-.About label{
+.About label {
     font-weight: bold;
     padding-right: 10px;
     font-size: 18px;
 }
-.Options{
+.Options {
     padding: 10px 20px;
     flex: 0 1 5%;
     display: inline-flex;
@@ -46,7 +46,7 @@
     background-color: #026455;
     border: none;
     cursor: pointer;
-    color: #FFF;
+    color: #fff;
     font-size: 20px;
     padding: 7px 14px;
     font-family: 'Ubuntu', sans-serif;
@@ -56,11 +56,11 @@
     background-color: #013f36;
     color: #05c4aa;
 }
-.Options a{
+.Options a {
     text-decoration: none;
-    color:#05ecca; 
+    color: #05ecca;
     padding-top: 10px;
 }
-.Options a:hover{
-    color:#013f36; 
+.Options a:hover {
+    color: #013f36;
 }

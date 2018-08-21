@@ -8,7 +8,8 @@ const Button = props => {
       className={[
         styles.Button,
         idxStyles[props.btnSize],
-        idxStyles[props.btnColor]
+        idxStyles[props.btnColor],
+        props.class
       ].join(' ')}
       onClick={props.clicked}
       disabled={props.disabled}

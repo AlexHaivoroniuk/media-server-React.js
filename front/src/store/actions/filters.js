@@ -9,10 +9,10 @@ export const clearFilters = data => (dispatch, getState) => {
   dispatch({ type: actions.RESET_MOVIES });
 };
 
-export const handleFiltersInput = (event, filter) => ({
+export const handleFiltersInput = (value, filter) => ({
   type: actions.HANDLE_FILTERS_INPUT,
-  e: event,
-  filter: filter
+  value,
+  filter
 });
 export const handleRangeInput = (val, year) => ({
   type: actions.HANDLE_RANGE_INPUT,
