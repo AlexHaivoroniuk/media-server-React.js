@@ -5,7 +5,6 @@ import Button from './../Button/Button';
 import Icon from './../Icon/Icon';
 
 const Movie = props => {
-  console.log(props);
   return (
     <div className={styles.MovieContainer}>
       <div className={styles.BackLink}>

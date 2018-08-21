@@ -3,14 +3,15 @@ import styles from './Button.scss';
 import idxStyles from './../../../index.scss';
 
 const Button = props => {
+  let classes = [
+    styles.Button,
+    idxStyles[props.btnSize],
+    idxStyles[props.btnColor]
+  ];
+  if (props.class) classes.push(props.class);
   return (
     <button
-      className={[
-        styles.Button,
-        idxStyles[props.btnSize],
-        idxStyles[props.btnColor],
-        props.class
-      ].join(' ')}
+      className={classes.join(' ')}
       onClick={props.clicked}
       disabled={props.disabled}
     >

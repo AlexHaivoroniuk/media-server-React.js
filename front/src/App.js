@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import Toolbar from './components/Toolbar/Toolbar';
 import MoviesContainer from './containers/Movies/MoviesContainer';
 import SingleMovie from './containers/SingleMovie/SingleMovie';
 import ContentContainer from './containers/Content/ContentContainer';
 import SideNav from './components/SideNav/SideNav';
+import ErrorBoundary from './components/utils/ErrorBoundary';
 
 class App extends Component {
   constructor(props) {
@@ -27,13 +28,15 @@ class App extends Component {
       <Fragment>
         <Toolbar toggle={this.toggleNav} />
         <SideNav width={this.state.style} />
-        <ContentContainer>
-          <Route exact path="/" component={MoviesContainer} />
-          <Route path="/:id" component={SingleMovie} />
-        </ContentContainer>
+        <ErrorBoundary>
+          <ContentContainer>
+            <Route exact path="/" component={MoviesContainer} />
+            <Route path="/:id" component={SingleMovie} />
+          </ContentContainer>
+        </ErrorBoundary>
       </Fragment>
     );
   }
 }
 
-export default App;
+export default withRouter(App);
