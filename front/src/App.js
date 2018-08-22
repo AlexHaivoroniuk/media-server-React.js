@@ -28,8 +28,10 @@ class App extends Component {
         <Toolbar toggle={this.toggleNav} />
         <SideNav width={this.state.style} />
         <ContentContainer>
-          <Route exact path="/" component={MoviesContainer} />
-          <Route path="/:id" component={SingleMovie} />
+          <React.Fragment>
+            <Route exact path="/" component={MoviesContainer} />
+            <Route path="/:id" component={SingleMovie} />
+          </React.Fragment>
         </ContentContainer>
       </Fragment>
     );

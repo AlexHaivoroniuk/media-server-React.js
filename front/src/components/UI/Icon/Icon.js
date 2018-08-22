@@ -1,5 +1,6 @@
 import React from 'react';
 import idxStyles from './../../../index.scss';
+import PropTypes from 'prop-types';
 
 const Icon = props => {
   return (
@@ -14,3 +15,8 @@ const Icon = props => {
 };
 
 export default Icon;
+
+Icon.porpTypes = {
+  btnSize: PropTypes.string,
+  btnColor: PropTypes.string
+};

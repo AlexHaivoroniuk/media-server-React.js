@@ -28,7 +28,6 @@ export const fetchMovies = data => (dispatch, getState) => {
     .then(res => res.data)
     .then(data => {
       dispatch(fetchMovieSuccess(data));
-      console.log('movies', data);
       return null;
     })
     .catch(err => dispatch(fetchMovieFailure(err.message, err)));
