@@ -6,8 +6,18 @@ import Controls from './../../components/Controls/Controls';
 import Spinner from './../../components/UI/Spinner/Spinner';
 import { connect } from 'react-redux';
 import { fetchMovies } from './../../store/actions/movies';
+import PropTypes from 'prop-types';
+import { MovieTemplate } from './../../MovieTemplate/movieTemplate';
 
 class MoviesContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { modal: false };
+  }
+
+  tglModal = () => {
+    this.setState((prevState, props) => ({ modal: !prevState.modal }));
+  };
   componentDidMount = () => {
     this.props.fetch();
   };
@@ -51,3 +61,7 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(MoviesContainer);
+
+MoviesContainer.propTypes = {
+  movies: PropTypes.arrayOf(MovieTemplate)
+};

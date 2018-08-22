@@ -1,41 +1,42 @@
 import React, { Component } from 'react';
 import Movie from './../../components/UI/Movie/Movie';
 import Spinner from './../../components/UI/Spinner/Spinner';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { fetchMovie } from './../../store/actions/currentMovie';
+import { MovieTemplate } from '../../MovieTemplate/movieTemplate';
 
 class SingleMovie extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      movie: []
-    };
-  }
-  fetchMovies() {
-    axios
-      .get(`http://localhost:4000/movies/${this.props.match.params.id}`)
-      .then(res => {
-        this.setState(
-          {
-            movie: res.data
-          },
-          () => {}
-        );
-      })
-      .catch(err => console.error(err));
-  }
-
   componentDidMount() {
-    this.fetchMovies();
+    this.props.fetch(this.props.match.params.id);
   }
 
   render() {
     let movie = <Spinner />;
-    if (this.state.movie) {
-      movie = <Movie movie={this.state.movie} />;
-    }
 
+    if (!this.props.movie) {
+      movie = <Spinner />;
+    } else {
+      movie = <Movie movie={this.props.movie} />;
+    }
     return movie;
   }
 }
 
-export default SingleMovie;
+const mapStateToProps = state => ({
+  movie: state.currentMovie.movie
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetch: id => {
+    dispatch(fetchMovie(id));
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SingleMovie);
+
+SingleMovie.propTypes = {
+  movie: MovieTemplate
+};

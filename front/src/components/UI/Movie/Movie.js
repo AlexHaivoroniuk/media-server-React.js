@@ -3,9 +3,9 @@ import styles from './Movie.scss';
 import { Link } from 'react-router-dom';
 import Button from './../Button/Button';
 import Icon from './../Icon/Icon';
+import { MovieTemplate } from './../../../MovieTemplate/movieTemplate';
 
 const Movie = props => {
-  console.log(props);
   return (
     <div className={styles.MovieContainer}>
       <div className={styles.BackLink}>
@@ -17,16 +17,16 @@ const Movie = props => {
       </div>
       <div className={styles.Movie}>
         <div className={styles.EditIcon}>
-          <button>
-            <i className="fas fa-edit" />
-          </button>
+          <Button>
+            <Icon iconSize="md">fas fa-edit</Icon>
+          </Button>
         </div>
         <div className={styles.LeftSide}>
           <div className={styles.Poster}>
             <img src={props.movie.Poster} alt="" />
           </div>
           <div className={styles.WatchButton}>
-            <button>Watch</button>
+            <Button>Watch</Button>
           </div>
         </div>
         <div className={styles.AllInformation}>
@@ -144,3 +144,7 @@ const Movie = props => {
 };
 
 export default Movie;
+
+Movie.propTypes = {
+  movie: MovieTemplate
+};
