@@ -1,6 +1,6 @@
 const Movie = require("../models/Movie");
 const { URL } = require('url');
-const logger = require('./../../config/winston');
+const logger = require('../../config/winston/winston');
 const testFolder = new URL('file:///home/ohaivoroniuk/Movies');
 const fs = require("fs");
 const axios = require("axios");
@@ -43,12 +43,12 @@ module.exports = function(req, res, next) {
                 }&y=${newMovie.year}`
               )
               .then(res => {
-                logger.info({ message: 'Movie fetch was successful', label: scriptName})
+                logger.info({ message: 'INFO Movie fetch was successful', label: scriptName, line: __line})
                 return new Movie(res.data)
                   .save()
-                  .then(data => { logger.info({ message:'Movie fetch was successful', label: scriptName}); return data})
+                  .then(data => { /*logger.info({ message:'Movie fetch was successful', label: scriptName});*/ return data})
                   .catch(err => {
-                    logger.warning({ message:`Movie save failed with error: ${err.message}`,label: scriptName});
+                    logger.warn({ message:`WARN Movie save failed with error: ${err.message}`,label: scriptName, line: __line});
                     res.status(500).send({
                       message:
                         err.message ||
@@ -56,7 +56,7 @@ module.exports = function(req, res, next) {
                     });
                   });
               }).catch(err => {
-                logger.warn({ message: `Movie fetch failed with error: ${err.message}`, label: scriptName});
+                logger.warn({ message: `WARN Movie fetch failed with error: ${err.message}`, label: scriptName, line: __line});
               })
               ;
           }
@@ -65,11 +65,12 @@ module.exports = function(req, res, next) {
           res.json(data);
         });
       } else {
-        logger.info({ message: 'All up to date', label: scriptName})
+        logger.info({ message: 'INFO All up to date', label: scriptName,  line: __line})
+        logger.front_info({ message: 'FRONT All movies are up to date ', label: scriptName,  line: __line});
       }
     })
     .catch(err => {
-      logger.warn({ message: `Movie retrieval from database failed with error: ${err.message}`, label: scriptName})
+      logger.warn({ message: `WARN Movie retrieval from database failed with error: ${err.message}`, label: scriptName, line: __line})
       res.status(500).send({
         message: err.message || "Some error occurred while retrieving movies."
       });

@@ -44,6 +44,29 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+  <script>
+    let eventSource = new EventSource('http://localhost:4000/notif_stream')
+
+    eventSource.onopen = function (e) {
+      console.log("SSE opened");
+    }
+    eventSource.onerror = function (e) {
+      if (this.readyState == EventSource.CONNECTING) {
+        console.log("Connection is lost, reconecting...");
+      } else {
+        console.log("Error, state: " + this.readyState);
+      }
+    }
+    eventSource.onmessage = function (e) {
+      if (e.lastEventId === '-1') {
+        // This is the end of the stream
+        eventSource.close();
+      }
+      // console.log("message OBJECT:", e);
+      // console.log("PARSED DATA:", JSON.parse(e.data));
+      console.log("Data received: " + e.data);
+    };
+  </script>
 </body>
 
 </html>

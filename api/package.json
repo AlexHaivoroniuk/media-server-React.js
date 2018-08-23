@@ -14,7 +14,8 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "mongoose": "^5.2.6",
-    "winston": "^3.0.0"
+    "winston": "^3.0.0",
+    "winston-transport": "^4.2.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.3"

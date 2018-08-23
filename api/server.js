@@ -2,13 +2,22 @@ const express       = require('express');
 const mongoose      = require('mongoose');
 const bodyParser    = require('body-parser');
 const PopulateDb    = require('./app/middleware/PopulateDbWithMovie');
+const sseMW    = require('./app/middleware/sse');
 const {url, port}   = require('./config/config');
-const winston       = require('./config/winston');
 const app           = express();
+
+const eventBus = require('./app/utils/EventBus');
+require('./app/utils/AddNewGlobals');
+
+const path = require('path');
+const scriptName = path.basename(__filename);
  
+const sseClients = new sseMW.Clients();
+
 mongoose.Promise = Promise;
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
+app.use(sseMW.sseMiddleware);
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -25,11 +34,17 @@ const db = mongoose.connect(url, { useNewUrlParser: true })
                         process.exit(1);
                     })
 app.use('/movies', PopulateDb)
-app.get('/aaa', function(req, res) {
-    res.send(new Error("GOtch error"));
-    res.end();
-})
+let conn = null;
+app.get('/notif_stream', function(req, res) {
+    sseClients.add(res.sseConnection);
+    res.sseConnection.setup();
+    conn = res.sseConnection;
+    eventBus.on('message', function(data) {
+        res.sseConnection.send(data); 
+    });
+
+});
 require('./app/routes')(app);
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`Server Live on: ${port}`);
-})
+});
