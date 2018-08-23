@@ -1,0 +1,70 @@
+{ 
+  "movies": {
+    "moviesDefault": [
+      {
+        "_id": "5b7582126a59583da21ae120",
+        "Title": "Gladiator",
+        "Year": "2000",
+        "Genre": "Action, Adventure, Drama",
+        "Country": "USA, UK"
+      },
+      {
+        "_id": "5b7d4ec5ee778e259f3d2d6c",
+        "Title": "The Silence of the Lambs",
+        "Year": "1991",
+        "Genre": "Crime, Drama, Thriller",
+        "Country": "USA"
+      },
+      {
+        "_id": "5b7d51e5ec97a229595b464b",
+        "Title": "Basic Instinct",
+        "Year": "1992",
+        "Genre": "Drama, Mystery, Thriller",
+        "Country": "France, USA, UK"
+      },
+      {
+        "_id": "5b7d51e5ec97a229595b464f",
+        "Title": "Take the Lead",
+        "Year": "2006",
+        "Genre": "Drama, Music",
+        "Country": "USA"
+      },
+      {
+        "_id": "5b7d5357b38d712add14c71d",
+        "Title": "The Lincoln Lawyer",
+        "Year": "2011",
+        "Genre": "Crime, Drama, Thriller",
+        "Country": "USA"
+      },
+      {
+        "_id": "5b7d5357b38d712add14c721",
+        "Title": "The Insider",
+        "Year": "1999",
+        "Genre": "Biography, Drama, Thriller",
+        "Country": "USA"
+      },
+      {
+        "_id": "5b7d54b0025e5d2ca4eab17d",
+        "Title": "The Whole Nine Yards",
+        "Year": "2000",
+        "Genre": "Comedy, Crime",
+        "Country": "USA"
+      },
+      {
+        "_id": "5b7d54b0025e5d2ca4eab181",
+        "Title": "Groundhog Day",
+        "Year": "1993",
+        "Genre": "Comedy, Fantasy, Romance",
+        "Country": "USA"
+      }
+    ]
+  },
+  "filters": {
+    "genre": [],
+    "country": [],
+    "year": {
+      "minY": 1900,
+      "maxY": 2018
+    }
+  }
+}
