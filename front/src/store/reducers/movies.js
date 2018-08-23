@@ -19,7 +19,7 @@ const filterBy = (curMovies, field, filters) => {
       if (elem.Type === 'series') {
         Year = elem.Year.slice(0, 4);
       }
-      if (Year < filters.year.maxY && Year > filters.year.minY) return true;
+      if (Year <= filters.year.maxY && Year >= filters.year.minY) return true;
       else return false;
     });
   }
