@@ -20,7 +20,7 @@ describe('<Movie />', () => {
     imdbRating: '7.7',
     Production: 'Eros donec',
     Released: '1356',
-    _id: 321
+    _id: '321'
   };
 
   it('should be defined', () => {
@@ -64,13 +64,15 @@ describe('<Movie />', () => {
   it('should have edit icon', () => {
     const wrapper = shallow(<Movie movie={stubMovie} />);
     expect(wrapper.find('.Movie').find('.EditIcon').length).toEqual(1);
-    expect(wrapper.find('.EditIcon').find('button').length).toEqual(1);
+    expect(wrapper.find('.EditIcon').find('Button').length).toEqual(1);
     expect(
       wrapper
+        .find('.MovieContainer')
+        .find('.Movie')
         .find('.EditIcon')
-        .find('button')
-        .find('i')
-        .prop('className')
+        .find('Button')
+        .find('Icon')
+        .prop('children')
     ).toEqual('fas fa-edit');
   });
 
@@ -86,12 +88,12 @@ describe('<Movie />', () => {
         .prop('src')
     ).toEqual('poster.img');
     expect(ls.find('.WatchButton').length).toEqual(1);
-    expect(ls.find('.WatchButton').find('button').length).toEqual(1);
+    expect(ls.find('.WatchButton').find('Button').length).toEqual(1);
     expect(
       ls
         .find('.WatchButton')
-        .find('button')
-        .text()
+        .find('Button')
+        .prop('children')
     ).toEqual('Watch');
   });
 

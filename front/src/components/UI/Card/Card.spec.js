@@ -13,7 +13,7 @@ describe('<Card />', () => {
     Director: 'Eget Nullam',
     Country: 'Quam',
     Actors: 'Viverra, Ipsum, Nunc Aliquet',
-    _id: 321
+    _id: '321'
   };
   it('should be defined', () => {
     expect(Card).toBeDefined();

@@ -10,12 +10,9 @@ const sortAZ = (sortOrder, movies) => {
 };
 
 const filterBy = (curMovies, field, filters) => {
-  // console.log(field)
-  // console.log('curMovies', curMovies);
   if (field === 'year') {
     return curMovies.filter(elem => {
       let Year = elem.Year;
-      // console.log('year', Year)
       if (elem.Type === 'series') {
         Year = elem.Year.slice(0, 4);
       }
@@ -44,19 +41,14 @@ const filterBy = (curMovies, field, filters) => {
 };
 
 const filterMovies = (state, action) => {
-  console.log(action.filters);
   const filterGenre = filterBy(
     state.moviesDefault.slice(),
     'genre',
     action.filters
   );
-  console.log('filterGenre :', filterGenre);
   const filterCountry = filterBy(filterGenre, 'country', action.filters);
-  console.log('filterCountry :', filterCountry);
   const filterYear = filterBy(filterCountry, 'year', action.filters);
-  console.log('filterYear :', filterYear);
   const filteredMovies = filterYear;
-  console.log(filteredMovies);
   return {
     ...state,
     movies: filteredMovies
