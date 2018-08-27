@@ -12,7 +12,7 @@ import {
 import { filterMovies } from './../../store/actions/movies';
 import throttle from 'lodash/throttle';
 
-const Filters = props => {
+export const Filters = props => {
   let form = null; // form reference
 
   const lists = {
@@ -67,7 +67,7 @@ const Filters = props => {
           </fieldset>
           <fieldset>
             <legend>Country</legend>
-            <div className={styles.Genre}>
+            <div className={styles.Country}>
               {lists.countryList.map((el, idx) => (
                 <Input
                   type="checkbox"
