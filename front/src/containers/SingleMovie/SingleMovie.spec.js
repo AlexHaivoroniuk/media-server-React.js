@@ -9,10 +9,13 @@ import SingleMovie from './SingleMovie';
 
 const mockStore = configureMockStore([thunk]);
 var mockAxios = new AxiosMockAdapter(axios);
-
+const movie = {
+  name: 'super movie'
+};
 const initialState = {
-  movies: [],
-  movieDefault: []
+  currentMovie: {
+    movie: movie
+  }
 };
 
 describe('<SingleMovie />', () => {
@@ -32,8 +35,8 @@ describe('<SingleMovie />', () => {
     let store = mockStore(initialState);
     const match = { params: { id: 2 } };
     mockAxios.onGet('http://localhost:4000/movies/2').reply(200, { id: 2 });
-    //SingleMovie.prototype.fetchMovies = () => { return Promise.resolve({ id: 2 }) };
     const wrapper = shallow(<SingleMovie match={match} store={store} />, false);
-    expect(wrapper.props()).toEqual({ movie: [] });
+    expect(wrapper.props()).toHaveProperty('movie');
+    expect(wrapper.props().movie).toEqual(movie);
   });
 });
