@@ -19,24 +19,39 @@ const initialState = {
     toggleFilters: true
   }
 };
+const initialState2 = {
+  filters: {
+    toggleFilters: false
+  }
+};
 
 describe('<Filters />', () => {
-  let store, wrapper;
-
-  beforeEach(() => {
-    store = mockStore(initialState);
-    wrapper = mount(<FiltersContainer store={store} />);
-  });
-
   it('should be defined', () => {
     expect(Filters).toBeDefined();
   });
 
   it('should render correctly', () => {
+    const store = mockStore(initialState);
+    const wrapper = mount(<FiltersContainer store={store} />);
     expect(wrapper).toMatchSnapshot();
   });
 
+  describe('should not display', () => {
+    it('when toggleFilters is false', () => {
+      const store = mockStore(initialState2);
+      const wrapper = mount(<FiltersContainer store={store} />);
+      expect(wrapper.find('.Filters').length).toEqual(0);
+    });
+  });
+
   describe('should have correct structure', () => {
+    let store, wrapper;
+
+    beforeEach(() => {
+      store = mockStore(initialState);
+      wrapper = mount(<FiltersContainer store={store} />);
+    });
+
     it('form with fieldsets and buttons', () => {
       expect(wrapper.find('.Filters').length).toEqual(1);
       expect(wrapper.find('.Filters').find('form').length).toEqual(1);
