@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import styles from './Input.scss';
+import PropTypes from 'prop-types';
 
 const Input = props => {
   let inputElement = null;
@@ -101,3 +102,14 @@ const Input = props => {
 };
 
 export default Input;
+
+Input.propTypes = {
+  type: PropTypes.string.isRequired,
+  value: PropTypes.any.isRequired,
+  placeholder: PropTypes.string,
+  changed: PropTypes.func.isRequired,
+  min: PropTypes.string,
+  max: PropTypes.string,
+  label: PropTypes.string,
+  elConfig: PropTypes.object
+};

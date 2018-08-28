@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styles from './ContentContainer.scss';
 import Button from './../../components/UI/Button/Button';
 import Icon from './../../components/UI/Icon/Icon';
+import PropTypes from 'prop-types';
 
 export default class ContentContainer extends Component {
   goToTop = () => {
@@ -19,3 +20,7 @@ export default class ContentContainer extends Component {
     );
   }
 }
+
+ContentContainer.propTypes = {
+  children: PropTypes.element.isRequired
+};

@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Card.scss';
 import { Link } from 'react-router-dom';
 // import idxStyles from './../../index.scss'
+import { MovieTemplate } from './../../../MovieTemplate/movieTemplate';
 
 const Card = props => {
   return (
@@ -49,3 +50,7 @@ const Card = props => {
 };
 
 export default Card;
+
+Card.propTypes = {
+  movie: MovieTemplate
+};

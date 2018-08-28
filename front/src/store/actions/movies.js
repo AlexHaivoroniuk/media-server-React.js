@@ -22,12 +22,11 @@ export const filterMovies = data => (dispatch, getState) => {
 export const fetchMovies = data => (dispatch, getState) => {
   dispatch(fetchMovieStart());
 
-  axios
+  return axios
     .get('http://localhost:4000/movies')
     .then(res => res.data)
     .then(data => {
       dispatch(fetchMovieSuccess(data));
-      console.log('movies', data);
       return null;
     })
     .catch(err => dispatch(fetchMovieFailure(err.message, err)));

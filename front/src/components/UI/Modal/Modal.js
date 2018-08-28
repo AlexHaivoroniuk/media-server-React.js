@@ -1,9 +1,11 @@
 import React from 'react';
 import Icon from './../Icon/Icon';
 import styles from './Modal.scss';
+import PropTypes from 'prop-types';
 
 const Modal = props => {
   let modal = null;
+  console.log(props);
   if (props.show) {
     modal = (
       <div
@@ -35,3 +37,9 @@ const Modal = props => {
 };
 
 export default Modal;
+
+Modal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  close: PropTypes.func.isRequired,
+  children: PropTypes.arrayOf(PropTypes.element.isRequired)
+};
