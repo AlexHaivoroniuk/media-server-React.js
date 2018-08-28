@@ -5,8 +5,11 @@ import MoviesContainer from './containers/Movies/MoviesContainer';
 import SingleMovie from './containers/SingleMovie/SingleMovie';
 import ContentContainer from './containers/Content/ContentContainer';
 import SideNav from './components/SideNav/SideNav';
+import { connect } from 'react-redux';
 import ErrorBoundary from './components/utils/ErrorBoundary';
-
+import { notifStreamConnect, removeNotifById } from './store/actions/notify';
+import SnackBar from './components/UI/SnackBar/SnackBar';
+import styles from './App.scss';
 class App extends Component {
   constructor(props) {
     super(props);
@@ -17,6 +20,10 @@ class App extends Component {
     };
   }
 
+  componentDidMount = () => {
+    this.props.notifyConnect();
+  };
+
   toggleNav = () => {
     this.setState((prevState, props) => ({
       style: { width: prevState.style.width === '0px' ? '250px' : '0px' }
@@ -24,6 +31,23 @@ class App extends Component {
   };
 
   render() {
+    let notifications = <div />;
+    if (this.props.notif.length > 0) {
+      notifications = (
+        <div className={styles.NotifWrapper}>
+          {this.props.notif.map((item, idx) => (
+            <SnackBar
+              key={idx}
+              message={`${item.message} - ${item.id.slice(0, 3)}`}
+              type={item.type}
+              clicked={() => {
+                this.props.removeNotif(item.id);
+              }}
+            />
+          ))}
+        </div>
+      );
+    }
     return (
       <Fragment>
         <Toolbar toggle={this.toggleNav} />
@@ -34,9 +58,28 @@ class App extends Component {
             <Route path="/:id" component={SingleMovie} />
           </ContentContainer>
         </ErrorBoundary>
+        {notifications}
       </Fragment>
     );
   }
 }
 
-export default withRouter(App);
+const mapStateToProps = state => ({
+  notif: state.notify
+});
+
+const mapDispatchToProps = dispatch => ({
+  notifyConnect: () => {
+    dispatch(notifStreamConnect());
+  },
+  removeNotif: id => {
+    dispatch(removeNotifById(id));
+  }
+});
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App)
+);

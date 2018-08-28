@@ -9,11 +9,11 @@ class MoviesController {
     findAll(req, res) {
         Movie.find()
             .then(movie => {
-                logger.front_info({ message: 'FRONT Got All Movies', label: scriptName, line: __line})
+                logger.front_info({ message: 'FRONT Got All Movies', type: 'info', label: scriptName, line: __line})
                 logger.info({ message: 'INFO Movies were found', label: scriptName,  line: __line})
                 res.json(movie);
             }).catch(err => {
-                logger.front_info({ message: 'FRONT DId not Gotcha yall', label: scriptName,  line: __line})
+                logger.front_info({ message: 'FRONT DId not Gotcha yall', type: 'error', label: scriptName,  line: __line})
                 logger.warn({ message: 'WARN Movies were not found', label: scriptName,  line: __line})
                 res.status(500).send({
                     message: err.message || "Some error occurred while retrieving movies."
@@ -23,7 +23,7 @@ class MoviesController {
     findOne(req, res) {
         Movie.findById(req.params.id)
             .then(movie => {  
-                logger.front_info({ message: 'FRONT Got One Movie', label: scriptName,  line: __line})
+                logger.front_info({ message: 'FRONT Got One Movie', type: 'info', label: scriptName,  line: __line})
                 logger.info({ message: ' INFO Movie was found', label: scriptName,  line: __line})
                 if(!movie) {
                     return res.status(404).send({
@@ -33,7 +33,7 @@ class MoviesController {
                 res.send(movie)
             })
             .catch(err => {
-                logger.front_info({ message: 'FRONT Not found', label: scriptName, line: __line})
+                logger.front_info({ message: 'FRONT Not found', type: 'error', label: scriptName, line: __line})
                 if (err.kind === 'ObjectId') {
                     logger.warn({ message: `Movie not found with id : ${req.params.id}`, label: scriptName, line: __line})
                     return res.status(404).send({

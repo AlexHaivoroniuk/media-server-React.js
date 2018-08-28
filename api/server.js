@@ -8,9 +8,6 @@ const app           = express();
 
 const eventBus = require('./app/utils/EventBus');
 require('./app/utils/AddNewGlobals');
-
-const path = require('path');
-const scriptName = path.basename(__filename);
  
 const sseClients = new sseMW.Clients();
 
@@ -28,21 +25,17 @@ const db = mongoose.connect(url, { useNewUrlParser: true })
                     .then( () => { 
                         console.log('MongoDB Connected');
                     })
-                    .catch((err) => {
-                        winston.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)    
+                    .catch((err) => { 
                         console.error('Failed to open Mongodb Connection: ', err.message);
                         process.exit(1);
                     })
 app.use('/movies', PopulateDb)
-let conn = null;
 app.get('/notif_stream', function(req, res) {
     sseClients.add(res.sseConnection);
     res.sseConnection.setup();
-    conn = res.sseConnection;
     eventBus.on('message', function(data) {
         res.sseConnection.send(data); 
     });
-
 });
 require('./app/routes')(app);
 const server = app.listen(port, () => {

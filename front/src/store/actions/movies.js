@@ -1,9 +1,8 @@
 import actions from '../actionsTypes';
 import axios from 'axios';
 
-const fetchMovieStart = data => ({
-  type: actions.FETCH_MOVIES_START,
-  data
+const fetchMovieStart = () => ({
+  type: actions.FETCH_MOVIES_START
 });
 const fetchMovieSuccess = movies => ({
   type: actions.FETCH_MOVIES_SUCCESS,

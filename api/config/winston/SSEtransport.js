@@ -1,7 +1,5 @@
 const Transport = require('winston-transport');
-const eventBus  = require('./../../app/utils/EventBus')
-// const conn = require('./../../server');
-
+const eventBus  = require('./../../app/utils/EventBus');
 module.exports = class SSETransport extends Transport {
     constructor(opts) {
         super(opts);
@@ -10,7 +8,6 @@ module.exports = class SSETransport extends Transport {
     log(info, callback) {
         setImmediate(() => {
             eventBus.emit('message', info)
-            // console.log(info)
           });
         callback();
     }

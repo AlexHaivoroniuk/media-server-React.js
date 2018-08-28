@@ -66,7 +66,7 @@ module.exports = function(req, res, next) {
         });
       } else {
         logger.info({ message: 'INFO All up to date', label: scriptName,  line: __line})
-        logger.front_info({ message: 'FRONT All movies are up to date ', label: scriptName,  line: __line});
+        logger.front_info({ message: 'FRONT All movies are up to date ', type: 'info', label: scriptName,  line: __line});
       }
     })
     .catch(err => {
