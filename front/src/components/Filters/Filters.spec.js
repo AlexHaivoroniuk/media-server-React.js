@@ -6,11 +6,13 @@ import thunk from 'redux-thunk';
 import FiltersContainer, { Filters } from './Filters';
 
 const mockStore = configureMockStore([thunk]);
-const initialState = {
+const moviesState = {
   movies: {
     movies: [],
     movieDefault: []
-  },
+  }
+};
+const filtersStateOn = {
   filters: {
     year: {
       minY: 1976,
@@ -19,9 +21,20 @@ const initialState = {
     toggleFilters: true
   }
 };
-const initialState2 = {
+const filtersStateOff = {
   filters: {
+    year: {
+      minY: 1976,
+      maxY: 2018
+    },
     toggleFilters: false
+  }
+};
+
+const filterDataState = {
+  filterData: {
+    genres: ['a', 'b', 'c'],
+    countries: ['z', 'x']
   }
 };
 
@@ -31,14 +44,21 @@ describe('<Filters />', () => {
   });
 
   it('should render correctly', () => {
-    const store = mockStore(initialState);
+    const store = mockStore({
+      ...moviesState,
+      ...filtersStateOn,
+      ...filterDataState
+    });
     const wrapper = mount(<FiltersContainer store={store} />);
     expect(wrapper).toMatchSnapshot();
   });
 
   describe('should not display', () => {
     it('when toggleFilters is false', () => {
-      const store = mockStore(initialState2);
+      const store = mockStore({
+        ...filtersStateOff,
+        ...filterDataState
+      });
       const wrapper = mount(<FiltersContainer store={store} />);
       expect(wrapper.find('.Filters').length).toEqual(0);
     });
@@ -48,7 +68,11 @@ describe('<Filters />', () => {
     let store, wrapper;
 
     beforeEach(() => {
-      store = mockStore(initialState);
+      store = mockStore({
+        ...moviesState,
+        ...filtersStateOn,
+        ...filterDataState
+      });
       wrapper = mount(<FiltersContainer store={store} />);
     });
 
@@ -66,7 +90,7 @@ describe('<Filters />', () => {
         .at(0);
       expect(fs.find('legend').text()).toEqual('Genre');
       expect(fs.find('.Genre').length).toEqual(1);
-      expect(fs.find('.Genre').find('Input').length).toEqual(10);
+      expect(fs.find('.Genre').find('Input').length).toEqual(3);
     });
 
     it('fieldset with countries', () => {
@@ -76,7 +100,7 @@ describe('<Filters />', () => {
         .at(1);
       expect(fs.find('legend').text()).toEqual('Country');
       expect(fs.find('.Country').length).toEqual(1);
-      expect(fs.find('.Country').find('Input').length).toEqual(6);
+      expect(fs.find('.Country').find('Input').length).toEqual(2);
     });
 
     it('fieldset with year', () => {
@@ -108,6 +132,7 @@ describe('<Filters />', () => {
       bt.simulate('click');
       let action = store.getActions();
       expect(action).toEqual([
+        { type: 'FETCH_FILTER_DATA_START' },
         {
           filters: { toggleFilters: true, year: { maxY: 2018, minY: 1976 } },
           type: 'FILTER_MOVIES'
@@ -124,6 +149,7 @@ describe('<Filters />', () => {
       bt.simulate('click');
       let action = store.getActions();
       expect(action).toEqual([
+        { type: 'FETCH_FILTER_DATA_START' },
         { type: 'CLEAR_FILTERS' },
         { type: 'RESET_MOVIES' }
       ]);
@@ -143,6 +169,7 @@ describe('<Filters />', () => {
       });
       let action = store.getActions();
       expect(action).toEqual([
+        { type: 'FETCH_FILTER_DATA_START' },
         { filter: 'genre', type: 'HANDLE_FILTERS_INPUT', value: 'GenreName' }
       ]);
     });
@@ -161,6 +188,7 @@ describe('<Filters />', () => {
       });
       let action = store.getActions();
       expect(action).toEqual([
+        { type: 'FETCH_FILTER_DATA_START' },
         {
           filter: 'country',
           type: 'HANDLE_FILTERS_INPUT',
@@ -184,6 +212,7 @@ describe('<Filters />', () => {
 
       let action = store.getActions();
       expect(action).toEqual([
+        { type: 'FETCH_FILTER_DATA_START' },
         {
           type: 'HANDLE_RANGE_INPUT',
           val: '1951',
@@ -207,6 +236,7 @@ describe('<Filters />', () => {
 
       let action = store.getActions();
       expect(action).toEqual([
+        { type: 'FETCH_FILTER_DATA_START' },
         {
           type: 'HANDLE_RANGE_INPUT',
           val: '1938',
@@ -230,6 +260,7 @@ describe('<Filters />', () => {
 
       let action = store.getActions();
       expect(action).toEqual([
+        { type: 'FETCH_FILTER_DATA_START' },
         {
           type: 'HANDLE_RANGE_INPUT',
           val: '1996',
@@ -253,6 +284,7 @@ describe('<Filters />', () => {
 
       let action = store.getActions();
       expect(action).toEqual([
+        { type: 'FETCH_FILTER_DATA_START' },
         {
           type: 'HANDLE_RANGE_INPUT',
           val: '1998',

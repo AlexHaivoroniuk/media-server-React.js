@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styles from './Filters.scss';
 import Input from './../UI/Input/Input';
 import Button from './../UI/Button/Button';
@@ -9,145 +9,150 @@ import {
   handleFiltersInput,
   handleRangeInput
 } from './../../store/actions/filters';
+import { fetchFilterData } from './../../store/actions/filterData';
 import { filterMovies } from './../../store/actions/movies';
 import throttle from 'lodash/throttle';
 
-export const Filters = props => {
-  let form = null; // form reference
-
-  const lists = {
-    genre: [
-      'Action',
-      'Adventure',
-      'Fantasy',
-      'Drama',
-      'Romance',
-      'Family',
-      'Crime',
-      'Sci-Fi',
-      'Horror',
-      'Thriller'
-    ],
-    countryList: ['USA', 'UK', 'France', 'Canada', 'Australia', 'New Zealand']
-  };
-
-  const resetFilters = e => {
-    e.preventDefault();
-    props.clear();
-    form.reset();
-  };
-
-  const throttledRange = throttle((val, year) => {
-    props.handleRange(val, year);
-  }, 1000);
-
-  let filters = null;
-  if (props.display) {
-    filters = (
-      <div className={styles.Filters}>
-        <form
-          action=""
-          ref={node => {
-            form = node;
-          }}
-        >
-          <fieldset>
-            <legend>Genre</legend>
-            <div className={styles.Genre}>
-              {lists.genre.map((el, idx) => (
-                <Input
-                  type="checkbox"
-                  key={idx}
-                  label={el}
-                  value={el}
-                  changed={e => props.handleInput(e.target.value, 'genre')}
-                />
-              ))}
-            </div>
-          </fieldset>
-          <fieldset>
-            <legend>Country</legend>
-            <div className={styles.Country}>
-              {lists.countryList.map((el, idx) => (
-                <Input
-                  type="checkbox"
-                  key={idx}
-                  label={el}
-                  value={el}
-                  changed={e => props.handleInput(e.target.value, 'country')}
-                />
-              ))}
-            </div>
-          </fieldset>
-          <fieldset>
-            <legend>Year</legend>
-            <div className={styles.Range}>
-              <Input
-                type="range"
-                label="Min year"
-                min="1900"
-                max="2018"
-                value={props.year.minY}
-                changed={e => throttledRange(e.target.value, 'minY')}
-              />
-              <Input
-                type="text"
-                value={props.year.minY}
-                changed={e => throttledRange(e.target.value, 'minY')}
-              />
-              <Input
-                type="range"
-                label="Max year"
-                min="1900"
-                max="2018"
-                value={props.year.maxY}
-                changed={e => throttledRange(e.target.value, 'maxY')}
-              />
-              <Input
-                type="text"
-                value={props.year.maxY}
-                changed={e => throttledRange(e.target.value, 'maxY')}
-              />
-            </div>
-          </fieldset>
-          <Button
-            clicked={e => {
-              e.preventDefault();
-              props.filter();
-            }}
-            btnSize="md"
-          >
-            Filter
-            <Icon>fa fa-filter</Icon>
-          </Button>
-          <Button
-            clicked={e => {
-              resetFilters(e);
-            }}
-            btnSize="md"
-            btnColor="danger"
-          >
-            Clear
-            <Icon>fa fa-trash</Icon>
-          </Button>
-        </form>
-      </div>
-    );
+export class Filters extends Component {
+  constructor(props) {
+    super(props);
+    this.form = null;
   }
 
-  return filters;
-};
+  componentDidMount = () => {
+    this.props.fetchFilterData();
+  };
+
+  resetFilters = e => {
+    e.preventDefault();
+    this.props.clear();
+    this.form.reset();
+  };
+
+  throttledRange = throttle((val, year) => {
+    this.props.handleRange(val, year);
+  }, 1000);
+
+  render = () => {
+    let filters = null;
+    if (this.props.display) {
+      filters = (
+        <div className={styles.Filters}>
+          <form
+            action=""
+            ref={node => {
+              this.form = node;
+            }}
+          >
+            <fieldset>
+              <legend>Genre</legend>
+              <div className={styles.Genre}>
+                {this.props.list.genres.map((el, idx) => (
+                  <Input
+                    type="checkbox"
+                    key={idx}
+                    label={el}
+                    value={el}
+                    changed={e =>
+                      this.props.handleInput(e.target.value, 'genre')
+                    }
+                  />
+                ))}
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Country</legend>
+              <div className={styles.Country}>
+                {this.props.list.countries.map((el, idx) => (
+                  <Input
+                    type="checkbox"
+                    key={idx}
+                    label={el}
+                    value={el}
+                    changed={e =>
+                      this.props.handleInput(e.target.value, 'country')
+                    }
+                  />
+                ))}
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Year</legend>
+              <div className={styles.Range}>
+                <Input
+                  type="range"
+                  label="Min year"
+                  min="1900"
+                  max="2018"
+                  value={this.props.year.minY}
+                  changed={e => this.throttledRange(e.target.value, 'minY')}
+                />
+                <Input
+                  type="text"
+                  value={this.props.year.minY}
+                  changed={e => this.throttledRange(e.target.value, 'minY')}
+                />
+                <Input
+                  type="range"
+                  label="Max year"
+                  min="1900"
+                  max="2018"
+                  value={this.props.year.maxY}
+                  changed={e => this.throttledRange(e.target.value, 'maxY')}
+                />
+                <Input
+                  type="text"
+                  value={this.props.year.maxY}
+                  changed={e => this.throttledRange(e.target.value, 'maxY')}
+                />
+              </div>
+            </fieldset>
+            <Button
+              clicked={e => {
+                e.preventDefault();
+                this.props.filter();
+              }}
+              btnSize="md"
+            >
+              Filter
+              <Icon>fa fa-filter</Icon>
+            </Button>
+            <Button
+              clicked={e => {
+                this.resetFilters(e);
+              }}
+              btnSize="md"
+              btnColor="danger"
+            >
+              Clear
+              <Icon>fa fa-trash</Icon>
+            </Button>
+          </form>
+        </div>
+      );
+    }
+
+    return filters;
+  };
+}
 
 const mapStateToProps = state => ({
   display: state.filters.toggleFilters,
   year: state.filters.year,
   genre: state.filters.genre,
-  country: state.filters.toggleFilters
+  country: state.filters.toggleFilters,
+  list: {
+    genres: state.filterData.genres,
+    countries: state.filterData.countries
+  }
 });
 
 const mapDispatchToProps = dispatch => ({
   clear: () => {
     dispatch(clearFilters());
+  },
+  fetchFilterData: () => {
+    dispatch(fetchFilterData());
   },
   filter: () => {
     dispatch(filterMovies());
