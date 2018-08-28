@@ -1,5 +1,5 @@
 const Movie = require('../models/Movie');
-const logger  = require('./../../config/winston');
+const logger  = require('../../config/winston/winston');
 const path = require('path');
 const scriptName = path.basename(__filename);
 class MoviesController {
@@ -9,10 +9,12 @@ class MoviesController {
     findAll(req, res) {
         Movie.find()
             .then(movie => {
-                logger.info({ message: 'Movies were found', label: scriptName})
+                logger.front_info({ message: 'FRONT Got All Movies', type: 'info', label: scriptName, line: __line})
+                logger.info({ message: 'INFO Movies were found', label: scriptName,  line: __line})
                 res.json(movie);
             }).catch(err => {
-                logger.warn({ message: 'Movies were not found', label: scriptName})
+                logger.front_info({ message: 'FRONT DId not Gotcha yall', type: 'error', label: scriptName,  line: __line})
+                logger.warn({ message: 'WARN Movies were not found', label: scriptName,  line: __line})
                 res.status(500).send({
                     message: err.message || "Some error occurred while retrieving movies."
                 });
@@ -21,7 +23,8 @@ class MoviesController {
     findOne(req, res) {
         Movie.findById(req.params.id)
             .then(movie => {  
-                logger.info({ message: 'Movie was found', label: scriptName})
+                logger.front_info({ message: 'FRONT Got One Movie', type: 'info', label: scriptName,  line: __line})
+                logger.info({ message: ' INFO Movie was found', label: scriptName,  line: __line})
                 if(!movie) {
                     return res.status(404).send({
                         message: "Movies not found with id " + req.params.id
@@ -29,14 +32,15 @@ class MoviesController {
                 }
                 res.send(movie)
             })
-            .catch(err => { 
+            .catch(err => {
+                logger.front_info({ message: 'FRONT Not found', type: 'error', label: scriptName, line: __line})
                 if (err.kind === 'ObjectId') {
-                    logger.warn({ message: `Movie not found with id : ${req.params.id}`, label: scriptName})
+                    logger.warn({ message: `Movie not found with id : ${req.params.id}`, label: scriptName, line: __line})
                     return res.status(404).send({
-                        message: "Movies not found with id" + req.params.id
+                        message: "WARN Movies not found with id" + req.params.id
                     });
                 }
-                logger.warn({ message: `Error retrieving note with id : ${req.params.id}`, label: scriptName})  
+                logger.warn({ message: `WARN Error retrieving note with id : ${req.params.id}`, label: scriptName, line: __line})  
                 return res.status(500).send({
                     message: "Error retrieving note with id " + req.params.id
                 })
@@ -52,7 +56,7 @@ class MoviesController {
             Year: req.body.year,
             })
             .then(movie => {
-                logger.info({ message: 'Movie update was successful', label: scriptName})
+                logger.info({ message: ' INFO Movie update was successful', label: scriptName, line: __line})
                 if(!movie) {
                     return res.status(404).send({
                         message: "Movie not found with id " + req.params.id
@@ -61,13 +65,13 @@ class MoviesController {
                 res.json(movie);
             }).catch(err => {
                 if(err.kind === 'ObjectId') {
-                    logger.warn({ message: `Movie not found with id : ${req.params.id}`, label: scriptName})  
+                    logger.warn({ message: `WARN Movie not found with id : ${req.params.id}`, label: scriptName,  line: __line})  
                     return res.status(404).send({
                         message: "Movie not found with id " + req.params.id
                     });                
                 }
 
-                logger.warn({ message: `Error updating movie with id : ${req.params.id}`, label: scriptName})  
+                logger.warn({ message: `WARN Error updating movie with id : ${req.params.id}`, label: scriptName, line: __line})  
                 return res.status(500).send({
                     message: "Error updating note with id " + req.params.id
                 });
@@ -76,7 +80,7 @@ class MoviesController {
     delete(req, res) {
         Movie.findByIdAndRemove(req.params.id)
         .then(movie => {
-            logger.info({ message: 'Movie deletion was successful', label: scriptName})
+            logger.info({ message: 'INFO Movie deletion was successful', label: scriptName})
             if(!movie) {
                 return res.status(404).send({
                     message: "Movie not found with id " + req.params.id
@@ -85,12 +89,12 @@ class MoviesController {
             res.send({message: "Movie deleted successfully!"});
         }).catch(err => {
             if(err.kind === 'ObjectId' || err.name === 'NotFound') {
-                logger.warn({ message: `Movie not found with id : ${req.params.id}`, label: scriptName})  
+                logger.warn({ message: `WARN Movie not found with id : ${req.params.id}`, label: scriptName, line: __line})  
                 return res.status(404).send({
                     message: "Movie not found with id " + req.params.id
                 });                
             }
-            logger.warn({ message: `Error updating movie with id : ${req.params.id}`, label: scriptName})  
+            logger.warn({ message: `WARN Error updating movie with id : ${req.params.id}`, label: scriptName, line: __line})  
             return res.status(500).send({
                 message: "Could not delete note with id " + req.params.id
             });
