@@ -1,5 +1,5 @@
 const Movie = require('../models/Movie');
-const logger  = require('../../config/winston');
+const logger  = require('../../config/winston/winston');
 const path = require('path');
 const scriptName = path.basename(__filename);
 const uniq = require('lodash/uniq');
