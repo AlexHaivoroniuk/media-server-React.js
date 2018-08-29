@@ -22,5 +22,5 @@ export default class ContentContainer extends Component {
 }
 
 ContentContainer.propTypes = {
-  children: PropTypes.element.isRequired
+  children: PropTypes.any
 };

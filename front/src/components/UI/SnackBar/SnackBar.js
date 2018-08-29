@@ -6,6 +6,10 @@ import Icon from './../Icon/Icon';
 const SnackBar = props => {
   let classes = [styles.SnackBar, styles.SnackBar__Show];
 
+  // setTimeout(() => {
+  //   props.clicked();
+  // }, 8000);
+
   const onClose = () => {
     props.clicked();
   };

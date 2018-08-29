@@ -3,30 +3,43 @@ import { shallow } from 'enzyme';
 
 import Input from './Input';
 
+const mockRequiredPropsInput = {
+  type: 'text',
+  value: '',
+  changed: jest.fn()
+};
+
 describe('<input />', () => {
   it('should be defined', () => {
     expect(Input).toBeDefined();
   });
 
   it('should render correctly', () => {
-    const wrapper = shallow(<Input />);
+    const wrapper = shallow(<Input {...mockRequiredPropsInput} />);
     expect(wrapper).toMatchSnapshot();
   });
 
   it('should have correct structure', () => {
-    const wrapper = shallow(<Input />);
+    const wrapper = shallow(<Input {...mockRequiredPropsInput} />);
     expect(wrapper.find('.Input').length).toEqual(1);
     expect(wrapper.find('.Input').find('label.Label').length).toEqual(1);
   });
 
   it('should have display label', () => {
-    const wrapper = shallow(<Input label="Malesuada" />);
+    const wrapper = shallow(
+      <Input
+        label="Malesuada"
+        type={mockRequiredPropsInput.type}
+        value={mockRequiredPropsInput.value}
+        changed={mockRequiredPropsInput.changed}
+      />
+    );
     expect(wrapper.find('.Input').text()).toEqual('Malesuada');
   });
 
   describe('default input type', () => {
     it('should have correct structure', () => {
-      const wrapper = shallow(<Input />);
+      const wrapper = shallow(<Input {...mockRequiredPropsInput} />);
       const ie = wrapper.find('.Input').find('.InputElement');
       expect(ie.length).toEqual(1);
       expect(ie.prop('autoComplete')).toEqual('on');
@@ -34,7 +47,13 @@ describe('<input />', () => {
 
     it('should handle the change event', () => {
       const mockFn = jest.fn();
-      const wrapper = shallow(<Input changed={mockFn} />);
+      const wrapper = shallow(
+        <Input
+          changed={mockFn}
+          value={mockRequiredPropsInput.value}
+          type={mockRequiredPropsInput.type}
+        />
+      );
       const ie = wrapper.find('.Input').find('.InputElement');
       ie.simulate('change');
       expect(mockFn).toHaveBeenCalled();
@@ -46,7 +65,12 @@ describe('<input />', () => {
 
     it('should have correct structure', () => {
       const wrapper = shallow(
-        <Input type={type} value="vestibulum" placeholder="faucibus" />
+        <Input
+          type={type}
+          value="vestibulum"
+          changed={mockRequiredPropsInput.changed}
+          placeholder="faucibus"
+        />
       );
       const ie = wrapper.find('.Input').find('.InputElement');
       expect(ie.length).toEqual(1);
@@ -57,7 +81,13 @@ describe('<input />', () => {
 
     it('should handle the change event', () => {
       const mockFn = jest.fn();
-      const wrapper = shallow(<Input type={type} changed={mockFn} />);
+      const wrapper = shallow(
+        <Input
+          type={type}
+          changed={mockFn}
+          value={mockRequiredPropsInput.value}
+        />
+      );
       const ie = wrapper.find('.Input').find('.InputElement');
       ie.simulate('change');
       expect(mockFn).toHaveBeenCalled();
@@ -69,7 +99,12 @@ describe('<input />', () => {
 
     it('should have correct structure', () => {
       const wrapper = shallow(
-        <Input type={type} value="vestibulum" placeholder="faucibus" />
+        <Input
+          type={type}
+          value="vestibulum"
+          changed={mockRequiredPropsInput.changed}
+          placeholder="faucibus"
+        />
       );
       const ie = wrapper.find('.Input').find('.InputElement');
       expect(ie.length).toEqual(1);
@@ -80,7 +115,9 @@ describe('<input />', () => {
 
     it('should handle the change event', () => {
       const mockFn = jest.fn();
-      const wrapper = shallow(<Input type={type} changed={mockFn} />);
+      const wrapper = shallow(
+        <Input type={type} changed={mockFn} value={mockRequiredPropsInput} />
+      );
       const ie = wrapper.find('.Input').find('.InputElement');
       ie.simulate('change');
       expect(mockFn).toHaveBeenCalled();
@@ -102,6 +139,7 @@ describe('<input />', () => {
           type={type}
           value="vestibulum"
           placeholder="faucibus"
+          changed={mockRequiredPropsInput.changed}
           elConfig={elConfig}
         />
       );
@@ -132,7 +170,12 @@ describe('<input />', () => {
     it('should handle the change event', () => {
       const mockFn = jest.fn();
       const wrapper = shallow(
-        <Input type={type} elConfig={elConfig} changed={mockFn} />
+        <Input
+          type={type}
+          elConfig={elConfig}
+          changed={mockFn}
+          value={mockRequiredPropsInput}
+        />
       );
       const ie = wrapper.find('.Input').find('.InputElement');
       ie.simulate('change');
@@ -144,7 +187,13 @@ describe('<input />', () => {
     const type = 'checkbox';
 
     it('should have correct structure', () => {
-      const wrapper = shallow(<Input type={type} value="vestibulum" />);
+      const wrapper = shallow(
+        <Input
+          type={type}
+          value="vestibulum"
+          changed={mockRequiredPropsInput.changed}
+        />
+      );
       const ie = wrapper.find('.Input').find('input');
       expect(ie.length).toEqual(1);
       expect(ie.prop('autoComplete')).toEqual('on');
@@ -154,7 +203,13 @@ describe('<input />', () => {
 
     it('should handle the change event', () => {
       const mockFn = jest.fn();
-      const wrapper = shallow(<Input type={type} changed={mockFn} />);
+      const wrapper = shallow(
+        <Input
+          type={type}
+          changed={mockFn}
+          value={mockRequiredPropsInput.value}
+        />
+      );
       const ie = wrapper.find('.Input').find('input');
       ie.simulate('change');
       expect(mockFn).toHaveBeenCalled();
@@ -165,12 +220,26 @@ describe('<input />', () => {
     const type = 'range';
 
     it('should have slider container', () => {
-      const wrapper = shallow(<Input type={type} value="vestibulum" />);
+      const wrapper = shallow(
+        <Input
+          type={type}
+          value="vestibulum"
+          changed={mockRequiredPropsInput.changed}
+        />
+      );
       expect(wrapper.find('.Input').find('.SliderContainer').length).toEqual(1);
     });
 
     it('should have correct structure', () => {
-      const wrapper = shallow(<Input type={type} min="2" max="9" value="7" />);
+      const wrapper = shallow(
+        <Input
+          type={type}
+          min="2"
+          max="9"
+          value="7"
+          changed={mockRequiredPropsInput.changed}
+        />
+      );
       const ie = wrapper.find('.SliderContainer').find('input');
       expect(ie.length).toEqual(1);
       expect(ie.prop('autoComplete')).toEqual('on');
@@ -182,7 +251,13 @@ describe('<input />', () => {
 
     it('should handle the change event', () => {
       const mockFn = jest.fn();
-      const wrapper = shallow(<Input type={type} changed={mockFn} />);
+      const wrapper = shallow(
+        <Input
+          type={type}
+          changed={mockFn}
+          value={mockRequiredPropsInput.value}
+        />
+      );
       const ie = wrapper.find('.SliderContainer').find('input');
       ie.simulate('change');
       expect(mockFn).toHaveBeenCalled();

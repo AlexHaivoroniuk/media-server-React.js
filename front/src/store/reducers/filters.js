@@ -23,7 +23,6 @@ const clearFilters = state => {
 };
 
 const filtersHandler = (state, action) => {
-  // console.log(action);
   let newArr = [];
   if (state[action.filter]) {
     newArr = [...state[action.filter]];
@@ -35,11 +34,6 @@ const filtersHandler = (state, action) => {
   } else {
     newArr.push(action.value);
   }
-  // console.log('Checkboxes', newArr);
-  // console.log({
-  //   ...state,
-  //   [action.filter]: newArr
-  // });
   return {
     ...state,
     [action.filter]: newArr
@@ -47,14 +41,16 @@ const filtersHandler = (state, action) => {
 };
 
 const rangeHandler = (state, action) => {
-  // console.log(action);
-  return {
-    ...state,
-    year: {
-      ...state.year,
-      [action.year]: action.val
-    }
-  };
+  if (action.year && (action.year === 'minY' || action.year === 'maxY')) {
+    return {
+      ...state,
+      year: {
+        ...state.year,
+        [action.year]: action.val
+      }
+    };
+  }
+  return { ...state };
 };
 
 const filters = (state = initialState, action) => {
