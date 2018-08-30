@@ -1,9 +1,8 @@
 import actions from '../actionsTypes';
 import axios from 'axios';
 
-const fetchMovieStart = data => ({
-  type: actions.FETCH_MOVIES_START,
-  data
+const fetchMovieStart = () => ({
+  type: actions.FETCH_MOVIES_START
 });
 const fetchMovieSuccess = movies => ({
   type: actions.FETCH_MOVIES_SUCCESS,
@@ -23,7 +22,7 @@ export const filterMovies = data => (dispatch, getState) => {
 export const fetchMovies = data => (dispatch, getState) => {
   dispatch(fetchMovieStart());
 
-  axios
+  return axios
     .get('http://localhost:4000/movies')
     .then(res => res.data)
     .then(data => {

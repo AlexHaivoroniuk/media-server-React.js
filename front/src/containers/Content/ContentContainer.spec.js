@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 
 import ContentContainer from './ContentContainer';
 
@@ -24,6 +24,15 @@ describe('<ContentContainer />', () => {
       const button = wrapper.find('.ContentContainer').find('Button');
       expect(button.length).toEqual(1);
       expect(button.prop('clicked')).toEqual(wrapper.instance().goToTop);
+    });
+
+    it('scroolTo wheh click on button', () => {
+      const mockFn = jest.fn();
+      global.scrollTo = mockFn;
+      const wrapper = mount(<ContentContainer />);
+      const button = wrapper.find('.ContentContainer').find('Button');
+      button.simulate('click');
+      expect(mockFn).toHaveBeenCalledWith(0, 0);
     });
   });
 

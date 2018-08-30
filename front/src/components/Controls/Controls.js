@@ -7,7 +7,7 @@ import { toggleFiltersPanel } from './../../store/actions/filters';
 import { fetchMovies } from './../../store/actions/movies';
 import actions from './../../store/actionsTypes';
 
-const Controls = props => {
+export const Controls = props => {
   return (
     <div className={styles.Controls}>
       <Button btnSize="lg" clicked={props.fetch}>
