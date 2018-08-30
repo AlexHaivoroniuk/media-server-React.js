@@ -1,7 +1,7 @@
 const Movie = require("../models/Movie");
 const { URL } = require('url');
 const logger = require('./../../config/winston');
-const testFolder = new URL('file:///home/ohaivoroniuk/Movies');
+const testFolder = 'C:/Users/ycherniavskyi.EXADEL/media-server/media-files';
 const fs = require("fs");
 const axios = require("axios");
 const api = require("../../config/config");
@@ -18,20 +18,14 @@ module.exports = function(req, res, next) {
         const reqArr = fs.readdirSync(testFolder).map(file => {
           const fileArr = file.split("");
           const movieName = fileArr.slice(0, fileArr.indexOf("(")).join("");
+          const TitleToCheck = movieName.toLowerCase().replace(/\s/g,'');
           const movieReleaseYear = fileArr
             .slice(fileArr.indexOf("(") + 1, fileArr.indexOf(")"))
             .join("");
 
-          function isSameName(movie) {
-            return movie.Title === movieName;
-          }
-          function isSameYear(movie) {
-            return movie.Year === movieReleaseYear;
-          }
-          function isMovie(movie) {
-            return movie.Type === movieReleaseYear;
-          }
-          if (!movie.some(isSameName) || (!movie.some(isSameYear) && movie.some(isMovie))) {
+          const toAddMovie = movie.every(m => m.Title.toLowerCase().replace(/\s/g,'') !== TitleToCheck || (m.Type === 'movie' && m.Year !== movieReleaseYear));
+
+          if (toAddMovie) {
             const newMovie = {
               name: movieName,
               year: movieReleaseYear
@@ -59,6 +53,16 @@ module.exports = function(req, res, next) {
                 logger.warn({ message: `Movie fetch failed with error: ${err.message}`, label: scriptName});
               })
               ;
+          }
+          else{
+            return axios
+              .get(
+                `http://www.omdbapi.com/`
+              )
+              .then(res => {
+                logger.info({ message: 'There is no new movie!', label: scriptName})
+                return new Movie(res.data);
+              });
           }
         });
         Promise.all(reqArr).then(data => {
