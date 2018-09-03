@@ -18,6 +18,19 @@ const Input = props => {
         />
       );
       break;
+    case 'password':
+      inputElement = (
+        <input
+          type={props.type}
+          className={inputStyles.join(' ')}
+          value={props.value}
+          {...props.elConfig}
+          placeholder={props.placeholder}
+          autoComplete="on"
+          onChange={props.changed}
+        />
+      );
+      break;
     case 'textarea':
       inputElement = (
         <textarea

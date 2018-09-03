@@ -1,0 +1,15 @@
+.Authenticate {
+    position: absolute;
+    font-family: 'Ubuntu', sans-serif;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #4daf9582;
+    padding: 1em;
+    border-radius: 20px;
+    &__Title {
+        text-align: center;
+        font-weight: bolder;
+        font-size: 1.5em;
+    }
+}
