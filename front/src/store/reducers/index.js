@@ -4,11 +4,13 @@ import { notify } from './notify';
 import filters from './filters';
 import currentMovie from './currentMovie';
 import filterData from './filterData';
+import user from './user';
 
 export default combineReducers({
   movies,
   filters,
   notify,
   currentMovie,
-  filterData
+  filterData,
+  user
 });
