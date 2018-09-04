@@ -7,7 +7,6 @@ export const login = data => dispatch => {
   });
 };
 
-//export function logout() {
 export const logout = () => dispatch => {
   dispatch({
     type: actions.USER_LOGGED_OUT
