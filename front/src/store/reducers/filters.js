@@ -48,6 +48,9 @@ const filtersHandler = (state, action) => {
 
 const rangeHandler = (state, action) => {
   // console.log(action);
+  if (action.year !== 'minY' && action.year !== 'maxY') {
+    return state;
+  }
   return {
     ...state,
     year: {

@@ -10,8 +10,7 @@ const fetchMovieSuccess = movies => ({
 });
 const fetchMovieFailure = (data, e) => ({
   type: actions.FETCH_MOVIES_FAILURE,
-  data,
-  error: e
+  e
 });
 
 export const filterMovies = data => (dispatch, getState) => {
