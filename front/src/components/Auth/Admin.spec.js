@@ -15,7 +15,6 @@ describe('<Admin />', () => {
 
   it('should have correct structure', () => {
     const wrapper = shallow(<Admin />);
-    console.log(wrapper.debug());
     expect(wrapper.find('div').length).toEqual(1);
     expect(wrapper.text()).toEqual(
       'Access is restricted only to users with Admin role.'

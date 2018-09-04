@@ -15,7 +15,6 @@ describe('<Loading />', () => {
 
   it('should have correct structure', () => {
     const wrapper = shallow(<Loading />);
-    console.log(wrapper.debug());
     expect(wrapper.find('div').length).toEqual(1);
     expect(wrapper.text()).toEqual('Logging you in...');
   });
