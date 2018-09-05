@@ -11,6 +11,11 @@ class UserController {
                 role: 'Admin'
             },
             {
+                username: 'm1',
+                password: 'm1',
+                role: 'Admin'
+            },
+            {
                 username: 'user',
                 password: 'user',
                 role: 'User'

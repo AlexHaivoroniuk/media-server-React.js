@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import styles from './SideNav.scss';
 import idxStyles from './../../index.scss';
@@ -7,11 +7,9 @@ import { logout } from '../../store/actions/user';
 
 const sideNav = props => {
   const classes = {
-    film: 'fa fa-film',
     home: 'fa fa-home',
-    music: 'fa fa-music',
-    protected: 'fa fa-cannabis',
-    setup: 'fa fa-cogs',
+    protected: 'fa fa-shield-alt',
+    settings: 'fa fa-cogs',
     login: 'fa fa-sign-in-alt',
     logout: 'fa fa-sign-out-alt'
   };
@@ -32,39 +30,56 @@ const sideNav = props => {
         <span>Logout</span>
       </div>
     );
-  return (
-    <div className={`${styles.SideNav} ${idxStyles.taC}`} style={props.width}>
-      <div className={`${styles.SideNav__item} ${idxStyles.taL}`}>
-        <span>You are logged as {props.user.name}.</span>
-      </div>
-      <Link to={`/`}>
+  let settings =
+    props.user.role === 'Admin' ? (
+      <Link to={`/settings`}>
         <div className={`${styles.SideNav__item} ${idxStyles.taL}`}>
-          <i className={classes.home} />
-          <span>Home</span>
+          <i className={classes.settings} />
+          <span>Settings</span>
         </div>
       </Link>
-      <div className={`${styles.SideNav__item} ${idxStyles.taL}`}>
-        <i className={classes.film} />
-        <span>Movies</span>
-      </div>
-      <div className={`${styles.SideNav__item} ${idxStyles.taL}`}>
-        <i className={classes.music} />
-        <span>Music</span>
-      </div>
+    ) : null;
+  let protect =
+    props.user.role === 'User' || props.user.role === 'Admin' ? (
       <Link to={`/protected`}>
         <div className={`${styles.SideNav__item} ${idxStyles.taL}`}>
           <i className={classes.protected} />
           <span>Protected</span>
         </div>
       </Link>
-      <Link to={`/setup`}>
+    ) : null;
+  return (
+    <Fragment>
+      <div
+        className={styles.SideNav__Backdrop}
+        onClick={() => {
+          props.toggle();
+        }}
+        style={{
+          display: props.show
+        }}
+      />
+      <div
+        className={`${styles.SideNav} ${idxStyles.taC}`}
+        style={{ width: props.width }}
+        onClick={e => {
+          e.stopPropagation();
+        }}
+      >
         <div className={`${styles.SideNav__item} ${idxStyles.taL}`}>
-          <i className={classes.setup} />
-          <span>Setup</span>
+          <span>You are logged as {props.user.name}.</span>
         </div>
-      </Link>
-      {loginLogout}
-    </div>
+        <Link to={`/`}>
+          <div className={`${styles.SideNav__item} ${idxStyles.taL}`}>
+            <i className={classes.home} />
+            <span>Home</span>
+          </div>
+        </Link>
+        {protect}
+        {settings}
+        {loginLogout}
+      </div>
+    </Fragment>
   );
 };
 

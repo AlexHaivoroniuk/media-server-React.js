@@ -1,36 +1,54 @@
 .SideNav {
     height: 100%;
-    // width: 250px; 
+    width: 250px;
     position: fixed;
-    z-index: 1; 
+    z-index: 20;
     top: 0;
     left: 0;
     background-color: #111;
-    overflow-x: hidden; 
-    padding-top: 60px;
-    transition: 0.3s; 
+    overflow-x: hidden;
+    margin-top: 3em;
+    transition: 0.3s;
     .SideNav__item {
-      padding: 8px 8px 8px 32px;
-      text-decoration: none;
-      font-size: 1em;
-      color: #cccccc;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      transition: 0.3s;
-      &:hover {
-        background-color: #525252;
-        cursor: pointer;
-      }
-      & i {
-        flex: 1 1 10%;
-      }
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 1em;
+        color: #cccccc;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        transition: 0.3s;
+        &:hover {
+            background-color: #525252;
+            cursor: pointer;
+        }
+        & i {
+            flex: 1 1 10%;
+        }
     }
     a {
-      text-decoration: none;
+        text-decoration: none;
     }
     @media screen and (max-height: 450px) {
-      .SideNav {padding-top: 15px;}
-      .SideNav__item {font-size: 18px; opacity: 0;}
+        .SideNav {
+            padding-top: 15px;
+        }
+        .SideNav__item {
+            font-size: 18px;
+            opacity: 0;
+        }
+    }
+    &__Backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-content: center;
+        z-index: 1;
     }
 }

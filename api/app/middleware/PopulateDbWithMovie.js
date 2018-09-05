@@ -1,7 +1,7 @@
 const Movie = require("../models/Movie");
 const { URL } = require('url');
 const logger = require('./../../config/winston/winston');
-const testFolder = 'C:/Users/ycherniavskyi.EXADEL/media-server/media-files';
+const testFolder = new URL('file:///home/ohaivoroniuk/Movies');
 const fs = require("fs");
 const axios = require("axios");
 const api = require("../../config/config");
@@ -23,7 +23,7 @@ module.exports = function(req, res, next) {
             .slice(fileArr.indexOf("(") + 1, fileArr.indexOf(")"))
             .join("");
 
-          const toAddMovie = movie.every(m => m.Title.toLowerCase().replace(/\s/g,'') !== TitleToCheck || (m.Type === 'movie' && m.Year !== movieReleaseYear));
+          const toAddMovie = movie.every(m => String(m.Title).toLowerCase().replace(/\s/g,'') !== TitleToCheck || (String(m.Type) === 'movie' && String(m.Year) !== movieReleaseYear));
 
           if (toAddMovie) {
             const newMovie = {
@@ -38,7 +38,7 @@ module.exports = function(req, res, next) {
               )
               .then(res => {
                 logger.info({ message: 'INFO Movie fetch was successful', label: scriptName, line: __line})
-                return new Movie(res.data)
+                return new Movie(res.data) // add library id property
                   .save()
                   .then(data => { /*logger.info({ message:'Movie fetch was successful', label: scriptName});*/ return data})
                   .catch(err => {
@@ -55,14 +55,7 @@ module.exports = function(req, res, next) {
               ;
           }
           else{
-            return axios
-              .get(
-                `http://www.omdbapi.com/`
-              )
-              .then(res => {
-                logger.info({ message: 'There is no new movie!', label: scriptName, line: __line});
-                return new Movie(res.data);
-              });
+            return movies;
           }
         });
         Promise.all(reqArr).then(data => {
