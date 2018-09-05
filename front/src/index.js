@@ -14,12 +14,17 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
 
-ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
-  document.getElementById('root')
-);
-registerServiceWorker();
+const index = div => {
+  ReactDOM.render(
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>,
+    div || document.getElementById('root')
+  );
+  registerServiceWorker();
+};
+index(document.getElementById('root'));
+
+export default index;

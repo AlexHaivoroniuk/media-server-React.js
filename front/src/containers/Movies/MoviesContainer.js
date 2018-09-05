@@ -15,9 +15,9 @@ class MoviesContainer extends Component {
     this.state = { modal: false };
   }
 
-  tglModal = () => {
+  /*tglModal = () => {
     this.setState((prevState, props) => ({ modal: !prevState.modal }));
-  };
+  };*/
   componentDidMount = () => {
     this.props.fetch();
   };
