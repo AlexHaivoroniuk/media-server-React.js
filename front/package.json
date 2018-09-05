@@ -62,7 +62,8 @@
   "jest": {
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx,mjs}"
+      "src/**/*.{js,jsx,mjs}",
+      "!src/registerServiceWorker.js"
     ],
     "coverageReporters": [
       "html"

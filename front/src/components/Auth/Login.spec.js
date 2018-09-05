@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, render, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
@@ -9,7 +9,7 @@ const mockStore = configureMockStore([thunk]);
 const initialState = {};
 
 describe('<Login />', () => {
-  let store, wrapper;
+  let store, wrapper, mockFn;
 
   beforeEach(() => {
     store = mockStore(initialState);
@@ -38,7 +38,12 @@ describe('<Login />', () => {
   });
 
   it('should handle the click event', () => {
-    console.log(wrapper.debug());
-    // todo
+    mockFn = jest.fn();
+    wrapper = mount(<Login store={store} userLogin={mockFn} />);
+    wrapper
+      .find('.login')
+      .find('button.button')
+      .simulate('click');
+    expect(mockFn).toHaveBeenCalled();
   });
 });

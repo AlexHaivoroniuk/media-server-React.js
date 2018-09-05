@@ -30,7 +30,7 @@ export const userIsAdminRedir = connectedRouterRedirect({
   allowRedirectBack: true,
   authenticatedSelector: state =>
     state.user !== null && state.user.role === 'Admin',
-  predicate: user => user.role === 'Admin',
+  //predicate: user => user.role === 'Admin',
   FailureComponent: Admin,
   wrapperDisplayName: 'UserIsAdmin'
 });
