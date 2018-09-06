@@ -19,13 +19,13 @@ build:
           - js-scrutinizer-run
 
 filter:
-  paths: front/src
+  paths: 'front/src/*'
 
   excluded_paths:
-    - *.spec.js
-    - *.test.js
-    - registerServiceWorker.js
-    - setupTests.js
+    - '*.spec.js'
+    - '*.test.js'
+    - 'registerServiceWorker.js'
+    - 'setupTests.js'
 
   dependency_paths:
-        - node_modules/
+    - 'node_modules/'
