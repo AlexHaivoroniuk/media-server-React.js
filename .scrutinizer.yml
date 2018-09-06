@@ -19,7 +19,7 @@ build:
           - js-scrutinizer-run
 
 filter:
-  paths: 'front/src/*'
+  paths: ['front/src/*']
 
   excluded_paths:
     - '*.spec.js'
