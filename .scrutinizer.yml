@@ -8,10 +8,6 @@ build:
     before:
       - cd front
 
-  dependencies:
-    before:
-      - npm install
-
   nodes:
     analysis:
       tests:
@@ -26,6 +22,3 @@ filter:
     - '*.test.js'
     - 'registerServiceWorker.js'
     - 'setupTests.js'
-
-  dependency_paths:
-    - 'node_modules/'
