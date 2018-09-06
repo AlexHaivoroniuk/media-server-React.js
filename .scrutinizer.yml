@@ -1,0 +1,31 @@
+checks:
+  javascript:
+    code_rating: true
+    duplicate_code: true
+
+build:
+  project_setup:
+    before:
+      - cd front
+
+  dependencies:
+    before:
+      - npm install
+
+  nodes:
+    analysis:
+      tests:
+        override:
+          - js-scrutinizer-run
+
+filter:
+  paths: front/src
+
+  excluded_paths:
+    - *.spec.js
+    - *.test.js
+    - registerServiceWorker.js
+    - setupTests.js
+
+  dependency_paths:
+        - node_modules/
