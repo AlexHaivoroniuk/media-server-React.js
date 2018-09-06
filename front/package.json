@@ -57,7 +57,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "test-travis": "node scripts/test-travis-ci.js --env=jsdom"
   },
   "jest": {
     "collectCoverage": true,
@@ -66,7 +67,7 @@
       "!src/registerServiceWorker.js"
     ],
     "coverageReporters": [
-      "html"
+      "lcov"
     ],
     "setupFiles": [
       "<rootDir>/config/polyfills.js"
@@ -110,6 +111,7 @@
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.15.0",
+    "coveralls": "^3.0.2",
     "enzyme": "^3.4.3",
     "enzyme-adapter-react-16": "^1.2.0",
     "eslint-config-prettier": "^3.0.1",
