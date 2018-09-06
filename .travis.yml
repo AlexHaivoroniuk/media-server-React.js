@@ -8,11 +8,11 @@ branches:
   only:
     - master
 
+before_install:
+  - cd front
+
 install:
   - npm install
-
-before_script:
-  - cd front
 
 script:
   - npm test
