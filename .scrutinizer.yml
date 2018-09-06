@@ -4,6 +4,9 @@ checks:
     duplicate_code: true
 
 build:
+  environment:
+    node: v8.9.0
+  
   project_setup:
     before:
       - cd front
@@ -15,10 +18,15 @@ build:
           - js-scrutinizer-run
 
 filter:
-  paths: ['front/src/*']
-
   excluded_paths:
-    - '*.spec.js'
-    - '*.test.js'
-    - 'registerServiceWorker.js'
-    - 'setupTests.js'
+    - 'api/*'
+    - 'front/config/*'
+    - 'front/coverage/*'
+    - 'front/node_modules/*'
+    - 'front/public/*'
+    - 'front/scripts/*'
+    - 'front/static/*'
+    - 'front/src/**/*.spec.js'
+    - 'front/src/**/*.test.js'
+    - 'front/src/registerServiceWorker.js'
+    - 'front/src/setupTests.js'
