@@ -20,10 +20,9 @@ export const notifStreamConnect = data => (dispatch, getState) => {
   };
   eventSource.onmessage = function(e) {
     if (e.lastEventId === '-1') {
+      console.log('Connection closed');
       eventSource.close();
     }
-    // console.log(e);
-    console.log('REDUX| Data received: ' + e.data);
     dispatch({
       type: actions.NOTIFY_STREAM_MESSAGE,
       data: JSON.parse(e.data),

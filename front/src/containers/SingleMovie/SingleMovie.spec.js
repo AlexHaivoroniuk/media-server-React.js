@@ -39,4 +39,16 @@ describe('<SingleMovie />', () => {
     expect(wrapper.props()).toHaveProperty('movie');
     expect(wrapper.props().movie).toEqual(movie);
   });
+  it('should have movie prop', () => {
+    let store = mockStore(initialState);
+    const wrapper = shallow(<SingleMovie store={store} />, false);
+    expect(wrapper.props().movie).toBeDefined();
+    expect(wrapper.props().movie).toEqual(movie);
+  });
+  it('should fetch() single movie on componentDidMount()', () => {
+    let store = mockStore(initialState);
+    const spy = jest.spyOn(SingleMovie.prototype, 'componentDidMount');
+    const wrapper = shallow(<SingleMovie store={store} />, false);
+    expect(spy).toHaveBeenCalled();
+  });
 });

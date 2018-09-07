@@ -29,7 +29,7 @@ const db = mongoose.connect(url, { useNewUrlParser: true })
                         console.error('Failed to open Mongodb Connection: ', err.message);
                         process.exit(1);
                     })
-app.use('/movies', PopulateDb)
+app.use('/movies', PopulateDb);
 app.get('/notif_stream', function(req, res) {
     sseClients.add(res.sseConnection);
     res.sseConnection.setup();

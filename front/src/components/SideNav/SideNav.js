@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styles from './SideNav.scss';
 import idxStyles from './../../index.scss';
@@ -24,7 +25,9 @@ const sideNav = props => {
     ) : (
       <div
         className={`${styles.SideNav__item} ${idxStyles.taL}`}
-        onClick={() => props.logout()}
+        onClick={() => {
+          props.logout();
+        }}
       >
         <i className={classes.logout} />
         <span>Logout</span>
@@ -66,7 +69,7 @@ const sideNav = props => {
           e.stopPropagation();
         }}
       >
-        <div className={`${styles.SideNav__item} ${idxStyles.taL}`}>
+        <div className={`${styles.SideNav__status} ${idxStyles.taL}`}>
           <span>You are logged as {props.user.name}.</span>
         </div>
         <Link to={`/`}>
@@ -92,6 +95,18 @@ const mapDispatchToProps = dispatch => ({
     dispatch(logout());
   }
 });
+
+sideNav.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    role: PropTypes.string,
+    isLoading: PropTypes.bool
+  }),
+  toggle: PropTypes.func,
+  logout: PropTypes.func,
+  show: PropTypes.string
+};
 
 export default connect(
   mapStateToProps,

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 
 import Modal from './Modal';
 
@@ -43,6 +43,24 @@ describe('<Modal/>', () => {
       </div>
     );
     expect(wrapper.find('Modal').prop('close')).toBe(mockProps.close);
+  });
+  it('.ModalBackdrop should handle close()', () => {
+    const wrapper = mount(
+      <div>
+        <Modal {...mockProps} />
+      </div>
+    );
+    wrapper.find('.ModalBackdrop').simulate('click');
+    expect(mockProps.close).toHaveBeenCalled();
+  });
+  it('.Modal_Close should handle close()', () => {
+    const wrapper = mount(
+      <div>
+        <Modal {...mockProps} />
+      </div>
+    );
+    wrapper.find('.Modal_Close').simulate('click');
+    expect(mockProps.close).toHaveBeenCalled();
   });
   it('should have `children` prop', () => {
     const wrapper = shallow(<Modal {...mockProps} />);

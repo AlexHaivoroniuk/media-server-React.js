@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styles from './Settings.scss';
 import { connect } from 'react-redux';
 import { fetchLibraries } from '../../store/actions/libraries';
@@ -18,6 +19,10 @@ class Settings extends Component {
     };
   }
 
+  componentDidMount = () => {
+    this.props.fetchLib();
+  };
+
   handleAddLibInput = (val, field) => {
     this.setState((prevState, props) => ({
       addLib: {
@@ -25,10 +30,6 @@ class Settings extends Component {
         [field]: val
       }
     }));
-  };
-
-  componentDidMount = () => {
-    this.props.fetchLib();
   };
 
   addLibrary = data => {
@@ -41,17 +42,22 @@ class Settings extends Component {
       .then(res => {
         this.props.fetchLib();
         this.setState({ addLib: { name: '', path: '' } });
-      });
+      })
+      .catch(err => new Error(err));
   };
+
   deleteLibrary = id => {
-    axios.delete(`http://localhost:4000/libraries/${id}`).then(res => {
-      this.props.fetchLib();
-    });
+    axios
+      .delete(`http://localhost:4000/libraries/${id}`)
+      .then(res => {
+        this.props.fetchLib();
+      })
+      .catch(err => new Error(err));
   };
 
   render() {
-    let libList = <p>Libraries</p>;
-    if (this.props.libraries) {
+    let libList = null;
+    if (this.props.libraries.length > 0) {
       libList = this.props.libraries.map((lib, idx) => (
         <div
           key={idx}
@@ -73,6 +79,8 @@ class Settings extends Component {
           </div>
         </div>
       ));
+    } else {
+      libList = <div>No libraries yet</div>;
     }
 
     let disable =
@@ -132,6 +140,7 @@ class Settings extends Component {
               value={this.state.addLib.path}
               changed={e => {
                 this.handleAddLibInput(e.target.value, 'path');
+                console.log('gggg');
               }}
             />
             <Button
@@ -142,6 +151,7 @@ class Settings extends Component {
                   path: this.state.addLib.path,
                   id: this.props.user.id
                 });
+                console.log('addLib');
               }}
               disabled={disable}
             >
@@ -153,6 +163,23 @@ class Settings extends Component {
     );
   }
 }
+
+Settings.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    role: PropTypes.string,
+    isLoading: PropTypes.bool
+  }),
+  libraries: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string,
+      name: PropTypes.string,
+      path: PropTypes.string,
+      userId: PropTypes.string
+    })
+  )
+};
 
 const mapStateToProps = state => ({
   user: state.user,

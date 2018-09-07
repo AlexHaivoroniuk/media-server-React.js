@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './Toolbar.scss';
 import idxStyles from './../../index.scss';
 import { connect } from 'react-redux';
@@ -82,10 +83,21 @@ const Toolbar = props => {
         <div />
       </div>
       <Link to={`/`} className={`${styles.Toolbar__title}  ${idxStyles.taR}`}>
-        <div>MediaServer</div>
+        MediaServer
       </Link>
     </div>
   );
+};
+
+Toolbar.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    role: PropTypes.string,
+    isLoading: PropTypes.bool
+  }),
+  toggle: PropTypes.func,
+  logout: PropTypes.func
 };
 
 const mapStateToProps = state => ({

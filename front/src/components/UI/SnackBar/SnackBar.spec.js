@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 
 import SnackBar from './SnackBar';
 
@@ -15,7 +15,7 @@ describe('<SbackBar/>', () => {
   });
   it('should render correctly', () => {
     const wrapper = shallow(<SnackBar {...mockRequiredPropsSnackBar} />);
-    expect(SnackBar).toBeDefined();
+    expect(wrapper).toMatchSnapshot();
   });
   it('should have correct struture', () => {
     const wrapper = shallow(<SnackBar {...mockRequiredPropsSnackBar} />);
@@ -47,5 +47,10 @@ describe('<SbackBar/>', () => {
     expect(wrapper.find('SnackBar').prop('clicked')).toBe(
       mockRequiredPropsSnackBar.clicked
     );
+  });
+  it('should invoke onClose when clicked SnackBar_Close', () => {
+    const wrapper = mount(<SnackBar {...mockRequiredPropsSnackBar} />);
+    wrapper.find('.SnackBar_Close').simulate('click');
+    expect(mockRequiredPropsSnackBar.clicked).toHaveBeenCalled();
   });
 });

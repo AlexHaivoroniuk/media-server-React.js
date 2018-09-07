@@ -20,7 +20,7 @@ class Connection {
     };
     send(data) {
         let id =  Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-        this.res.write(`id: ${id}\ndata: ${JSON.stringify(data)}\n\n`);
+        this.res.write(`retry: 10000\n id: ${id}\ndata: ${JSON.stringify(data)}\n\n`);
     };
 };
  
