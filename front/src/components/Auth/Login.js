@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styles from './Login.scss';
 import { userLogin } from '../../store/actions/user';
 
-export class LoginContainer extends Component {
+export class Login extends Component {
   onClick = e => {
     e.preventDefault();
     this.props.userLogin({
@@ -40,7 +40,8 @@ export class LoginContainer extends Component {
     );
   }
 }
+
 export default connect(
   null,
   { userLogin }
-)(LoginContainer);
+)(Login);

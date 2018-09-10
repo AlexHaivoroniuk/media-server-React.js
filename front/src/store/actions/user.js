@@ -1,13 +1,12 @@
 import actions from '../actionsTypes';
 import axios from 'axios';
 
-export const login = data => dispatch => {
+export const login = () => dispatch => {
   dispatch({
     type: actions.USER_LOGGING_IN
   });
 };
 
-//export function logout() {
 export const logout = () => dispatch => {
   dispatch({
     type: actions.USER_LOGGED_OUT
@@ -20,7 +19,7 @@ const userLoginSuccess = data => ({
 });
 
 export const userLogin = data => (dispatch, getState) => {
-  axios
+  return axios
     .post(`http://localhost:4000/login`, {
       username: data.username,
       password: data.password

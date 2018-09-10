@@ -23,7 +23,6 @@
         "eslint-plugin-import": "2.8.0",
         "eslint-plugin-jsx-a11y": "5.1.1",
         "eslint-plugin-react": "7.4.0",
-        "eventsourcemock": "^2.0.0",
         "extract-text-webpack-plugin": "3.0.2",
         "file-loader": "1.1.5",
         "fs-extra": "^7.0.0",
@@ -58,15 +57,17 @@
     "scripts": {
         "start": "node scripts/start.js",
         "build": "node scripts/build.js",
-        "test": "node scripts/test.js --env=jsdom"
+        "test": "node scripts/test.js --env=jsdom",
+        "test-travis": "node scripts/test-travis-ci.js --env=jsdom"
     },
     "jest": {
         "collectCoverage": true,
         "collectCoverageFrom": [
-            "src/**/*.{js,jsx,mjs}"
+            "src/**/*.{js,jsx,mjs}",
+            "!src/registerServiceWorker.js"
         ],
         "coverageReporters": [
-            "html"
+            "lcov"
         ],
         "setupFiles": [
             "<rootDir>/config/polyfills.js",
@@ -79,17 +80,22 @@
         ],
         "testEnvironment": "node",
         "testURL": "http://localhost",
-        "transform": {
-            "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
-            "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-            "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
-        },
         "transformIgnorePatterns": [
             "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
         ],
         "moduleNameMapper": {
             "^react-native$": "react-native-web",
             "\\.(css|scss|less)$": "identity-obj-proxy"
+        },
+        "transform": {
+            "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
+            "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+            "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+        },
+        "scripts": {
+            "start": "node scripts/start.js",
+            "build": "node scripts/build.js",
+            "test": "node scripts/test.js --env=jsdom"
         },
         "moduleFileExtensions": [
             "web.js",
@@ -111,6 +117,7 @@
     },
     "devDependencies": {
         "axios-mock-adapter": "^1.15.0",
+        "coveralls": "^3.0.2",
         "enzyme": "^3.4.3",
         "enzyme-adapter-react-16": "^1.2.0",
         "eslint-config-prettier": "^3.0.1",
