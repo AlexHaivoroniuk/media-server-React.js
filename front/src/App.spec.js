@@ -4,13 +4,36 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import { createStore, compose, applyMiddleware } from 'redux';
+import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import reducers from './store/reducers';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
+const mockStore = configureMockStore([thunk]);
+const initialState = {
+  currentMovie: {},
+  filterData: {
+    genres: [],
+    countries: []
+  },
+  filters: {
+    genre: [],
+    country: [],
+    year: {
+      minY: 1900,
+      maxY: 2018
+    },
+    toggleFilters: false
+  },
+  movies: [],
+  moviesDefault: [],
+  notify: [],
+  user: {
+    id: '0',
+    name: 'guest',
+    role: 'Guest',
+    isLoading: false
+  }
+};
+const store = mockStore(initialState);
 
 it('renders without crashing', () => {
   window.EventSource = jest.fn();

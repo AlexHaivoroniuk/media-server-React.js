@@ -10,6 +10,23 @@ import ErrorBoundary from './components/utils/ErrorBoundary';
 import { notifStreamConnect, removeNotifById } from './store/actions/notify';
 import SnackBar from './components/UI/SnackBar/SnackBar';
 import styles from './App.scss';
+import {
+  userIsAuthenticated,
+  userIsAuthenticatedRedir,
+  userIsNotAuthenticated,
+  userIsNotAuthenticatedRedir,
+  userIsAdminRedir
+} from './auth';
+
+import SetupComponent from './components/Setup';
+import ProtectedComponent from './components/Protected';
+import LoginComponent from './components/Auth/Login';
+
+// Need to apply the hocs here to avoid applying them inside the render method
+const Login = userIsNotAuthenticatedRedir(LoginComponent);
+const Protected = userIsAuthenticatedRedir(ProtectedComponent);
+const Setup = userIsAuthenticatedRedir(userIsAdminRedir(SetupComponent));
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -55,6 +72,9 @@ class App extends Component {
         <ErrorBoundary>
           <ContentContainer>
             <Route exact path="/" component={MoviesContainer} />
+            <Route path="/login" component={Login} />
+            <Route path="/protected" component={Protected} />
+            <Route path="/setup" component={Setup} />
             <Route path="/:id" component={SingleMovie} />
           </ContentContainer>
         </ErrorBoundary>
@@ -65,7 +85,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  notif: state.notify
+  notif: state.notify,
+  user: state.user
 });
 
 const mapDispatchToProps = dispatch => ({

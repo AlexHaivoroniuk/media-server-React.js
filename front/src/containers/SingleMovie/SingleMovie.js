@@ -11,7 +11,7 @@ class SingleMovie extends Component {
   }
 
   render() {
-    let movie = <Spinner />;
+    let movie;
 
     if (!this.props.movie) {
       movie = <Spinner />;

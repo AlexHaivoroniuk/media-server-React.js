@@ -1,0 +1,18 @@
+sudo: false
+
+language: node_js
+node_js:
+  - 10
+
+branches:
+  only:
+    - master
+
+before_install:
+  - cd front
+
+install:
+  - npm install
+
+script:
+  - npm run test-travis && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage

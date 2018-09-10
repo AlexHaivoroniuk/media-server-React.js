@@ -43,6 +43,7 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.0",
+    "redux-auth-wrapper": "^2.0.3",
     "redux-thunk": "^2.3.0",
     "resolve": "1.6.0",
     "style-loader": "0.19.0",
@@ -56,15 +57,17 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "test-travis": "node scripts/test-travis-ci.js --env=jsdom"
   },
   "jest": {
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx,mjs}"
+      "src/**/*.{js,jsx,mjs}",
+      "!src/registerServiceWorker.js"
     ],
     "coverageReporters": [
-      "html"
+      "lcov"
     ],
     "setupFiles": [
       "<rootDir>/config/polyfills.js"
@@ -108,6 +111,7 @@
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.15.0",
+    "coveralls": "^3.0.2",
     "enzyme": "^3.4.3",
     "enzyme-adapter-react-16": "^1.2.0",
     "eslint-config-prettier": "^3.0.1",
