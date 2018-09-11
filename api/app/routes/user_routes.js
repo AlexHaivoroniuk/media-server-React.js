@@ -7,4 +7,8 @@ const userCtrl = new UserController();
 module.exports = function(app, db) {
     app.post('/login', userCtrl.login);
     app.get('/createlogins', userCtrl.create);
+    app.get('/users', userCtrl.get);
+    app.post('/users', userCtrl.create);
+    app.put('/users/:id', userCtrl.update);
+    app.delete('/users/:id', userCtrl.delete);
 };

@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Route, withRouter } from 'react-router-dom';
 import Toolbar from './components/Toolbar/Toolbar';
 import MoviesContainer from './containers/Movies/MoviesContainer';
+import Users from './components/Auth/setupUsers/setupUsers';
 import SingleMovie from './containers/SingleMovie/SingleMovie';
 import ContentContainer from './containers/Content/ContentContainer';
 import SideNav from './components/SideNav/SideNav';
@@ -71,7 +72,7 @@ class App extends Component {
         <SideNav width={this.state.style} />
         <ErrorBoundary>
           <ContentContainer>
-            <Route exact path="/" component={MoviesContainer} />
+            <Route exact path="/" component={Users} />
             <Route path="/login" component={Login} />
             <Route path="/protected" component={Protected} />
             <Route path="/setup" component={Setup} />
