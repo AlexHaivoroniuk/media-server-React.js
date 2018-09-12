@@ -75,6 +75,8 @@ class UserController {
             }
         });
 
+        logger.front_info({ message: 'User created successfully', type: 'info' });
+
         return res.json({
             id: newUser._id,
             username: newUser.username,

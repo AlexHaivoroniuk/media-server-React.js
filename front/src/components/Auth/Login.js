@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styles from './Login.scss';
+import styles from './Auth.scss';
 import { userLogin } from '../../store/actions/user';
 
 export class Login extends Component {

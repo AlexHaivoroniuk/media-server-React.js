@@ -12,7 +12,6 @@ class List extends Component {
   render() {
     return (
       <div>
-        <h3 className="post_heading">Users list</h3>
         {this.props.users.map(user => (
           <div key={user.id}>
             {user.editing ? (

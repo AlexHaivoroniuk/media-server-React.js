@@ -1,8 +1,11 @@
-.login {
-  width: 50%;
+.auth {
+  /*width: 100%;*/
   margin: 40px auto;
 }
-.login .username, .login .password {
+.auth label {
+  display: block;
+}
+.auth .username, .auth .password, .auth .role {
   -moz-appearance: none;
   -webkit-appearance: none;
   -webkit-box-align: center;
@@ -24,8 +27,11 @@
   -webkit-box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
   box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
   max-width: 100%;
-  width: 100%;
+  width: max-content;
   margin-bottom: 20px;
+}
+.auth .role {
+  width: 100%;
 }
 .checkbox {
   width: 100%;
@@ -57,7 +63,7 @@
   padding-right: calc(0.625em - 1px);
   padding-top: calc(0.375em - 1px);
   position: relative;
-  vertical-align: top;
+  /*vertical-align: top;*/
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -74,14 +80,19 @@
   padding-right: 0.75em;
   text-align: center;
   white-space: nowrap;
+  margin-left: 5px;
   margin-top: 20px;
   background-color: #00d1b2;
   border-color: transparent;
   color: #fff;
 }
-.username, .password {
+.username, .password, .role {
   text-decoration: none;
   padding: 10px 10px 10px 10px;
   font-weight: bold;
   color: coral;
+}
+
+.roleInfo {
+  font-size: 0.75em;
 }

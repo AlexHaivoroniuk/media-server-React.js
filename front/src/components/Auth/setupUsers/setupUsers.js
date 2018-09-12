@@ -7,7 +7,7 @@ class App extends Component {
     return (
       <div className="Users">
         <div className="navbar">
-          <h2 className="center ">Setup users</h2>
+          <h2 className="center ">Users setup</h2>
         </div>
         <List />
         <Add />
