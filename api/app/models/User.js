@@ -29,11 +29,27 @@ UserSchema.pre('save', function(next) {
     });
 });
 
+UserSchema.pre('findOneAndUpdate', function (next) {
+    if (this._update.password) {
+        this._update.password = bcrypt.hashSync(this._update.password, 10)
+    }
+    next();
+});
+
+
 UserSchema.methods.comparePassword = function(candidatePassword, cb) {
     bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
         if (err) return cb(err);
         cb(null, isMatch);
     });
 };
+
+UserSchema.virtual('id').get(function(){
+    return this._id;
+});
+
+UserSchema.set('toJSON', {
+    virtuals: true
+});
 
 module.exports = mongoose.model('User', UserSchema);
