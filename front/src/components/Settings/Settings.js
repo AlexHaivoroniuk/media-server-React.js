@@ -140,7 +140,6 @@ class Settings extends Component {
               value={this.state.addLib.path}
               changed={e => {
                 this.handleAddLibInput(e.target.value, 'path');
-                console.log('gggg');
               }}
             />
             <Button
@@ -151,7 +150,6 @@ class Settings extends Component {
                   path: this.state.addLib.path,
                   id: this.props.user.id
                 });
-                console.log('addLib');
               }}
               disabled={disable}
             >

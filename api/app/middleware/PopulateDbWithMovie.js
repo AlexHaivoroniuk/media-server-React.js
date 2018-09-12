@@ -1,6 +1,6 @@
 const Movie = require("../models/Movie");
 const { URL } = require('url');
-const logger = require('./../../config/winston/winston');
+const logger = require('../../config/winston');
 const testFolder = new URL('file:///home/ohaivoroniuk/Movies');
 const fs = require("fs");
 const axios = require("axios");

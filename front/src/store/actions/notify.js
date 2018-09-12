@@ -19,14 +19,20 @@ export const notifStreamConnect = data => (dispatch, getState) => {
     }
   };
   eventSource.onmessage = function(e) {
+    let lastMsgId = null;
     if (e.lastEventId === '-1') {
       console.log('Connection closed');
       eventSource.close();
     }
-    dispatch({
-      type: actions.NOTIFY_STREAM_MESSAGE,
-      data: JSON.parse(e.data),
-      id: e.lastEventId
-    });
+    // console.log('message received');
+    if (e.lastEventId !== lastMsgId) {
+      console.log(e);
+      dispatch({
+        type: actions.NOTIFY_STREAM_MESSAGE,
+        data: JSON.parse(e.data),
+        id: e.lastEventId
+      });
+    }
+    lastMsgId = e.lastEventId;
   };
 };
