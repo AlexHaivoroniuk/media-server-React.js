@@ -3,7 +3,8 @@ const logger  = require('../../config/winston/winston');
 const path = require('path');
 const scriptName = path.basename(__filename);
 class UserController {
-    create(req, res) {
+    createLogins(req, res) {
+        console.log('create logins');
         [
             {
                 username: 'admin',

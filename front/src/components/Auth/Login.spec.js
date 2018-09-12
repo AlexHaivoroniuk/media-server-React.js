@@ -25,13 +25,13 @@ describe('<Login />', () => {
   });
 
   it('should have correct structure', () => {
-    expect(wrapper.find('.login').length).toEqual(1);
-    expect(wrapper.find('.login').find('.username').length).toEqual(1);
-    expect(wrapper.find('.login').find('.password').length).toEqual(1);
-    expect(wrapper.find('.login').find('button.button').length).toEqual(1);
+    expect(wrapper.find('.auth').length).toEqual(1);
+    expect(wrapper.find('.auth').find('.username').length).toEqual(1);
+    expect(wrapper.find('.auth').find('.password').length).toEqual(1);
+    expect(wrapper.find('.auth').find('button.button').length).toEqual(1);
     expect(
       wrapper
-        .find('.login')
+        .find('.auth')
         .find('.button')
         .text()
     ).toEqual('Login');
@@ -41,7 +41,7 @@ describe('<Login />', () => {
     mockFn = jest.fn();
     wrapper = mount(<Login store={store} userLogin={mockFn} />);
     wrapper
-      .find('.login')
+      .find('.auth')
       .find('button.button')
       .simulate('click');
     expect(mockFn).toHaveBeenCalled();

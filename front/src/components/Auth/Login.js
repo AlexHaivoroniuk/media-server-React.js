@@ -14,7 +14,7 @@ export class Login extends Component {
 
   render() {
     return (
-      <div className={styles.login}>
+      <div className={styles.auth}>
         <div>
           <input
             className={styles.username}
