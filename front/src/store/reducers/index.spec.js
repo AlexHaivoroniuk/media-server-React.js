@@ -6,6 +6,7 @@ import currentMovie from './currentMovie';
 import filterData from './filterData';
 import libraries from './libraries';
 import user from './user';
+import setupUsers from './setupUsers';
 import reducer from './index';
 
 jest.mock('redux', () => ({ combineReducers: jest.fn() }));
@@ -23,7 +24,8 @@ describe('combined (index) reducer ', () => {
       currentMovie,
       filterData,
       libraries,
-      user
+      user,
+      setupUsers
     };
 
     expect(combineReducers.mock.calls[0][0]).toEqual(expectedReducers);
