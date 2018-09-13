@@ -33,6 +33,7 @@ class Edit extends Component {
               <label for="username">Username: </label>
               <input
                 className={styles.username}
+                required
                 name="username"
                 type="text"
                 defaultValue={this.props.user.username}
