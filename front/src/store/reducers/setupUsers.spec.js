@@ -44,10 +44,16 @@ describe('reducer setupUsers', () => {
     expect(reducer(state, { type: 'USER_FETCH_START' })).toEqual(state);
   });
 
-  it('should handle USER_FETCH_SUCCESS', () => {
+  it('should handle USER_FETCH_SUCCESS when state is empty', () => {
     expect(reducer([], { type: 'USER_FETCH_SUCCESS', users: state })).toEqual(
       state
     );
+  });
+
+  it('should handle USER_FETCH_SUCCESS when state is not empty', () => {
+    expect(
+      reducer(state, { type: 'USER_FETCH_SUCCESS', users: state })
+    ).toEqual(state);
   });
 
   it('should handle USER_FETCH_FAILURE', () => {

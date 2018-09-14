@@ -12,7 +12,7 @@ const setupUsers = (state = [], action) => {
     case actions.USER_FETCH_START:
       return [...state];
     case actions.USER_FETCH_SUCCESS:
-      return [...state, ...action.users];
+      return [...action.users];
     case actions.USER_FETCH_FAILURE:
       return [...state];
     case actions.USER_CREATE_SUCCESS:
