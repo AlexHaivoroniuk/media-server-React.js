@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { userUpdate } from '../../../../store/actions/setupUsers';
 import styles from '../../Auth.scss';
 
-class Edit extends Component {
+export class Edit extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const username = this.getUserName.value;
@@ -26,13 +27,14 @@ class Edit extends Component {
   render() {
     return (
       <div className={styles.auth}>
-        <form className="form" onSubmit={this.handleSubmit}>
+        <form className="form">
           <fieldset>
             <legend>Edit user: {this.props.user.username}</legend>
             <div>
-              <label for="username">Username: </label>
+              <label htmlFor="username">Username: </label>
               <input
                 className={styles.username}
+                required
                 name="username"
                 type="text"
                 defaultValue={this.props.user.username}
@@ -41,7 +43,7 @@ class Edit extends Component {
               />
             </div>
             <div>
-              <label for="password">Password: </label>
+              <label htmlFor="password">Password: </label>
               <input
                 className={styles.password}
                 name="password"
@@ -51,7 +53,7 @@ class Edit extends Component {
               />
             </div>
             <div>
-              <label for="role">Role: </label>
+              <label htmlFor="role">Role: </label>
               <select
                 className={styles.role}
                 required
@@ -63,7 +65,9 @@ class Edit extends Component {
                 <option>Admin</option>
               </select>
             </div>
-            <button className={styles.button}>Save</button>
+            <button className={styles.button} onClick={this.handleSubmit}>
+              Save
+            </button>
             <button
               className={styles.button}
               onClick={() => this.props.cancel(this.props.user.id)}
@@ -76,6 +80,14 @@ class Edit extends Component {
     );
   }
 }
+
+Edit.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.string,
+    username: PropTypes.string,
+    role: PropTypes.string
+  })
+};
 
 const mapDispatchToProps = dispatch => ({
   update: data => {

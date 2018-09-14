@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { userDelete } from '../../../../store/actions/setupUsers';
 import styles from '../../Auth.scss';
 
-class User extends Component {
+export class User extends Component {
   render() {
     return (
       <div className="User">
@@ -36,6 +37,14 @@ class User extends Component {
     );
   }
 }
+
+User.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.string,
+    username: PropTypes.string,
+    role: PropTypes.string
+  })
+};
 
 const mapDispatchToProps = dispatch => ({
   edit: id => {
