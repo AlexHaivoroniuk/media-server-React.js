@@ -70,18 +70,17 @@ class UserController {
             password: req.body.password,
             role: req.body.role
         });
-        newUser.save(function(err) {
-            if (err) {
-                return res.status(500).send(logger.frontMessage(err.message || 'Creating user error.', 'error'));
-            }
-        });
+        newUser.save()
+        .then(() => {
+            logger.front_info({ message: 'User created successfully', type: 'info' });
 
-        logger.front_info({ message: 'User created successfully', type: 'info' });
-
-        return res.json({
-            id: newUser._id,
-            username: newUser.username,
-            role: newUser.role
+            return res.json({
+                id: newUser._id,
+                username: newUser.username,
+                role: newUser.role
+            });
+        }).catch(err => {
+            return res.status(500).send(logger.frontMessage(`Error creating user ${req.body.username}`, 'error'));
         });
     }
     update(req, res) {
