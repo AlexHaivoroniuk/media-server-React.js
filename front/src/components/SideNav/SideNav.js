@@ -6,7 +6,7 @@ import idxStyles from './../../index.scss';
 import { Link } from 'react-router-dom';
 import { logout } from '../../store/actions/user';
 
-const sideNav = props => {
+const SideNav = props => {
   const classes = {
     home: 'fa fa-home',
     protected: 'fa fa-shield-alt',
@@ -96,7 +96,7 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-sideNav.propTypes = {
+SideNav.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
@@ -111,4 +111,4 @@ sideNav.propTypes = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(sideNav);
+)(SideNav);
