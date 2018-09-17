@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter, Switch } from 'react-router-dom';
 import Toolbar from './components/Toolbar/Toolbar';
 import MoviesContainer from './containers/Movies/MoviesContainer';
 import setupUsers from './components/Auth/setupUsers/setupUsers';
@@ -71,11 +71,13 @@ class App extends Component {
         <SideNav width={this.state.style} />
         <ErrorBoundary>
           <ContentContainer>
-            <Route exact path="/" component={MoviesContainer} />
-            <Route path="/login" component={Login} />
-            <Route path="/protected" component={Protected} />
-            <Route path="/setup" component={Setup} />
-            <Route path="/:id" component={SingleMovie} />
+            <Switch>
+              <Route exact path="/" component={MoviesContainer} />
+              <Route path="/login" component={Login} />
+              <Route path="/protected" component={Protected} />
+              <Route path="/setup" component={Setup} />
+              <Route path="/:id" component={SingleMovie} />
+            </Switch>
           </ContentContainer>
         </ErrorBoundary>
         {notifications}
