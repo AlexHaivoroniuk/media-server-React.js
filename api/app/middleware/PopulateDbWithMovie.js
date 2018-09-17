@@ -22,12 +22,12 @@ module.exports = function(req, res, next) {
                 const reqArr = fs.readdirSync(testFolder).map(file => {
                   const fileArr = file.split("");
                   const movieName = fileArr.slice(0, fileArr.indexOf("(")).join("");
-                  const TitleToCheck = movieName.toLowerCase().replace(/\s/g,'');
+                  const TitleToCheck = movieName.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','');
                   const movieReleaseYear = fileArr
                     .slice(fileArr.indexOf("(") + 1, fileArr.indexOf(")"))
                     .join("");
 
-                  const toAddMovie = movie.every(m => String(m.Title).toLowerCase().replace(/\s/g,'') !== TitleToCheck || (String(m.Type) === 'movie' && String(m.Year) !== movieReleaseYear));
+                  const toAddMovie = movie.every(m => String(m.Title).toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','') !== TitleToCheck || (String(m.Type) === 'movie' && String(m.Year) !== movieReleaseYear));
 
                   if (toAddMovie) {
                     const newMovie = {
