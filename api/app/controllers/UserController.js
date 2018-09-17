@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const logger  = require('../../config/winston/winston');
+const logger  = require('../../config/winston');
 const path = require('path');
 const scriptName = path.basename(__filename);
 class UserController {
@@ -9,6 +9,11 @@ class UserController {
             {
                 username: 'admin',
                 password: 'admin',
+                role: 'Admin'
+            },
+            {
+                username: 'm1',
+                password: 'm1',
                 role: 'Admin'
             },
             {

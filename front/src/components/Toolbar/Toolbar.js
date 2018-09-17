@@ -1,31 +1,116 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './Toolbar.scss';
 import idxStyles from './../../index.scss';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { logout } from '../../store/actions/user';
 
 const Toolbar = props => {
   let classes = {
-    film: 'fa fa-film',
-    bars: 'fa fa-bars'
+    home: 'fa fa-home',
+    bars: 'fa fa-bars',
+    protected: 'fa fa-shield-alt',
+    settings: 'fa fa-cogs',
+    login: 'fa fa-sign-in-alt',
+    logout: 'fa fa-sign-out-alt'
   };
+
+  const loginLogout =
+    props.user.role === 'Guest' ? (
+      <Link to={`/login`} className={styles.Toolbar__Menu__item}>
+        <div>
+          <i className={classes.login} />
+          <span>Login</span>
+        </div>
+      </Link>
+    ) : (
+      <div
+        className={styles.Toolbar__Menu__item}
+        onClick={() => props.logout()}
+      >
+        <i className={classes.logout} />
+        <span>Logout</span>
+      </div>
+    );
+
+  let settings =
+    props.user.role === 'Admin' ? (
+      <Link to={`/settings`} className={styles.Toolbar__Menu__item}>
+        <div>
+          <i className={classes.settings} />
+          <span> Settings</span>
+        </div>
+      </Link>
+    ) : null;
+  let protect =
+    props.user.role === 'User' || props.user.role === 'Admin' ? (
+      <Link to={`/protected`} className={styles.Toolbar__Menu__item}>
+        <div>
+          <i className={classes.protected} />
+          <span> Protected</span>
+        </div>
+      </Link>
+    ) : null;
   return (
     <div className={styles.Toolbar}>
       <div
-        className={`${styles.Toolbar__menu} ${idxStyles.taC}`}
+        className={`${styles.Toolbar__sideBarTgl} ${idxStyles.taC}`}
         onClick={props.toggle}
       >
         <i className={classes.bars} />
       </div>
+
+      <div className={styles.Toolbar__Menu}>
+        <Link to={`/`} className={styles.Toolbar__Menu__item}>
+          <div>
+            <i className={classes.home} />
+            <span> Home</span>
+          </div>
+        </Link>
+        {protect}
+        {settings}
+        {loginLogout}
+        <div className={styles.Toolbar__Menu__status}>
+          You are logged as {props.user.name}.
+        </div>
+      </div>
+
       <div className={styles.Logo}>
         <div />
         <div />
         <div />
         <div />
       </div>
-      <div className={`${styles.Toolbar__title}  ${idxStyles.taR}`}>
+      <Link to={`/`} className={`${styles.Toolbar__title}  ${idxStyles.taR}`}>
         MediaServer
-      </div>
+      </Link>
     </div>
   );
 };
 
-export default Toolbar;
+Toolbar.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    role: PropTypes.string,
+    isLoading: PropTypes.bool
+  }),
+  toggle: PropTypes.func,
+  logout: PropTypes.func
+};
+
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+const mapDispatchToProps = dispatch => ({
+  logout: () => {
+    dispatch(logout());
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Toolbar);

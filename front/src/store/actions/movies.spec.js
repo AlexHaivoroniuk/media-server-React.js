@@ -74,7 +74,7 @@ describe('action movies', () => {
       expect(action).toEqual([
         { type: 'FETCH_MOVIES_START' },
         {
-          e: new Error('Request failed with status code 404'),
+          e: Error('Request failed with status code 404'),
           type: 'FETCH_MOVIES_FAILURE'
         }
       ]);

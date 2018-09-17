@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styles from './SideNav.scss';
 import idxStyles from './../../index.scss';
@@ -7,11 +8,9 @@ import { logout } from '../../store/actions/user';
 
 const sideNav = props => {
   const classes = {
-    film: 'fa fa-film',
     home: 'fa fa-home',
-    music: 'fa fa-music',
-    protected: 'fa fa-cannabis',
-    setup: 'fa fa-cogs',
+    protected: 'fa fa-shield-alt',
+    settings: 'fa fa-cogs',
     login: 'fa fa-sign-in-alt',
     logout: 'fa fa-sign-out-alt'
   };
@@ -26,45 +25,64 @@ const sideNav = props => {
     ) : (
       <div
         className={`${styles.SideNav__item} ${idxStyles.taL}`}
-        onClick={() => props.logout()}
+        onClick={() => {
+          props.logout();
+        }}
       >
         <i className={classes.logout} />
         <span>Logout</span>
       </div>
     );
-  return (
-    <div className={`${styles.SideNav} ${idxStyles.taC}`} style={props.width}>
-      <div className={`${styles.SideNav__item} ${idxStyles.taL}`}>
-        <span>You are logged as {props.user.name}.</span>
-      </div>
-      <Link to={`/`}>
+  let settings =
+    props.user.role === 'Admin' ? (
+      <Link to={`/settings`}>
         <div className={`${styles.SideNav__item} ${idxStyles.taL}`}>
-          <i className={classes.home} />
-          <span>Home</span>
+          <i className={classes.settings} />
+          <span>Settings</span>
         </div>
       </Link>
-      <div className={`${styles.SideNav__item} ${idxStyles.taL}`}>
-        <i className={classes.film} />
-        <span>Movies</span>
-      </div>
-      <div className={`${styles.SideNav__item} ${idxStyles.taL}`}>
-        <i className={classes.music} />
-        <span>Music</span>
-      </div>
+    ) : null;
+  let protect =
+    props.user.role === 'User' || props.user.role === 'Admin' ? (
       <Link to={`/protected`}>
         <div className={`${styles.SideNav__item} ${idxStyles.taL}`}>
           <i className={classes.protected} />
           <span>Protected</span>
         </div>
       </Link>
-      <Link to={`/setup`}>
-        <div className={`${styles.SideNav__item} ${idxStyles.taL}`}>
-          <i className={classes.setup} />
-          <span>Setup</span>
+    ) : null;
+  return (
+    <Fragment>
+      <div
+        className={styles.SideNav__Backdrop}
+        onClick={() => {
+          props.toggle();
+        }}
+        style={{
+          display: props.show
+        }}
+      />
+      <div
+        className={`${styles.SideNav} ${idxStyles.taC}`}
+        style={{ width: props.width }}
+        onClick={e => {
+          e.stopPropagation();
+        }}
+      >
+        <div className={`${styles.SideNav__status} ${idxStyles.taL}`}>
+          <span>You are logged as {props.user.name}.</span>
         </div>
-      </Link>
-      {loginLogout}
-    </div>
+        <Link to={`/`}>
+          <div className={`${styles.SideNav__item} ${idxStyles.taL}`}>
+            <i className={classes.home} />
+            <span>Home</span>
+          </div>
+        </Link>
+        {protect}
+        {settings}
+        {loginLogout}
+      </div>
+    </Fragment>
   );
 };
 
@@ -77,6 +95,18 @@ const mapDispatchToProps = dispatch => ({
     dispatch(logout());
   }
 });
+
+sideNav.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    role: PropTypes.string,
+    isLoading: PropTypes.bool
+  }),
+  toggle: PropTypes.func,
+  logout: PropTypes.func,
+  show: PropTypes.string
+};
 
 export default connect(
   mapStateToProps,

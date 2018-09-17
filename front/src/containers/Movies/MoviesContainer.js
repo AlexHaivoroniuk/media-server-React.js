@@ -35,11 +35,8 @@ class MoviesContainer extends Component {
     }
     return (
       <Fragment>
-        <Controls toggle={this.toggleFilters} sortAZ={this.sortAZ} />
-        <Filters
-          filtersHandler={this.filtersHandler}
-          rangeHandler={this.rangeHandler}
-        />
+        <Controls />
+        <Filters />
         {list}
       </Fragment>
     );

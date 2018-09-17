@@ -1,6 +1,5 @@
 const winston = require('winston');
 const { createLogger, format, transports } = winston;
-const SSETransport = require('./SSEtransport');
 const { combine, timestamp, colorize, printf, json } = format;
 const path = require('path');
 
@@ -67,15 +66,6 @@ let options = {
             timestamp(formatTimestamp),
             myFormat,
         ),
-    },
-    sse: {
-        level: 'front_info',
-        handleExceptions: true,
-        // json: true,
-        format: combine(
-            timestamp(formatTimestamp),
-            json()
-        )
     }
 };
 
@@ -87,7 +77,6 @@ let logger = createLogger({
         new transports.File(options.file),
         new transports.File(options.fileFront),
         new transports.Console(options.console),
-        new SSETransport(options.sse),
     ],
     exitOnError: false,
 });

@@ -36,7 +36,6 @@ const initialState = {
 const store = mockStore(initialState);
 
 it('renders without crashing', () => {
-  window.EventSource = jest.fn();
   const div = document.createElement('div');
   ReactDOM.render(
     <Provider store={store}>

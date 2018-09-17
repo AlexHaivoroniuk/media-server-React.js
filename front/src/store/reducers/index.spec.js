@@ -4,6 +4,7 @@ import { notify } from './notify';
 import filters from './filters';
 import currentMovie from './currentMovie';
 import filterData from './filterData';
+import libraries from './libraries';
 import user from './user';
 import setupUsers from './setupUsers';
 import reducer from './index';
@@ -22,6 +23,7 @@ describe('combined (index) reducer ', () => {
       notify,
       currentMovie,
       filterData,
+      libraries,
       user,
       setupUsers
     };

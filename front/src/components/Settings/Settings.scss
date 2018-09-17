@@ -1,0 +1,63 @@
+.Settings {
+    height: 100%;
+    width: 100%;
+    font-family: 'Ubuntu', serif;
+    h2 {
+        text-align: center;
+    }
+    h3 {
+        padding: 0 1em;
+    }
+    &__User {
+        width: 40%;
+        padding: 1em;
+    }
+    &__Libraries {
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+        padding: 1em;
+        &__LibrariesList {
+            flex: 0 1 30%;
+            box-shadow: 0 0 0 0 white;
+            &__item {
+                cursor: pointer;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-weight: bolder;
+                height: 1em;
+                margin: 1em 0;
+                border-radius: 20px;
+                box-shadow: 3px 4px 3px 0 black;
+                transition: background-color 0.5s;
+                padding: 1em;
+                background: rgba(68, 68, 68, 0.835);
+                &:hover {
+                    background-color: rgba(131, 131, 131, 0.876);
+                }
+                &__name {
+                    display: flex;
+                    height: inherit;
+                    align-items: center;
+                    justify-content: space-between;
+                    span {
+                        padding: 0 0.5em;
+                    }
+                }
+                &__delete {
+                    padding: 0.7em;
+                    border-radius: 20px;
+                    &:hover {
+                        background-color: rgb(47, 46, 46);
+                        color: red;
+                    }
+                }
+            }
+        }
+        &__AddLibraries {
+            flex: 0 1 50%;
+        }
+    }
+}

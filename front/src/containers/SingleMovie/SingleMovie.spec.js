@@ -77,4 +77,16 @@ describe('<SingleMovie />', () => {
       expect(wrapper.find('SingleMovie').find('Spinner').length).toEqual(1);
     });
   });
+  it('should have movie prop', () => {
+    let store = mockStore(notEmptyState);
+    const wrapper = shallow(<SingleMovie store={store} />, false);
+    expect(wrapper.props().movie).toBeDefined();
+    expect(wrapper.props().movie).toEqual(movie);
+  });
+  it('should fetch() single movie on componentDidMount()', () => {
+    let store = mockStore(notEmptyState);
+    const spy = jest.spyOn(SingleMovie.prototype, 'componentDidMount');
+    const wrapper = shallow(<SingleMovie store={store} />, false);
+    expect(spy).toHaveBeenCalled();
+  });
 });
