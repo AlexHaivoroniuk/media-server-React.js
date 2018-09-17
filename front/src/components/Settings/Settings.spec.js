@@ -73,7 +73,7 @@ describe('<Settings/>', () => {
   });
   it('should handle deleteLibrary()', () => {
     const wrapper = mount(<Settings store={store} />);
-    let spy = jest.spyOn(wrapper.find('Settings').instance(), 'deleteLibrary');
+    let spy = jest.spyOn(wrapper.find('Settings').instance(), 'toggleModal');
     wrapper
       .find('.Settings__Libraries__LibrariesList__item__delete')
       .last()
@@ -128,19 +128,6 @@ describe('<Settings/>', () => {
             });
           });
         });
-        // it('should handle onClick deleteLibrary()', () => {
-        //   const mockFnOnClick = jest.fn();
-        //   wrapper
-        //     .find('.Settings__Libraries__LibrariesList__item__delete')
-        //     .last()
-        //     .instance().onClick = mockFnOnClick;
-        //   wrapper
-        //     .find('.Settings__Libraries__LibrariesList__item__delete')
-        //     .last()
-        //     .simulate('click');
-        //   wrapper.update();
-        //   expect(mockFnOnClick).toHaveBeenCalled();
-        // });
       });
       describe('Settings__Libraries__AddLibraries', () => {
         it('should have 2 Inputs and Button', () => {

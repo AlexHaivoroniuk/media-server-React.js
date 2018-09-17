@@ -63,10 +63,13 @@ class Settings extends Component {
           Math.random()
             .toString(36)
             .substring(2, 15);
-        this.props.notifyMsg(
-          { message: err.response.data.msg, type: 'error' },
-          id
-        );
+        let errorMessage = null;
+        if (err.message.data.msg !== undefined) {
+          errorMessage = err.message.data.msg;
+        } else {
+          errorMessage = 'Unknown error occured';
+        }
+        this.props.notifyMsg({ message: errorMessage, type: 'error' }, id);
         this.setState(prevState => ({
           addLib: { ...prevState.addLib, path: '' }
         }));

@@ -6,6 +6,7 @@ import Modal from './Modal';
 const mockProps = {
   show: true,
   close: jest.fn(),
+  cancellable: true,
   children: (
     <Fragment>
       <div>Children content</div>
