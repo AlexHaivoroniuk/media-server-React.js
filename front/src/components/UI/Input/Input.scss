@@ -54,6 +54,9 @@
         border-width: 0 3px 3px 0;
         transform: rotate(45deg);
     }
+    & input[type='password'] {
+        -webkit-text-security: disc;
+    }
     // custom range slider
     .SliderContainer {
         width: 100%;

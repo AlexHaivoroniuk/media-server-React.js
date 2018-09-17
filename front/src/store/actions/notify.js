@@ -5,6 +5,12 @@ export const removeNotifById = id => ({
   id
 });
 
+export const notifyMessage = (data, id) => ({
+  type: actions.NOTIFY_STREAM_MESSAGE,
+  data,
+  id
+});
+
 export const notifStreamConnect = data => (dispatch, getState) => {
   const eventSource = new EventSource('http://localhost:4000/notif_stream');
 
@@ -19,15 +25,16 @@ export const notifStreamConnect = data => (dispatch, getState) => {
     }
   };
   eventSource.onmessage = function(e) {
+    let lastMsgId = null;
     if (e.lastEventId === '-1') {
+      console.log('Connection closed');
       eventSource.close();
     }
-    // console.log(e);
-    console.log('REDUX| Data received: ' + e.data);
-    dispatch({
-      type: actions.NOTIFY_STREAM_MESSAGE,
-      data: JSON.parse(e.data),
-      id: e.lastEventId
-    });
+    // console.log('message received');
+    if (e.lastEventId !== lastMsgId) {
+      // console.log(e);
+      dispatch(notifyMessage(JSON.parse(e.data), e.lastEventId));
+    }
+    lastMsgId = e.lastEventId;
   };
 };

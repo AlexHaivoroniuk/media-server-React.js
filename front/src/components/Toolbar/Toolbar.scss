@@ -11,13 +11,20 @@
     position: fixed;
     box-shadow: 0 0 20px 0 black;
     z-index: 100;
-    .Toolbar__menu {
+    .Toolbar__sideBarTgl {
+        display: none;
         flex: 0 1 5%;
         line-height: 3em;
         align-self: center;
         &:hover {
             cursor: pointer;
-            background-color: #26a694;
+            background-color: #026455;
+        }
+        @media screen and (max-width: 960px) {
+            display: block;
+            & {
+                flex: 0 1 10%;
+            }
         }
     }
     .Toolbar__title {
@@ -27,14 +34,42 @@
         align-items: center;
         box-sizing: border-box;
         height: 100%;
-        flex: 0 1 auto;
+        flex: 1 1 auto;
         &:hover {
             cursor: pointer;
         }
     }
-    @media screen and (max-width: 650px) {
-        .Toolbar__menu {
+
+    &__Menu {
+        flex: 1 1 70%;
+        height: inherit;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        &__item {
+            cursor: pointer;
+            height: inherit;
             flex: 0 1 15%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.5s;
+            & span {
+                padding-left: 1em;
+            }
+            &:hover {
+                background-color: #00c1a8;
+            }
+            &_active {
+                background-color: #00c1a8;
+            }
+        }
+        &__status {
+            padding: 0 1em;
+        }
+        @media screen and (max-width: 960px) {
+            display: none;
         }
     }
 }
@@ -89,5 +124,16 @@
     }
     100% {
         transform: rotate(360deg);
+    }
+}
+
+a {
+    &:focus,
+    &:hover,
+    &:visited,
+    &:link,
+    &:active {
+        text-decoration: none;
+        color: white;
     }
 }

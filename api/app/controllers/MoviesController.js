@@ -1,5 +1,5 @@
 const Movie = require('../models/Movie');
-const logger  = require('../../config/winston/winston');
+const logger  = require('../../config/winston');
 const path = require('path');
 const scriptName = path.basename(__filename);
 class MoviesController {
@@ -9,7 +9,7 @@ class MoviesController {
     findAll(req, res) {
         Movie.find()
             .then(movie => {
-                logger.front_info({ message: 'FRONT Got All Movies', type: 'info', label: scriptName, line: __line})
+                // logger.front_info({ message: 'FRONT Got All Movies', type: 'info', label: scriptName, line: __line})
                 logger.info({ message: 'INFO Movies were found', label: scriptName,  line: __line})
                 res.json(movie);
             }).catch(err => {

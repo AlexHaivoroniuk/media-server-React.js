@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Route, withRouter, Switch } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import Toolbar from './components/Toolbar/Toolbar';
 import MoviesContainer from './containers/Movies/MoviesContainer';
 import setupUsers from './components/Auth/setupUsers/setupUsers';
@@ -19,21 +19,22 @@ import {
   userIsAdminRedir
 } from './auth';
 
+import SettingsComponent from './components/Settings/Settings';
 import ProtectedComponent from './components/Protected';
 import LoginComponent from './components/Auth/Login';
 
 // Need to apply the hocs here to avoid applying them inside the render method
 const Login = userIsNotAuthenticatedRedir(LoginComponent);
 const Protected = userIsAuthenticatedRedir(ProtectedComponent);
+const Settings = userIsAuthenticatedRedir(userIsAdminRedir(SettingsComponent));
 const Setup = userIsAuthenticatedRedir(userIsAdminRedir(setupUsers));
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      style: {
-        width: '0px'
-      }
+      style: '0px',
+      display: 'none'
     };
   }
 
@@ -43,7 +44,8 @@ class App extends Component {
 
   toggleNav = () => {
     this.setState((prevState, props) => ({
-      style: { width: prevState.style.width === '0px' ? '250px' : '0px' }
+      style: prevState.style === '0px' ? '250px' : '0px',
+      display: prevState.display === 'none' ? 'block' : 'none'
     }));
   };
 
@@ -55,7 +57,7 @@ class App extends Component {
           {this.props.notif.map((item, idx) => (
             <SnackBar
               key={idx}
-              message={`${item.message} - ${item.id.slice(0, 3)}`}
+              message={item.message}
               type={item.type}
               clicked={() => {
                 this.props.removeNotif(item.id);
@@ -68,13 +70,18 @@ class App extends Component {
     return (
       <Fragment>
         <Toolbar toggle={this.toggleNav} />
-        <SideNav width={this.state.style} />
+        <SideNav
+          width={this.state.style}
+          toggle={this.toggleNav}
+          show={this.state.display}
+        />
         <ErrorBoundary>
           <ContentContainer>
             <Switch>
               <Route exact path="/" component={MoviesContainer} />
               <Route path="/login" component={Login} />
               <Route path="/protected" component={Protected} />
+              <Route path="/settings" component={Settings} />
               <Route path="/setup" component={Setup} />
               <Route path="/:id" component={SingleMovie} />
             </Switch>
