@@ -38,7 +38,7 @@ class Clients {
         console.log('New client connected, now: ', connections.length);
         conn.res.on('close', function () {
             let i = connections.indexOf(conn);
-            if (i >= 0) {
+            if (i !== -1) {
                 connections.splice(i, 1);
             }
             console.log('Client disconnected, now: ', connections.length);
