@@ -5,6 +5,12 @@ export const removeNotifById = id => ({
   id
 });
 
+export const notifyMessage = (data, id) => ({
+  type: actions.NOTIFY_STREAM_MESSAGE,
+  data,
+  id
+});
+
 export const notifStreamConnect = data => (dispatch, getState) => {
   const eventSource = new EventSource('http://localhost:4000/notif_stream');
 
@@ -26,12 +32,8 @@ export const notifStreamConnect = data => (dispatch, getState) => {
     }
     // console.log('message received');
     if (e.lastEventId !== lastMsgId) {
-      console.log(e);
-      dispatch({
-        type: actions.NOTIFY_STREAM_MESSAGE,
-        data: JSON.parse(e.data),
-        id: e.lastEventId
-      });
+      // console.log(e);
+      dispatch(notifyMessage(JSON.parse(e.data), e.lastEventId));
     }
     lastMsgId = e.lastEventId;
   };

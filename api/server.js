@@ -6,11 +6,13 @@ const {url, port}   = require('./config/config');
 const app           = express();
 const winston       = require('./config/winston');
 const Movie = require("./app/models/Movie");
-const testFolder = '/home/ohaivoroniuk/Movies';
+const { LibrariesCtrlSinglton } = require("./app/routes/library_routes");
+const PopulateDb = require('./app/middleware/PopulateDbWithMovie');
+const { URL } = require('url');
+const testFolder = new URL('file:///home/ohaivoroniuk/Movies');
 const api = require("./config/config");
 const apiKey = api.apiKey;
 const path = require('path');
-const _ = require('lodash');
 const scriptName = path.basename(__filename);
 const fs = require("fs");
 const axios = require("axios");
@@ -26,7 +28,6 @@ const streamSSE = new SSE();
 winston.add(new ExpressSseTransport({
     level: 'front_info',
     handleExceptions: true,
-    // json: true,
     format: combine(
         timestamp(formatTimestamp),
         json()
@@ -34,7 +35,6 @@ winston.add(new ExpressSseTransport({
 }, streamSSE));
 
 require('./app/utils/AddNewGlobals');
-
 
 mongoose.Promise = Promise;
 app.use(bodyParser.urlencoded({ extended: true}));
@@ -45,7 +45,7 @@ app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
     next();
   });
-const db = mongoose.connect(url, { useNewUrlParser: true })
+mongoose.connect(url, { useNewUrlParser: true })
                     .then( () => { 
                         console.log('MongoDB Connected');
                     })
@@ -53,20 +53,26 @@ const db = mongoose.connect(url, { useNewUrlParser: true })
                         console.error('Failed to open Mongodb Connection: ', err.message);
                         process.exit(1);
                     });
+app.get('/movies_populate', PopulateDb);
 app.get('/notif_stream', (req, res) => {
     streamSSE.subscribe(req, res);
-    // console.log(streamSSE.getSubscriberCount());
 })
 require('./app/routes')(app);
 app.listen(port, () => {
     console.log(`Server Live on: ${port}`);
 
-
+    LibrariesCtrlSinglton.setWatchersForAll();
 
     function AddMoviesOrSingleMovie(filename){
         let movieTitle = filename.substring(0, filename.indexOf('('));
         let movieYear = filename.substring(filename.indexOf('('), filename.indexOf(')'));
-        let toAddMovie = moviesBeforeChanges.every(m => m.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','') !== filename.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.',''));
+        let toAddMovie = moviesBeforeChanges.every(m =>
+            (
+                m.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','') 
+                !== 
+                filename.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','')
+            )
+        );
         if(toAddMovie){
             return axios
           .get(
@@ -92,13 +98,24 @@ app.listen(port, () => {
 
     function RemoveMoviesOrSingleMovie(filename){
         let movieTitle = filename.substring(0, filename.indexOf('('));
-
         return axios
           .get(
             `http://localhost:4000/movies/`
           )
           .then(res => {
-            let movieToDelete = res.data.filter(m => m.Title.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','') === movieTitle.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.',''));
+                let movieToDelete = res.data.filter(m => { 
+                    if (m.Title !== undefined) {
+                        return (
+                            m.Title.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','') 
+                            === 
+                            movieTitle.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','')
+                        )
+                    } else {
+                        return false;
+                    }
+
+                } 
+          )
             return axios
             .delete(
               `http://localhost:4000/movies/${movieToDelete[0]._id}`
@@ -126,10 +143,6 @@ app.listen(port, () => {
                 if(!MACTemporary.includes(filename.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.',''))){
                     RemoveMoviesOrSingleMovie(filename);
                 }
-                //console.log(filename);
-                //console.log("MBC: " + moviesBeforeChanges);
-                //console.log("MAC: " + moviesAfterChanges);
-                //console.log("MATC: " + MACTemporary);
                 moviesAfterChanges.forEach(movieAF => {
                     if(!moviesBeforeChanges.includes(movieAF)) {
                         AddMoviesOrSingleMovie(movieAF);

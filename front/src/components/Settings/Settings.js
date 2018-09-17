@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import styles from './Settings.scss';
 import { connect } from 'react-redux';
 import { fetchLibraries } from '../../store/actions/libraries';
+import { notifyMessage } from '../../store/actions/notify';
 import axios from 'axios';
 import Input from './../UI/Input/Input';
 import Icon from './../UI/Icon/Icon';
 import Button from './../UI/Button/Button';
+import Modal from './../UI/Modal/Modal';
 
 class Settings extends Component {
   constructor(props) {
@@ -15,13 +17,23 @@ class Settings extends Component {
       addLib: {
         name: '',
         path: ''
-      }
+      },
+      showModal: false,
+      libraryToDeleteId: null
     };
+    this.toggleModal = this.toggleModal.bind(this);
+    this.deleteLibrary = this.deleteLibrary.bind(this);
   }
 
   componentDidMount = () => {
     this.props.fetchLib();
   };
+
+  toggleModal() {
+    this.setState(prevState => ({
+      showModal: !prevState.showModal
+    }));
+  }
 
   handleAddLibInput = (val, field) => {
     this.setState((prevState, props) => ({
@@ -43,17 +55,32 @@ class Settings extends Component {
         this.props.fetchLib();
         this.setState({ addLib: { name: '', path: '' } });
       })
-      .catch(err => new Error(err));
+      .catch(err => {
+        let id =
+          Math.random()
+            .toString(36)
+            .substring(2, 15) +
+          Math.random()
+            .toString(36)
+            .substring(2, 15);
+        this.props.notifyMsg(
+          { message: err.response.data.msg, type: 'error' },
+          id
+        );
+        this.setState(prevState => ({
+          addLib: { ...prevState.addLib, path: '' }
+        }));
+      });
   };
 
-  deleteLibrary = id => {
+  deleteLibrary() {
     axios
-      .delete(`http://localhost:4000/libraries/${id}`)
-      .then(res => {
+      .delete(`http://localhost:4000/libraries/${this.state.libraryToDeleteId}`)
+      .then(() => {
         this.props.fetchLib();
       })
       .catch(err => new Error(err));
-  };
+  }
 
   render() {
     let libList = null;
@@ -72,7 +99,8 @@ class Settings extends Component {
           <div
             className={styles.Settings__Libraries__LibrariesList__item__delete}
             onClick={() => {
-              this.deleteLibrary(lib._id);
+              this.setState({ libraryToDeleteId: lib._id });
+              this.toggleModal();
             }}
           >
             <Icon>fa fa-trash-alt</Icon>
@@ -83,6 +111,48 @@ class Settings extends Component {
       libList = <div>No libraries yet</div>;
     }
 
+    let modal = null;
+    if (this.state.showModal) {
+      modal = (
+        <Modal
+          show={this.state.showModal}
+          close={() => {
+            this.toggleModal();
+          }}
+          cancellable={false}
+        >
+          <div>
+            <h3>
+              <span>Are you sure to delete this library?</span>
+            </h3>
+          </div>
+          <div>
+            <Button
+              btnSize="md"
+              btnColor="success"
+              clicked={() => {
+                this.toggleModal();
+                this.deleteLibrary();
+              }}
+            >
+              Confirm
+              <Icon>fa fa-check</Icon>
+            </Button>
+            <Button
+              btnSize="md"
+              btnColor="danger"
+              clicked={() => {
+                this.toggleModal();
+              }}
+            >
+              Decline
+              <Icon>fa fa-times</Icon>
+            </Button>
+          </div>
+        </Modal>
+      );
+    }
+
     let disable =
       this.state.addLib.name === '' || this.state.addLib.path === ''
         ? true
@@ -90,6 +160,7 @@ class Settings extends Component {
 
     return (
       <div className={styles.Settings}>
+        {modal}
         <h2>Settings</h2>
         <hr />
         <h3>
@@ -187,6 +258,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchLib: () => {
     dispatch(fetchLibraries());
+  },
+  notifyMsg: (data, id) => {
+    dispatch(notifyMessage(data, id));
   }
 });
 

@@ -25,6 +25,7 @@ const movieSchema = new mongoose.Schema({
     Year: String,
     imdbID: String,
     imdbRating: String,
+    libraryId: String
 });
 
 const Movie = mongoose.model('Movie', movieSchema);

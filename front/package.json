@@ -122,6 +122,7 @@
         "enzyme-adapter-react-16": "^1.2.0",
         "eslint-config-prettier": "^3.0.1",
         "eslint-plugin-prettier": "^2.6.2",
+        "eventsourcemock": "^2.0.0",
         "identity-obj-proxy": "^3.0.0",
         "jest-enzyme": "^6.0.3",
         "node-sass": "^4.9.2",

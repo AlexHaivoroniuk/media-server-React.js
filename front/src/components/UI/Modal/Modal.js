@@ -5,29 +5,37 @@ import PropTypes from 'prop-types';
 
 const Modal = props => {
   let modal = null;
-  if (props.show) {
-    modal = (
+  let times = null;
+  const closeHandler = () => {
+    if (props.cancellable) {
+      props.close();
+    } else {
+      return;
+    }
+  };
+  if (props.cancellable) {
+    times = (
       <div
-        className={styles.ModalBackdrop}
+        className={styles.Modal_Close}
         onClick={e => {
           props.close();
         }}
       >
+        <Icon iconSize="lg">fa fa-times</Icon>
+      </div>
+    );
+  }
+  if (props.show) {
+    modal = (
+      <div className={styles.ModalBackdrop} onClick={closeHandler}>
         <div
           className={styles.Modal}
           onClick={e => {
             e.stopPropagation();
           }}
         >
+          {times}
           {props.children}
-          <div
-            className={styles.Modal_Close}
-            onClick={e => {
-              props.close();
-            }}
-          >
-            <Icon iconSize="lg">fa fa-times</Icon>
-          </div>
         </div>
       </div>
     );
@@ -39,6 +47,7 @@ export default Modal;
 
 Modal.propTypes = {
   show: PropTypes.bool.isRequired,
-  close: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired
+  close: PropTypes.func,
+  children: PropTypes.any.isRequired,
+  cancellable: PropTypes.bool
 };
