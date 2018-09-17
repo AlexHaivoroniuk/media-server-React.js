@@ -27,6 +27,7 @@ import LoginComponent from './components/Auth/Login';
 const Login = userIsNotAuthenticatedRedir(LoginComponent);
 const Protected = userIsAuthenticatedRedir(ProtectedComponent);
 const Settings = userIsAuthenticatedRedir(userIsAdminRedir(SettingsComponent));
+const Setup = userIsAuthenticatedRedir(userIsAdminRedir(setupUsers));
 
 class App extends Component {
   constructor(props) {
@@ -81,6 +82,7 @@ class App extends Component {
               <Route path="/login" component={Login} />
               <Route path="/protected" component={Protected} />
               <Route path="/settings" component={Settings} />
+              <Route path="/setup" component={Setup} />
               <Route path="/:id" component={SingleMovie} />
             </Switch>
           </ContentContainer>

@@ -12,11 +12,11 @@ const setupUsers = (state = [], action) => {
     case actions.USER_FETCH_START:
       return [...state];
     case actions.USER_FETCH_SUCCESS:
-      return [...state, ...action.users];
+      return [...action.users];
     case actions.USER_FETCH_FAILURE:
       return [...state];
     case actions.USER_CREATE_SUCCESS:
-      return state.concat([action.data]);
+      return state.concat([{ ...action.data, editing: false }]);
     case actions.USER_UPDATE_SUCCESS:
       return state.map(
         user =>

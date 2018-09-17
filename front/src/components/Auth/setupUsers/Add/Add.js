@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { userCreate } from '../../../../store/actions/setupUsers';
 import styles from '../../Auth.scss';
 
-class Add extends Component {
+export class Add extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const username = this.getUserName.value;
@@ -16,7 +16,7 @@ class Add extends Component {
       role,
       editing: false
     };
-    this.props.create(data);
+    this.props.userCreate(data);
 
     this.getUserName.value = '';
     this.getPassword.value = '';
@@ -26,11 +26,11 @@ class Add extends Component {
   render() {
     return (
       <div className={styles.auth}>
-        <form className="form" onSubmit={this.handleSubmit}>
+        <form className="form">
           <fieldset>
             <legend>New user</legend>
             <div>
-              <label for="username">Username: </label>
+              <label htmlFor="username">Username: </label>
               <input
                 className={styles.username}
                 required
@@ -41,7 +41,7 @@ class Add extends Component {
               />
             </div>
             <div>
-              <label for="password">Password: </label>
+              <label htmlFor="password">Password: </label>
               <input
                 className={styles.password}
                 required
@@ -52,7 +52,7 @@ class Add extends Component {
               />
             </div>
             <div>
-              <label for="role">Role: </label>
+              <label htmlFor="role">Role: </label>
               <select
                 className={styles.role}
                 required
@@ -63,7 +63,9 @@ class Add extends Component {
                 <option>Admin</option>
               </select>
             </div>
-            <button className={styles.button}>Add</button>
+            <button className={styles.button} onClick={this.handleSubmit}>
+              Add
+            </button>
           </fieldset>
         </form>
       </div>
@@ -71,13 +73,7 @@ class Add extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  create: data => {
-    dispatch(userCreate(data));
-  }
-});
-
 export default connect(
   null,
-  mapDispatchToProps
+  { userCreate }
 )(Add);

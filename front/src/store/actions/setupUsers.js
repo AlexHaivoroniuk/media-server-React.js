@@ -29,7 +29,7 @@ const userFailure = e => ({
   e
 });
 
-export const userFetch = data => (dispatch, getState) => {
+export const userFetch = () => (dispatch, getState) => {
   //dispatch(fetchMovieStart());
 
   return axios
