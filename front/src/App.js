@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Route, withRouter, Switch } from 'react-router-dom';
 import Toolbar from './components/Toolbar/Toolbar';
 import MoviesContainer from './containers/Movies/MoviesContainer';
+import setupUsers from './components/Auth/setupUsers/setupUsers';
 import SingleMovie from './containers/SingleMovie/SingleMovie';
 import ContentContainer from './containers/Content/ContentContainer';
 import SideNav from './components/SideNav/SideNav';
@@ -18,14 +19,13 @@ import {
   userIsAdminRedir
 } from './auth';
 
-import SetupComponent from './components/Setup';
 import ProtectedComponent from './components/Protected';
 import LoginComponent from './components/Auth/Login';
 
 // Need to apply the hocs here to avoid applying them inside the render method
 const Login = userIsNotAuthenticatedRedir(LoginComponent);
 const Protected = userIsAuthenticatedRedir(ProtectedComponent);
-const Setup = userIsAuthenticatedRedir(userIsAdminRedir(SetupComponent));
+const Setup = userIsAuthenticatedRedir(userIsAdminRedir(setupUsers));
 
 class App extends Component {
   constructor(props) {

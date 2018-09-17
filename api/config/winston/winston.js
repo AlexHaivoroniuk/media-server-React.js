@@ -91,5 +91,10 @@ let logger = createLogger({
     ],
     exitOnError: false,
 });
+logger.frontMessage = function(message, type) {
+    this.front_info({ message, type });
+
+    return { message };
+};
 
 module.exports = logger;

@@ -5,6 +5,7 @@ import filters from './filters';
 import currentMovie from './currentMovie';
 import filterData from './filterData';
 import user from './user';
+import setupUsers from './setupUsers';
 
 export default combineReducers({
   movies,
@@ -12,5 +13,6 @@ export default combineReducers({
   notify,
   currentMovie,
   filterData,
-  user
+  user,
+  setupUsers
 });
