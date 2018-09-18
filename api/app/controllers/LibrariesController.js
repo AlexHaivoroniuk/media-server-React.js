@@ -50,12 +50,11 @@ class LibrariesController {
                 logger.front_info({ message: 'Library has been added successfully', type: 'success', label: scriptName,  line: __line})
                 PopulateDB(req, res);
                 let watcher = watcherSync(data.path, data._id)
-                console.log("---->>>Watcher returner", watcher)
-                console.log("----\\\\\////\/\/\/\/\>>>Lib id", data._id)
+               
                 this.watcherInstance[data._id] = watcher;
-                console.log("---))))))>", this.watcherInstance)
+                
                 res.send(data);
-                console.log(data);
+               
             }).catch(err => {
                 res.status(500).send({
                     message: err.message || "Some error occurred while creating the Library."
@@ -65,19 +64,19 @@ class LibrariesController {
         /*TODO add check to  prevent duplicate lib paths being added */
     }
     setWatchersForAll() {
-        console.log('in the setWatchersForAll');
+      
         Libraries.find()
             .then(libs => {
                 if (libs.length > 0) {
                     libs.forEach((lib) => {
                         let watcher = watcherSync(lib.path, lib._id);
                         this.watcherInstance[lib._id] = watcher;
-                        console.log(this.watcherInstance)
+                      
                     })
                 }
                 logger.info({ message: 'Watchers for libraries have been set', label: scriptName,  line: __line})
             }).catch(err => {
-                console.log(err)
+              
                 logger.warn({ message: 'Failed to receive libraries when seWatchersForAll', label: scriptName,  line: __line})
             }); 
     }
@@ -172,14 +171,10 @@ class LibrariesController {
                 });
             }
             else {
-                console.log('>>___req par id', req.params.id, (typeof req.params.id))
-                // console.log(this.watcherInstance);
-                console.log('getWatcher --->>>', this.watcherInstance[req.params.id]);
-                // console.log('watcherClose func()', this.watcherInstance[req.params.id].close);
-                // console.log('deletion from WatcherObject', delete this.watcherInstance[req.params.id]);
+                
                 this.watcherInstance[req.params.id].close();
                 delete this.watcherInstance[req.params.id];
-                console.log(this.watcherInstance);
+               
                 Movie
                     .deleteMany({ libraryId: req.params.id })
                     .then(data => { 

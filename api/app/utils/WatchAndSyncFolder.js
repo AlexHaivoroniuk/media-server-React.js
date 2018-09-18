@@ -9,7 +9,7 @@ const apiKey = api.apiKey;
 
 module.exports = function (folder, id) {
 
-    console.log('in the waching functionnality');
+  
 
     let moviesBeforeChanges = fs.readdirSync(folder);
 
@@ -17,33 +17,45 @@ module.exports = function (folder, id) {
         console.log('AddMoviesOrSingleMovie');
         let movieTitle = filename.substring(0, filename.indexOf('('));
         let movieYear = filename.substring(filename.indexOf('('), filename.indexOf(')'));
-        let toAddMovie = moviesBeforeChanges.every(m =>
-            (
-                m.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','') 
-                !== 
-                filename.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','')
+        return axios
+            .get(
+                `http://localhost:4000/movies/`
             )
-        );
-        if(toAddMovie) {
-            return axios
-                .get(
-                    `http://www.omdbapi.com/?apikey=${apiKey}&t=${
-                    movieTitle
-                    }&y=${movieYear}`
-                )
-                .then(res => {
-                    if(res.data.Response === "True"){
-                        logger.info({ message: 'INFO Movie fetch was successful', label: scriptName, line: __line})
-                        console.log('LIBRARY ID', id);
-                        return new Movie({...res.data, libraryId: id}).save();
-                    }
-                }).catch(err => {
-                    logger.warn({ message: `WARN Movie fetch failed with error: ${err.message}`, label: scriptName, line: __line});
-                })
-            Promise.all(reqArr).then(data => {
-                res.json(data);
-            });
-        }
+            .then(res => {
+                
+                let moviesInDB = res.data;
+                let toAddMovie = moviesInDB.every(m =>
+                    (
+                        m.Title.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','') 
+                        !== 
+                        movieTitle.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','')
+                    )
+                );
+
+                if(toAddMovie) {
+                    return axios
+                        .get(
+                            `http://www.omdbapi.com/?apikey=${apiKey}&t=${
+                            movieTitle
+                            }&y=${movieYear}`
+                        )
+                        .then(res => {
+                            if(res.data.Response === "True"){
+                                logger.info({ message: 'INFO Movie fetch was successful', label: scriptName, line: __line})
+                               
+                                return new Movie({...res.data, libraryId: id}).save();
+                            }
+                        }).catch(err => {
+                            logger.warn({ message: `WARN Movie fetch failed with error: ${err.message}`, label: scriptName, line: __line});
+                        })
+                    Promise.all(reqArr).then(data => {
+                        res.json(data);
+                    });
+                }
+
+            })
+
+     
     }
 
     function RemoveMoviesOrSingleMovie(filename){
@@ -83,10 +95,15 @@ module.exports = function (folder, id) {
         console.log('UpdateDatabase');
         moviesAfterChanges = fs.readdirSync(folder);
         MACTemporary = [];
+
+        
+
         moviesAfterChanges.forEach(element => {
                     MACTemporary.push(element.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.',''));
-                });                
+                });       
+                      
         if(!!!moviesAfterChanges.includes(filename)){
+        
             if(moviesAfterChanges.length !== moviesBeforeChanges.length)
                 RemoveMoviesOrSingleMovie(filename);
             else{
@@ -94,11 +111,6 @@ module.exports = function (folder, id) {
                 if(!MACTemporary.includes(filename.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.',''))){
                     RemoveMoviesOrSingleMovie(filename);
                 }
-                moviesAfterChanges.forEach(movieAF => {
-                    if(!moviesBeforeChanges.includes(movieAF)) {
-                        AddMoviesOrSingleMovie(movieAF);
-                    }
-                });
             }
         }
         else{
@@ -106,8 +118,9 @@ module.exports = function (folder, id) {
         }
     }
     let folderWatcher = fs.watch(folder, function(eventType, filename){
-        console.log('Changes caught in ', folder)
+       
         let moviesAfterChanges = fs.readdirSync(folder);
+
         if(eventType === "rename"){
             UpdateDatabase(filename);
             moviesBeforeChanges = moviesAfterChanges;
