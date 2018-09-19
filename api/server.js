@@ -9,7 +9,7 @@ const Movie = require("./app/models/Movie");
 const { LibrariesCtrlSinglton } = require("./app/routes/library_routes");
 const PopulateDb = require('./app/middleware/PopulateDbWithMovie');
 const { URL } = require('url');
-const testFolder = new URL('file:///home/ohaivoroniuk/Movies');
+const testFolder = 'C:/Users/ycherniavskyi.EXADEL/media-server/media-files';
 const api = require("./config/config");
 const apiKey = api.apiKey;
 const path = require('path');
@@ -66,11 +66,13 @@ app.listen(port, () => {
     function AddMoviesOrSingleMovie(filename){
         let movieTitle = filename.substring(0, filename.indexOf('('));
         let movieYear = filename.substring(filename.indexOf('('), filename.indexOf(')'));
-        let toAddMovie = moviesBeforeChanges.every(m =>
+         Movie.find().then( res => {
+            moviesInDB = res;
+        let toAddMovie = moviesInDB.every(m =>
             (
-                m.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','') 
+                m.Title.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','') 
                 !== 
-                filename.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','')
+                movieTitle.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','')
             )
         );
         if(toAddMovie){
@@ -94,16 +96,17 @@ app.listen(port, () => {
             res.json(data);
           });
         }
+        });
+        
     }
 
     function RemoveMoviesOrSingleMovie(filename){
         let movieTitle = filename.substring(0, filename.indexOf('('));
-        return axios
-          .get(
-            `http://localhost:4000/movies/`
-          )
+        return Movie.find()
           .then(res => {
-                let movieToDelete = res.data.filter(m => { 
+
+                console.log(res);
+                let movieToDelete = res.filter(m => { 
                     if (m.Title !== undefined) {
                         return (
                             m.Title.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','') 
@@ -116,10 +119,7 @@ app.listen(port, () => {
 
                 } 
           )
-            return axios
-            .delete(
-              `http://localhost:4000/movies/${movieToDelete[0]._id}`
-            ).then( data=> {
+            return  Movie.findByIdAndRemove(movieToDelete[0]._id).then( data=> {
                 winston.info({ message: `Movie ${movieToDelete[0].Title} was deleted`, label: scriptName, line: __line});
                 });
                
@@ -143,11 +143,6 @@ app.listen(port, () => {
                 if(!MACTemporary.includes(filename.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.',''))){
                     RemoveMoviesOrSingleMovie(filename);
                 }
-                moviesAfterChanges.forEach(movieAF => {
-                    if(!moviesBeforeChanges.includes(movieAF)) {
-                        AddMoviesOrSingleMovie(movieAF);
-                    }
-                });
             }
         }
         else{

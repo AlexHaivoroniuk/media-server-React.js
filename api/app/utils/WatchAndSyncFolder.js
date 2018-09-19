@@ -17,13 +17,10 @@ module.exports = function (folder, id) {
         console.log('AddMoviesOrSingleMovie');
         let movieTitle = filename.substring(0, filename.indexOf('('));
         let movieYear = filename.substring(filename.indexOf('('), filename.indexOf(')'));
-        return axios
-            .get(
-                `http://localhost:4000/movies/`
-            )
+        Movie.find()
             .then(res => {
                 
-                let moviesInDB = res.data;
+                let moviesInDB = res;
                 let toAddMovie = moviesInDB.every(m =>
                     (
                         m.Title.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','') 
@@ -61,12 +58,9 @@ module.exports = function (folder, id) {
     function RemoveMoviesOrSingleMovie(filename){
         console.log('RemoveMoviesOrSingleMovie');
         let movieTitle = filename.substring(0, filename.indexOf('('));
-        return axios
-            .get(
-                `http://localhost:4000/movies/`
-            )
+        return Movie.find()
             .then(res => {
-                    let movieToDelete = res.data.filter(m => { 
+                    let movieToDelete = res.filter(m => { 
                         if (m.Title !== undefined) {
                             return (
                                 m.Title.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','') 
@@ -79,10 +73,7 @@ module.exports = function (folder, id) {
 
                     } 
         )
-            return axios
-            .delete(
-            `http://localhost:4000/movies/${movieToDelete[0]._id}`
-            ).then( data=> {
+            return Movie.findByIdAndRemove(movieToDelete[0]._id).then( data=> {
                 logger.info({ message: `Movie ${movieToDelete[0].Title} was deleted`, label: scriptName, line: __line});
                 });
             
