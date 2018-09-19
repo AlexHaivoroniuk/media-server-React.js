@@ -1,0 +1,25 @@
+const axios = require('axios');
+const api = require("./../../../config/config");
+const Movie = require("./../../models/Movie");
+const logger = require('./../../../config/winston');
+const path = require('path');
+const scriptName = path.basename(__filename);
+
+module.exports = function(options) {
+    console.log('omdb1.get');
+    return axios
+        .get(
+            `http://www.omdbapi21.com/?apikey=${api.apiKey}&t=${
+            options.title
+            }&y=${options.year}`
+        )
+        .then(res => {
+            if(res.data.Response === "True"){
+                logger.info({ message: 'INFO Movie fetch was successful', label: scriptName, line: __line})
+                
+                return Promise.resolve(new Movie({...res.data, libraryId: options.libraryId}));
+            } else {
+                return Promise.reject();
+            }
+        });
+};
