@@ -6,16 +6,14 @@ const {url, port}   = require('./config/config');
 const app           = express();
 const winston       = require('./config/winston');
 const Movie = require("./app/models/Movie");
+const MovieFetcher = require('./app/utils/MovieFetcher');
 const { LibrariesCtrlSinglton } = require("./app/routes/library_routes");
 const PopulateDb = require('./app/middleware/PopulateDbWithMovie');
 const { URL } = require('url');
-const testFolder = new URL('file:///home/ohaivoroniuk/Movies');
-const api = require("./config/config");
-const apiKey = api.apiKey;
+const testFolder = '/home/dimka/Movies';
 const path = require('path');
 const scriptName = path.basename(__filename);
 const fs = require("fs");
-const axios = require("axios");
  
 let moviesBeforeChanges = fs.readdirSync(testFolder);
 
@@ -64,51 +62,38 @@ app.listen(port, () => {
     LibrariesCtrlSinglton.setWatchersForAll();
 
     function AddMoviesOrSingleMovie(filename){
-        console.log(')))))))))))))))AddMoviesOrSingleMovie');
         let movieTitle = filename.substring(0, filename.indexOf('('));
         let movieYear = filename.substring(filename.indexOf('('), filename.indexOf(')'));
-        let toAddMovie = moviesBeforeChanges.every(m =>
-            (
-                m.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','') 
-                !== 
-                filename.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','')
-            )
-        );
-        console.log('AddMoviesOrSingleMovie MBC:', moviesBeforeChanges);
-        console.log(filename);
-        console.log("BOOOOOOOOL",toAddMovie);        
-        if(toAddMovie){
-            return axios
-          .get(
-            `http://www.omdbapi.com/?apikey=${apiKey}&t=${
-              movieTitle
-            }&y=${movieYear}`
-          )
-          .then(res => {
-              if(res.data.Response === "True"){
-            winston.info({ message: 'INFO Movie fetch was successful', label: scriptName, line: __line})
-             return new Movie(res.data)
-               .save();
-              }
-          }).catch(err => {
-            winston.warn({ message: `WARN Movie fetch failed with error: ${err.message}`, label: scriptName, line: __line});
-          })
-          ;
-          Promise.all(reqArr).then(data => {
-            res.json(data);
-          });
-        }
+        Movie.find().then( res => {
+            moviesInDB = res;
+            let toAddMovie = moviesInDB.every(m =>
+                (
+                    m.Title.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','') 
+                    !== 
+                    movieTitle.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','')
+                )
+            );
+            if(toAddMovie){
+                MovieFetcher.get({
+                    title: movieTitle,
+                    year: movieYear
+                })
+                .then(res => {
+                    res.save();
+                })
+                .catch((res) => {
+                    logger.warn({ message: `WARN Movie "${movieTitle}" not found`, label: scriptName, line: __line});
+                });
+            }
+        });
+        
     }
 
     function RemoveMoviesOrSingleMovie(filename){
-        console.log('RemoveMoviesOrSingleMovie]]]]]]]]]]]]]]]]]]]]');
         let movieTitle = filename.substring(0, filename.indexOf('('));
-        return axios
-          .get(
-            `http://localhost:4000/movies/`
-          )
-          .then(res => {
-                let movieToDelete = res.data.filter(m => { 
+        return Movie.find()
+            .then(res => {
+                let movieToDelete = res.filter(m => { 
                     if (m.Title !== undefined) {
                         return (
                             m.Title.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','') 
@@ -120,11 +105,8 @@ app.listen(port, () => {
                     }
 
                 } 
-          )
-            return axios
-            .delete(
-              `http://localhost:4000/movies/${movieToDelete[0]._id}`
-            ).then( data=> {
+            )
+            return  Movie.findByIdAndRemove(movieToDelete[0]._id).then( data=> {
                 winston.info({ message: `Movie ${movieToDelete[0].Title} was deleted`, label: scriptName, line: __line});
                 });
                
@@ -136,7 +118,6 @@ app.listen(port, () => {
     function UpdateDatabase(filename){
         moviesAfterChanges = fs.readdirSync(testFolder);
         MACTemporary = [];
-        console.log("UpdateDatabase MAC:", moviesAfterChanges);
         moviesAfterChanges.forEach(element => {
                     MACTemporary.push(element.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.',''));
                 });                
@@ -145,15 +126,9 @@ app.listen(port, () => {
                 RemoveMoviesOrSingleMovie(filename);
             else{
                 
-                
                 if(!MACTemporary.includes(filename.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.',''))){
                     RemoveMoviesOrSingleMovie(filename);
                 }
-                moviesAfterChanges.forEach(movieAF => {
-                    if(!moviesBeforeChanges.includes(movieAF)) {
-                        AddMoviesOrSingleMovie(movieAF);
-                    }
-                });
             }
         }
         else{
@@ -161,12 +136,10 @@ app.listen(port, () => {
         }
     }
     fs.watch(testFolder, function(eventType, filename){
-        // let moviesAfterChanges = fs.readdirSync(testFolder);
+        let moviesAfterChanges = fs.readdirSync(testFolder);
         if(eventType === "rename"){
             UpdateDatabase(filename);
-            console.log('fs.watch MAC:', moviesAfterChanges);
             moviesBeforeChanges = moviesAfterChanges;
         }
     });
-
 });

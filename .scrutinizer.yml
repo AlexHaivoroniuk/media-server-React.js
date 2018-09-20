@@ -19,14 +19,11 @@ build:
 
 filter:
   excluded_paths:
-    - 'api/*'
     - 'front/config/*'
     - 'front/coverage/*'
     - 'front/node_modules/*'
     - 'front/public/*'
     - 'front/scripts/*'
     - 'front/static/*'
-    - 'front/src/**/*.spec.js'
-    - 'front/src/**/*.test.js'
     - 'front/src/registerServiceWorker.js'
     - 'front/src/setupTests.js'
