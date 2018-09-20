@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from './../../../UI/Button/Button';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { userUpdate } from '../../../../store/actions/setupUsers';
@@ -26,55 +27,56 @@ export class Edit extends Component {
 
   render() {
     return (
-      <div className={styles.auth}>
-        <form className="form">
-          <fieldset>
-            <legend>Edit user: {this.props.user.username}</legend>
-            <div>
+      <div className={styles.EditUser}>
+        <form className={styles.EditUser_form}>
+          <div>Edit user: {this.props.user.username}</div>
+          <div className={styles.EditUser__form__inputGroup}>
+            <div className={styles.EditUser__form__inputGroup__input}>
               <label htmlFor="username">Username: </label>
               <input
-                className={styles.username}
                 required
                 name="username"
                 type="text"
-                defaultValue={this.props.user.username}
                 ref={input => (this.getUserName = input)}
                 placeholder="Enter user name"
               />
             </div>
-            <div>
+            <div className={styles.EditUser__form__inputGroup__input}>
               <label htmlFor="password">Password: </label>
               <input
-                className={styles.password}
+                required
                 name="password"
                 type="text"
                 ref={input => (this.getPassword = input)}
                 placeholder="Enter password"
               />
             </div>
-            <div>
+            <div className={styles.EditUser__form__inputGroup__input}>
               <label htmlFor="role">Role: </label>
               <select
-                className={styles.role}
                 required
                 name="role"
-                defaultValue={this.props.user.role}
                 ref={input => (this.getRole = input)}
               >
                 <option>User</option>
                 <option>Admin</option>
               </select>
             </div>
-            <button className={styles.button} onClick={this.handleSubmit}>
+          </div>
+          <div className={styles.EditUser__form__inputGroup__button}>
+            <Button btnSize="md" clicked={this.handleSubmit}>
               Save
-            </button>
-            <button
-              className={styles.button}
-              onClick={() => this.props.cancel(this.props.user.id)}
+            </Button>
+            <Button
+              btnSize="md"
+              clicked={e => {
+                e.preventDefault();
+                this.props.cancel();
+              }}
             >
               Cancel
-            </button>
-          </fieldset>
+            </Button>
+          </div>
         </form>
       </div>
     );
@@ -92,10 +94,10 @@ Edit.propTypes = {
 const mapDispatchToProps = dispatch => ({
   update: data => {
     dispatch(userUpdate(data));
-  },
-  cancel: id => {
-    dispatch({ type: 'USER_EDIT', id });
   }
+  // cancel: id => {
+  //   dispatch({ type: 'USER_EDIT', id });
+  // }
 });
 
 export default connect(

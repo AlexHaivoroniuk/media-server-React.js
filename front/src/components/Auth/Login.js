@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Button from './../UI/Button/Button';
 import styles from './Auth.scss';
 import { userLogin } from '../../store/actions/user';
 
@@ -32,9 +33,9 @@ export class Login extends Component {
           />
         </div>
         <div>
-          <button className={styles.button} onClick={this.onClick}>
+          <Button btnSize="md" clicked={this.onClick}>
             Login
-          </button>
+          </Button>
         </div>
       </div>
     );

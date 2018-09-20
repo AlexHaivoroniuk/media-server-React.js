@@ -93,8 +93,6 @@ app.listen(port, () => {
         let movieTitle = filename.substring(0, filename.indexOf('('));
         return Movie.find()
             .then(res => {
-
-                console.log(res);
                 let movieToDelete = res.filter(m => { 
                     if (m.Title !== undefined) {
                         return (
@@ -141,7 +139,7 @@ app.listen(port, () => {
         let moviesAfterChanges = fs.readdirSync(testFolder);
         if(eventType === "rename"){
             UpdateDatabase(filename);
-        moviesBeforeChanges = moviesAfterChanges;
+            moviesBeforeChanges = moviesAfterChanges;
         }
     });
 });

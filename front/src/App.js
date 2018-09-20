@@ -50,13 +50,14 @@ class App extends Component {
   };
 
   render() {
+    // Math.round(Math.random() * (100 - 1) + 1)
     let notifications = <div />;
     if (this.props.notif.length > 0) {
       notifications = (
         <div className={styles.NotifWrapper}>
           {this.props.notif.map((item, idx) => (
             <SnackBar
-              key={idx}
+              key={item.id}
               message={item.message}
               type={item.type}
               clicked={() => {
@@ -75,18 +76,16 @@ class App extends Component {
           toggle={this.toggleNav}
           show={this.state.display}
         />
-        <ErrorBoundary>
-          <ContentContainer>
-            <Switch>
-              <Route exact path="/" component={MoviesContainer} />
-              <Route path="/login" component={Login} />
-              <Route path="/protected" component={Protected} />
-              <Route path="/settings" component={Settings} />
-              <Route path="/setup" component={Setup} />
-              <Route path="/:id" component={SingleMovie} />
-            </Switch>
-          </ContentContainer>
-        </ErrorBoundary>
+        <ContentContainer>
+          <Switch>
+            <Route exact path="/" component={MoviesContainer} />
+            <Route path="/login" component={Login} />
+            <Route path="/protected" component={Protected} />
+            <Route path="/settings" component={Settings} />
+            <Route path="/setup" component={Setup} />
+            <Route path="/:id" component={SingleMovie} />
+          </Switch>
+        </ContentContainer>
         {notifications}
       </Fragment>
     );
