@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { userFetch } from '../../../../store/actions/setupUsers';
 import User from '../User/User';
-import Edit from '../Edit/Edit';
+import Add from '../Add/Add';
+import styles from './../../Auth.scss';
 
 class List extends Component {
   componentDidMount = () => {
@@ -11,16 +12,11 @@ class List extends Component {
 
   render() {
     return (
-      <div>
+      <div className={styles.UserList}>
         {this.props.users.map(user => (
-          <div key={user.id}>
-            {user.editing ? (
-              <Edit user={user} key={user.id} />
-            ) : (
-              <User user={user} key={user.id} />
-            )}
-          </div>
+          <User user={user} key={user.id} />
         ))}
+        <Add />
       </div>
     );
   }
@@ -42,3 +38,12 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(List);
+
+// {this.props.users.map(
+//   user =>
+//     user.editing ? (
+//       <Edit user={user} key={user.id} />
+//     ) : (
+//       <User user={user} key={user.id} />
+//     )
+// )}

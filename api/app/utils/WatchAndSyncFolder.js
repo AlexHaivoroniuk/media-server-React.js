@@ -9,12 +9,9 @@ const apiKey = api.apiKey;
 
 module.exports = function (folder, id) {
 
-    console.log('in the waching functionnality');
-
     let moviesBeforeChanges = fs.readdirSync(folder);
-
+    
     function AddMoviesOrSingleMovie(filename){
-        console.log('AddMoviesOrSingleMovie');
         let movieTitle = filename.substring(0, filename.indexOf('('));
         let movieYear = filename.substring(filename.indexOf('('), filename.indexOf(')'));
         let toAddMovie = moviesBeforeChanges.every(m =>
@@ -34,7 +31,6 @@ module.exports = function (folder, id) {
                 .then(res => {
                     if(res.data.Response === "True"){
                         logger.info({ message: 'INFO Movie fetch was successful', label: scriptName, line: __line})
-                        console.log('LIBRARY ID', id);
                         return new Movie({...res.data, libraryId: id}).save();
                     }
                 }).catch(err => {
@@ -47,7 +43,6 @@ module.exports = function (folder, id) {
     }
 
     function RemoveMoviesOrSingleMovie(filename){
-        console.log('RemoveMoviesOrSingleMovie');
         let movieTitle = filename.substring(0, filename.indexOf('('));
         return axios
             .get(
@@ -80,7 +75,6 @@ module.exports = function (folder, id) {
     }
 
     function UpdateDatabase(filename){
-        console.log('UpdateDatabase');
         moviesAfterChanges = fs.readdirSync(folder);
         MACTemporary = [];
         moviesAfterChanges.forEach(element => {
@@ -106,7 +100,6 @@ module.exports = function (folder, id) {
         }
     }
     let folderWatcher = fs.watch(folder, function(eventType, filename){
-        console.log('Changes caught in ', folder)
         let moviesAfterChanges = fs.readdirSync(folder);
         if(eventType === "rename"){
             UpdateDatabase(filename);

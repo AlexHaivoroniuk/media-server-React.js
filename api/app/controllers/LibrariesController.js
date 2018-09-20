@@ -173,10 +173,7 @@ class LibrariesController {
             }
             else {
                 console.log('>>___req par id', req.params.id, (typeof req.params.id))
-                // console.log(this.watcherInstance);
                 console.log('getWatcher --->>>', this.watcherInstance[req.params.id]);
-                // console.log('watcherClose func()', this.watcherInstance[req.params.id].close);
-                // console.log('deletion from WatcherObject', delete this.watcherInstance[req.params.id]);
                 this.watcherInstance[req.params.id].close();
                 delete this.watcherInstance[req.params.id];
                 console.log(this.watcherInstance);

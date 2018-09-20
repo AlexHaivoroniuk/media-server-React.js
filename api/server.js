@@ -64,6 +64,7 @@ app.listen(port, () => {
     LibrariesCtrlSinglton.setWatchersForAll();
 
     function AddMoviesOrSingleMovie(filename){
+        console.log(')))))))))))))))AddMoviesOrSingleMovie');
         let movieTitle = filename.substring(0, filename.indexOf('('));
         let movieYear = filename.substring(filename.indexOf('('), filename.indexOf(')'));
         let toAddMovie = moviesBeforeChanges.every(m =>
@@ -73,6 +74,9 @@ app.listen(port, () => {
                 filename.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.','')
             )
         );
+        console.log('AddMoviesOrSingleMovie MBC:', moviesBeforeChanges);
+        console.log(filename);
+        console.log("BOOOOOOOOL",toAddMovie);        
         if(toAddMovie){
             return axios
           .get(
@@ -97,6 +101,7 @@ app.listen(port, () => {
     }
 
     function RemoveMoviesOrSingleMovie(filename){
+        console.log('RemoveMoviesOrSingleMovie]]]]]]]]]]]]]]]]]]]]');
         let movieTitle = filename.substring(0, filename.indexOf('('));
         return axios
           .get(
@@ -131,6 +136,7 @@ app.listen(port, () => {
     function UpdateDatabase(filename){
         moviesAfterChanges = fs.readdirSync(testFolder);
         MACTemporary = [];
+        console.log("UpdateDatabase MAC:", moviesAfterChanges);
         moviesAfterChanges.forEach(element => {
                     MACTemporary.push(element.toLowerCase().replace(/\s/g,'').replace(':','').replace('?','').replace('.',''));
                 });                
@@ -155,12 +161,12 @@ app.listen(port, () => {
         }
     }
     fs.watch(testFolder, function(eventType, filename){
-        let moviesAfterChanges = fs.readdirSync(testFolder);
+        // let moviesAfterChanges = fs.readdirSync(testFolder);
         if(eventType === "rename"){
             UpdateDatabase(filename);
-        moviesBeforeChanges = moviesAfterChanges;
+            console.log('fs.watch MAC:', moviesAfterChanges);
+            moviesBeforeChanges = moviesAfterChanges;
         }
-        
     });
 
 });
