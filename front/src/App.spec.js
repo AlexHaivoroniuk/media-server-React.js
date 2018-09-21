@@ -89,10 +89,6 @@ describe('<App />', () => {
       expect(wrapper.find('App').length).toEqual(1);
       expect(wrapper.find('App').find('Toolbar').length).toEqual(1);
       expect(wrapper.find('App').find('Connect(SideNav)').length).toEqual(1);
-      expect(wrapper.find('App').find('ErrorBoundary').length).toEqual(1);
-      expect(
-        wrapper.find('ErrorBoundary').find('ContentContainer').length
-      ).toEqual(1);
     });
 
     it('when notify is empty', () => {

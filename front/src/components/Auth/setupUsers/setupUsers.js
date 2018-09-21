@@ -7,9 +7,12 @@ class setupUsers extends Component {
     return (
       <div className="setupUsers">
         <div className="navbar">
-          <h2 className="center ">Users setup</h2>
+          <h3 className="center ">
+            <em>Users setup</em>
+          </h3>
         </div>
         <List />
+        <hr />
         <Add />
       </div>
     );

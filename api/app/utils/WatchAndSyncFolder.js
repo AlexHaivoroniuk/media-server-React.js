@@ -8,9 +8,8 @@ const scriptName = path.basename(__filename);
 module.exports = function (folder, id) {
 
     let moviesBeforeChanges = fs.readdirSync(folder);
-
+    
     function AddMoviesOrSingleMovie(filename){
-        console.log('AddMoviesOrSingleMovie');
         let movieTitle = filename.substring(0, filename.indexOf('('));
         let movieYear = filename.substring(filename.indexOf('('), filename.indexOf(')'));
         Movie.find()
@@ -42,7 +41,6 @@ module.exports = function (folder, id) {
     }
 
     function RemoveMoviesOrSingleMovie(filename){
-        console.log('RemoveMoviesOrSingleMovie');
         let movieTitle = filename.substring(0, filename.indexOf('('));
         return Movie.find()
             .then(res => {
@@ -69,7 +67,6 @@ module.exports = function (folder, id) {
     }
 
     function UpdateDatabase(filename){
-        console.log('UpdateDatabase');
         moviesAfterChanges = fs.readdirSync(folder);
         MACTemporary = [];
 

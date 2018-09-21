@@ -1,58 +1,82 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styles from './SnackBar.scss';
 import Icon from './../Icon/Icon';
+import { CSSTransition } from 'react-transition-group';
 
-const SnackBar = props => {
-  let classes = [styles.SnackBar, styles.SnackBar__Show];
-
-  setTimeout(() => {
-    props.clicked();
-  }, 4000);
-
-  const onClose = () => {
-    props.clicked();
+class SnackBar extends Component {
+  state = {
+    show: false
   };
 
-  switch (props.type) {
-    case 'success':
-      classes = [
-        styles.SnackBar,
-        styles.SnackBar__Show,
-        styles.SnackBar__Success
-      ];
-      break;
-    case 'info':
-      classes = [styles.SnackBar, styles.SnackBar__Show, styles.SnackBar__Info];
-      break;
-    case 'warn':
-      classes = [styles.SnackBar, styles.SnackBar__Show, styles.SnackBar__Warn];
-      break;
-    case 'error':
-      classes = [
-        styles.SnackBar,
-        styles.SnackBar__Show,
-        styles.SnackBar__Error
-      ];
-      break;
-    default:
-      classes = [styles.SnackBar, styles.SnackBar__Show, styles.SnackBar__Info];
-      return;
+  componentDidMount = () => {
+    this.setState({ show: true });
+    setTimeout(() => {
+      this.setState({ show: false });
+    }, 4000);
+  };
+
+  onClose = () => {
+    this.props.clicked();
+  };
+  handleFadeOut = () => {
+    this.setState({ show: false });
+    this.props.clicked();
+  };
+
+  render() {
+    let classes = [styles.SnackBar, styles.SnackBar__Show];
+    switch (this.props.type) {
+      case 'success':
+        classes = [styles.SnackBar, styles.SnackBar__Success];
+        break;
+      case 'info':
+        classes = [styles.SnackBar, styles.SnackBar__Info];
+        break;
+      case 'warn':
+        classes = [styles.SnackBar, styles.SnackBar__Warn];
+        break;
+      case 'error':
+        classes = [styles.SnackBar, styles.SnackBar__Error];
+        break;
+      default:
+        classes = [styles.SnackBar, styles.SnackBar__Info];
+        return;
+    }
+
+    return (
+      <CSSTransition
+        in={this.state.show}
+        timeout={{
+          enter: 1000,
+          exit: 1000
+        }}
+        classNames={{
+          enter: styles.fadeEnter,
+          enterActive: styles.fadeEnterActive,
+          exit: styles.fadeExit,
+          exitActive: styles.fadeExitActive
+        }}
+        unmountOnExit
+        onExited={this.onClose}
+      >
+        {() => (
+          <div
+            className={classes.join(' ')}
+            onClick={e => {
+              e.stopPropagation();
+            }}
+          >
+            {this.props.message}
+            <div className={styles.SnackBar_Close} onClick={this.handleFadeOut}>
+              <Icon iconSize="lg">fa fa-times</Icon>
+            </div>
+          </div>
+        )}
+      </CSSTransition>
+    );
   }
-  return (
-    <div
-      className={classes.join(' ')}
-      onClick={e => {
-        e.stopPropagation();
-      }}
-    >
-      {props.message}
-      <div className={styles.SnackBar_Close} onClick={onClose}>
-        <Icon iconSize="lg">fa fa-times</Icon>
-      </div>
-    </div>
-  );
-};
+}
 
 SnackBar.propTypes = {
   message: PropTypes.string.isRequired,

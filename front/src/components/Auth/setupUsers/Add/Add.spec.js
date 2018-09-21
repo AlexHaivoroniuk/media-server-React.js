@@ -29,19 +29,8 @@ describe('<Add />', () => {
   describe('should have correct structure', () => {
     it('should have div.auth and form with fieldset', () => {
       expect(wrapper.find('Add').length).toEqual(1);
-      expect(wrapper.find('Add').find('.auth').length).toEqual(1);
-      expect(wrapper.find('.auth').find('form').length).toEqual(1);
-    });
-
-    it('form should have a fieldset', () => {
-      expect(wrapper.find('form').find('fieldset').length).toEqual(1);
-      expect(wrapper.find('fieldset').find('legend').length).toEqual(1);
-      expect(
-        wrapper
-          .find('fieldset')
-          .find('legend')
-          .text()
-      ).toEqual('New user');
+      expect(wrapper.find('Add').find('.AddUser').length).toEqual(1);
+      expect(wrapper.find('.AddUser').find('form').length).toEqual(1);
     });
 
     it('form should have a inputs and select', () => {
@@ -81,7 +70,7 @@ describe('<Add />', () => {
     it('submit form', () => {
       const mockFn = jest.fn();
       wrapper = mount(<Add store={store} userCreate={mockFn} />);
-      const bt = wrapper.find('button.button');
+      const bt = wrapper.find('Button');
       bt.simulate('click');
       expect(mockFn).toHaveBeenCalled();
     });

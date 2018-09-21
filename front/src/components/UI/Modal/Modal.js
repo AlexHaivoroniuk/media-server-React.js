@@ -2,9 +2,9 @@ import React from 'react';
 import Icon from './../Icon/Icon';
 import styles from './Modal.scss';
 import PropTypes from 'prop-types';
+import { CSSTransition } from 'react-transition-group';
 
 const Modal = props => {
-  let modal = null;
   let times = null;
   const closeHandler = () => {
     if (props.cancellable) {
@@ -25,22 +25,37 @@ const Modal = props => {
       </div>
     );
   }
-  if (props.show) {
-    modal = (
-      <div className={styles.ModalBackdrop} onClick={closeHandler}>
-        <div
-          className={styles.Modal}
-          onClick={e => {
-            e.stopPropagation();
-          }}
-        >
-          {times}
-          {props.children}
+  return (
+    <CSSTransition
+      in={props.show}
+      timeout={{
+        enter: 1000,
+        exit: 1000
+      }}
+      classNames={{
+        enter: styles.fadeEnter,
+        enterActive: styles.fadeEnterActive,
+        exit: styles.fadeExit,
+        exitActive: styles.fadeExitActive
+      }}
+      mountOnEnter
+      unmountOnExit
+    >
+      {() => (
+        <div className={styles.ModalBackdrop} onClick={closeHandler}>
+          <div
+            className={styles.Modal}
+            onClick={e => {
+              e.stopPropagation();
+            }}
+          >
+            {times}
+            {props.children}
+          </div>
         </div>
-      </div>
-    );
-  }
-  return modal;
+      )}
+    </CSSTransition>
+  );
 };
 
 export default Modal;

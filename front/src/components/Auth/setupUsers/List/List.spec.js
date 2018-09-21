@@ -59,11 +59,11 @@ describe('<List />', () => {
       expect(wrapper.find('List').find('Connect(User)').length).toEqual(2);
     });
 
-    it('when one user is in editing mode', () => {
+    it('should have <Add/>', () => {
       const { wrapper } = mountComponent(stateEditing);
 
       expect(wrapper.find('List').length).toEqual(1);
-      expect(wrapper.find('List').find('Connect(Edit)').length).toEqual(2);
+      expect(wrapper.find('List').find('Add').length).toEqual(1);
     });
 
     it('when movies is not empty', () => {

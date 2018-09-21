@@ -24,10 +24,16 @@ describe('<Modal/>', () => {
     expect(wrapper).toMatchSnapshot();
   });
   it('should has correct structure', () => {
-    const wrapper = shallow(<Modal {...mockProps} />);
+    const wrapper = mount(
+      <div>
+        <Modal {...mockProps} />
+      </div>
+    );
     expect(wrapper.find('.ModalBackdrop').length).toEqual(1);
     expect(wrapper.find('.Modal').length).toEqual(1);
-    expect(wrapper.find('.Modal_Close').length).toEqual(1);
+    if (wrapper.props().cancellable === true) {
+      expect(wrapper.find('.Modal_Close').length).toEqual(1);
+    }
   });
   it('should have `show` prop', () => {
     const wrapper = shallow(
