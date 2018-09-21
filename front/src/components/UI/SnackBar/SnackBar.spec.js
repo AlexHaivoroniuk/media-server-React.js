@@ -18,7 +18,7 @@ describe('<SbackBar/>', () => {
     expect(wrapper).toMatchSnapshot();
   });
   it('should have correct struture', () => {
-    const wrapper = shallow(<SnackBar {...mockRequiredPropsSnackBar} />);
+    const wrapper = mount(<SnackBar {...mockRequiredPropsSnackBar} />);
     expect(wrapper.find('.SnackBar').length).toEqual(1);
     expect(wrapper.find('.SnackBar_Close').length).toEqual(1);
   });
@@ -48,9 +48,9 @@ describe('<SbackBar/>', () => {
       mockRequiredPropsSnackBar.clicked
     );
   });
-  it('should invoke onClose when clicked SnackBar_Close', () => {
+  it('should hide SnackBar when clicked SnackBar_Close', () => {
     const wrapper = mount(<SnackBar {...mockRequiredPropsSnackBar} />);
     wrapper.find('.SnackBar_Close').simulate('click');
-    expect(mockRequiredPropsSnackBar.clicked).toHaveBeenCalled();
+    expect(wrapper.state.show).not.toBeTruthy();
   });
 });

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { userDelete } from '../../../../store/actions/setupUsers';
+import { userDelete, userUpdate } from '../../../../store/actions/setupUsers';
 import Edit from './../Edit/Edit';
 import Modal from './../../../UI/Modal/Modal';
 import Button from './../../../UI/Button/Button';
@@ -99,6 +99,7 @@ export class User extends Component {
               <div
                 className={styles.User__content__controls__delete}
                 onClick={() => {
+                  this.props.delete(this.props.user.id);
                   this.toggleModal();
                 }}
               >
@@ -107,7 +108,12 @@ export class User extends Component {
             </div>
           </div>
           <div className={this.state.editStyles.join(' ')}>
-            <Edit user={this.props.user} cancel={this.toggleEditMode} />
+            <Edit
+              user={this.props.user}
+              cancel={this.toggleEditMode}
+              update={this.props.update}
+              cancelAction={this.props.cancelAction}
+            />
           </div>
         </div>
       </Fragment>
@@ -130,6 +136,12 @@ const mapDispatchToProps = dispatch => ({
   },
   delete: id => {
     dispatch(userDelete(id));
+  },
+  update: data => {
+    dispatch(userUpdate(data));
+  },
+  cancelAction: id => {
+    dispatch({ type: 'USER_EDIT', id });
   }
 });
 

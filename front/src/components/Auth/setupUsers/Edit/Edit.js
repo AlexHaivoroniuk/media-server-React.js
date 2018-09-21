@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import Button from './../../../UI/Button/Button';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { userUpdate } from '../../../../store/actions/setupUsers';
 import styles from '../../Auth.scss';
 
 export class Edit extends Component {
@@ -72,6 +70,7 @@ export class Edit extends Component {
               clicked={e => {
                 e.preventDefault();
                 this.props.cancel();
+                this.props.cancelAction(this.props.user.id);
               }}
             >
               Cancel
@@ -88,19 +87,10 @@ Edit.propTypes = {
     id: PropTypes.string,
     username: PropTypes.string,
     role: PropTypes.string
-  })
+  }),
+  update: PropTypes.func.isRequired,
+  cancel: PropTypes.func.isRequired,
+  cancelAction: PropTypes.func.isRequired
 };
 
-const mapDispatchToProps = dispatch => ({
-  update: data => {
-    dispatch(userUpdate(data));
-  }
-  // cancel: id => {
-  //   dispatch({ type: 'USER_EDIT', id });
-  // }
-});
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(Edit);
+export default Edit;

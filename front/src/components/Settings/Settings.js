@@ -31,7 +31,6 @@ class Settings extends Component {
               className={styles.Settings__list__item}
               key={idx}
               onClick={() => {
-                console.log('Tab clicked');
                 this.handleTab(el.idx);
               }}
             >

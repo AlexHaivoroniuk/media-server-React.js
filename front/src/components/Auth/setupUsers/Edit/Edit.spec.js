@@ -20,7 +20,15 @@ describe('<Edit />', () => {
 
   beforeEach(() => {
     store = mockStore(initialState);
-    wrapper = mount(<EditContainer store={store} user={user} />);
+    wrapper = mount(
+      <EditContainer
+        store={store}
+        user={user}
+        update={jest.fn()}
+        cancel={jest.fn()}
+        cancelAction={jest.fn()}
+      />
+    );
   });
 
   it('should be defined', () => {
@@ -43,7 +51,7 @@ describe('<Edit />', () => {
       it('when it is not string', () => {
         userT.id = true;
         wrapper = mount(<EditContainer store={store} user={userT} />);
-        expect(console.error).toHaveBeenCalledTimes(1);
+        expect(console.error).toHaveBeenCalled();
       });
       it('when it is string', () => {
         userT.id = '123';
@@ -86,19 +94,8 @@ describe('<Edit />', () => {
   describe('should have correct structure', () => {
     it('should have div.auth and form with fieldset', () => {
       expect(wrapper.find('Edit').length).toEqual(1);
-      expect(wrapper.find('Edit').find('.auth').length).toEqual(1);
-      expect(wrapper.find('.auth').find('form').length).toEqual(1);
-    });
-
-    it('form should have a fieldset', () => {
-      expect(wrapper.find('form').find('fieldset').length).toEqual(1);
-      expect(wrapper.find('fieldset').find('legend').length).toEqual(1);
-      expect(
-        wrapper
-          .find('fieldset')
-          .find('legend')
-          .text()
-      ).toEqual('Edit user: name');
+      expect(wrapper.find('Edit').find('.EditUser').length).toEqual(1);
+      expect(wrapper.find('.EditUser').find('form').length).toEqual(1);
     });
 
     it('form should have a inputs and select', () => {
@@ -136,7 +133,7 @@ describe('<Edit />', () => {
       it('should call update', () => {
         const mockFn = jest.fn();
         wrapper = mount(<Edit store={store} user={user} update={mockFn} />);
-        const bt = wrapper.find('button.button').at(0);
+        const bt = wrapper.find('Button').at(0);
         bt.simulate('click');
         expect(mockFn).toHaveBeenCalled();
       });
@@ -144,8 +141,15 @@ describe('<Edit />', () => {
       it('should call dispatch', () => {
         const mockFn = jest.fn();
         store.dispatch = mockFn;
-        wrapper = mount(<EditContainer store={store} user={user} />);
-        const bt = wrapper.find('button.button').at(0);
+        wrapper = mount(
+          <EditContainer
+            store={store}
+            user={user}
+            cancel={mockFn}
+            update={mockFn}
+          />
+        );
+        const bt = wrapper.find('Button').at(0);
         bt.simulate('click');
         expect(mockFn).toHaveBeenCalled();
       });
@@ -154,19 +158,36 @@ describe('<Edit />', () => {
     describe('cancel form', () => {
       it('should call cancel', () => {
         const mockFn = jest.fn();
-        wrapper = mount(<Edit store={store} user={user} cancel={mockFn} />);
-        const bt = wrapper.find('button.button').at(1);
+        wrapper = mount(
+          <EditContainer
+            store={store}
+            user={user}
+            cancel={mockFn}
+            cancelAction={mockFn}
+            update={mockFn}
+          />
+        );
+        const bt = wrapper.find('Button').at(1);
         bt.simulate('click');
         expect(mockFn).toHaveBeenCalled();
       });
 
       it('should call dispatch', () => {
         const mockFn = jest.fn();
-        store.dispatch = mockFn;
-        wrapper = mount(<EditContainer store={store} user={user} />);
-        const bt = wrapper.find('button.button').at(1);
+        const cancelActionMockFn = jest.fn();
+        store.dispatch = cancelActionMockFn;
+        wrapper = mount(
+          <EditContainer
+            store={store}
+            user={user}
+            update={mockFn}
+            cancel={mockFn}
+            cancelAction={cancelActionMockFn}
+          />
+        );
+        const bt = wrapper.find('Button').at(1);
         bt.simulate('click');
-        expect(mockFn).toHaveBeenCalledWith({ id: '12', type: 'USER_EDIT' });
+        expect(cancelActionMockFn).toHaveBeenCalledWith('12');
       });
     });
   });

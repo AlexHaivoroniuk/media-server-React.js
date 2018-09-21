@@ -21,6 +21,7 @@ class SnackBar extends Component {
   };
   handleFadeOut = () => {
     this.setState({ show: false });
+    this.props.clicked();
   };
 
   render() {

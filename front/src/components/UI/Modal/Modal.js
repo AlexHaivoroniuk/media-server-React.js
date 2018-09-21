@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 
 const Modal = props => {
-  let modal = null;
   let times = null;
   const closeHandler = () => {
     if (props.cancellable) {

@@ -43,7 +43,7 @@ describe('<User />', () => {
       it('when it is not string', () => {
         userT.id = 123;
         wrapper = mount(<UserContainer store={store} user={userT} />);
-        expect(console.error).toHaveBeenCalledTimes(1);
+        expect(console.error).toHaveBeenCalled();
       });
       it('when it is string', () => {
         userT.id = '123';
@@ -56,7 +56,7 @@ describe('<User />', () => {
       it('when it is not string', () => {
         userT.username = false;
         wrapper = mount(<UserContainer store={store} user={userT} />);
-        expect(console.error).toHaveBeenCalledTimes(1);
+        expect(console.error).toHaveBeenCalled();
       });
       it('when it is string', () => {
         userT.username = 'stepan';
@@ -69,7 +69,7 @@ describe('<User />', () => {
       it('when it is not string', () => {
         userT.role = true;
         wrapper = mount(<UserContainer store={store} user={userT} />);
-        expect(console.error).toHaveBeenCalledTimes(1);
+        expect(console.error).toHaveBeenCalled();
       });
       it('when it is string', () => {
         userT.username = 'Admin';
@@ -88,55 +88,92 @@ describe('<User />', () => {
       expect(wrapper.find('User').length).toEqual(1);
       expect(wrapper.find('User').find('.User').length).toEqual(1);
     });
-
-    it('form should have a button Edit and a button Delete', () => {
-      expect(wrapper.find('.User').find('button').length).toEqual(2);
-      const bts = wrapper.find('.User').find('button');
-      expect(bts.at(0).text()).toEqual('Edit');
-      expect(bts.at(1).text()).toEqual('Delete');
-    });
-
-    describe('clicking on the Edit button', () => {
-      it('should call update', () => {
-        const mockFn = jest.fn();
-        wrapper = mount(<User store={store} user={user} edit={mockFn} />);
-        const bt = wrapper.find('button.edit');
-        bt.simulate('click');
-        expect(mockFn).toHaveBeenCalled();
+    describe('User__content', () => {
+      it('should have User__content', () => {
+        expect(wrapper.find('User').length).toEqual(1);
+        expect(wrapper.find('User').find('.User__content').length).toEqual(1);
       });
-
-      it('should call dispatch', () => {
-        const mockFn = jest.fn();
-        store.dispatch = mockFn;
-        wrapper = mount(<UserContainer store={store} user={user} />);
-        const bt = wrapper.find('button.edit');
-        bt.simulate('click');
-        expect(mockFn).toHaveBeenCalledWith({ id: '987', type: 'USER_EDIT' });
+      describe('User__content__info', () => {
+        it('should have User__content__info', () => {
+          expect(wrapper.find('User').length).toEqual(1);
+          expect(
+            wrapper.find('User').find('.User__content__info').length
+          ).toEqual(1);
+        });
+        it('should have User__content__info__name', () => {
+          expect(wrapper.find('User').length).toEqual(1);
+          expect(
+            wrapper.find('User').find('.User__content__info').length
+          ).toEqual(1);
+        });
+        it('should have User__content__info roleInfo', () => {
+          expect(wrapper.find('User').length).toEqual(1);
+          expect(
+            wrapper.find('User').find('.User__content__info').length
+          ).toEqual(1);
+        });
       });
-    });
-
-    describe('clicking on the Delete button', () => {
-      beforeEach(() => {
-        window.confirm = function() {
-          return true;
-        };
-      });
-
-      it('should call cancel', () => {
-        const mockFn = jest.fn();
-        wrapper = mount(<User store={store} user={user} delete={mockFn} />);
-        const bt = wrapper.find('button.delete');
-        bt.simulate('click');
-        expect(mockFn).toHaveBeenCalled();
-      });
-
-      it('should call dispatch', () => {
-        const mockFn = jest.fn();
-        store.dispatch = mockFn;
-        wrapper = mount(<UserContainer store={store} user={user} />);
-        const bt = wrapper.find('button.delete');
-        bt.simulate('click');
-        expect(mockFn).toHaveBeenCalled();
+      describe('User__content__controls', () => {
+        it('should have User__content__controls', () => {
+          expect(wrapper.find('User').length).toEqual(1);
+          expect(
+            wrapper.find('User').find('.User__content__controls').length
+          ).toEqual(1);
+        });
+        describe('User__content__controls__edit', () => {
+          it('should have User__content__controls__edit', () => {
+            expect(wrapper.find('User').length).toEqual(1);
+            expect(
+              wrapper.find('User').find('.User__content__controls').length
+            ).toEqual(1);
+          });
+          it('should open Edit window onClick', () => {
+            const mockEdit = jest.fn();
+            wrapper = mount(<User store={store} user={user} edit={mockEdit} />);
+            const bt = wrapper.find('.User__content__controls__edit');
+            bt.simulate('click');
+            expect(wrapper.find('Edit')).toBeDefined();
+            expect(wrapper.state().editing).toBeTruthy();
+            expect(mockEdit).toHaveBeenCalled();
+          });
+          it('should call dispatch', () => {
+            const mockFn = jest.fn();
+            store.dispatch = mockFn;
+            wrapper = mount(<UserContainer store={store} user={user} />);
+            const bt = wrapper.find('.User__content__controls__edit');
+            bt.simulate('click');
+            expect(mockFn).toHaveBeenCalledWith({
+              id: '987',
+              type: 'USER_EDIT'
+            });
+          });
+        });
+        describe('User__content__controls__delete', () => {
+          it('should have User__content__controls__delete', () => {
+            expect(wrapper.find('User').length).toEqual(1);
+            expect(
+              wrapper.find('User').find('.User__content__controls').length
+            ).toEqual(1);
+          });
+          it('should open Modal onClick', () => {
+            const mockFn = jest.fn();
+            wrapper = mount(<User store={store} user={user} delete={mockFn} />);
+            const bt = wrapper.find('.User__content__controls__delete');
+            bt.simulate('click');
+            expect(wrapper.find('Modal')).toBeDefined();
+            expect(wrapper.state().showModal).toBeTruthy();
+          });
+          it('should call dispatch', () => {
+            const mockFn = jest.fn();
+            store.dispatch = mockFn;
+            wrapper = mount(
+              <UserContainer store={store} user={user} delete={mockFn} />
+            );
+            const bt = wrapper.find('.User__content__controls__delete');
+            bt.simulate('click');
+            expect(mockFn).toHaveBeenCalled();
+          });
+        });
       });
     });
   });

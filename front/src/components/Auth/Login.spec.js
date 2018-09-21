@@ -28,11 +28,11 @@ describe('<Login />', () => {
     expect(wrapper.find('.auth').length).toEqual(1);
     expect(wrapper.find('.auth').find('.username').length).toEqual(1);
     expect(wrapper.find('.auth').find('.password').length).toEqual(1);
-    expect(wrapper.find('.auth').find('button.button').length).toEqual(1);
+    expect(wrapper.find('.auth').find('Button').length).toEqual(1);
     expect(
       wrapper
         .find('.auth')
-        .find('.button')
+        .find('Button')
         .text()
     ).toEqual('Login');
   });
@@ -42,7 +42,7 @@ describe('<Login />', () => {
     wrapper = mount(<Login store={store} userLogin={mockFn} />);
     wrapper
       .find('.auth')
-      .find('button.button')
+      .find('Button')
       .simulate('click');
     expect(mockFn).toHaveBeenCalled();
   });
