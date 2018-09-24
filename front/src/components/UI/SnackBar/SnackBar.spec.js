@@ -9,7 +9,7 @@ const mockRequiredPropsSnackBar = {
   clicked: jest.fn()
 };
 
-describe('<SbackBar/>', () => {
+describe('<SnackBar/>', () => {
   it('should be defined', () => {
     expect(SnackBar).toBeDefined();
   });
@@ -48,9 +48,34 @@ describe('<SbackBar/>', () => {
       mockRequiredPropsSnackBar.clicked
     );
   });
+  // it('should handleFadeOut()', () => {
+  //   const wrapper = mount(<SnackBar {...mockRequiredPropsSnackBar} />);
+  //   let spy = jest.spyOn(wrapper.instance(), 'handleFadeOut');
+  //   wrapper.update();
+  //   wrapper.find('.SnackBar_Close').simulate('click');
+  //   expect(wrapper.state.show).not.toBeTruthy();
+  //   expect(spy).toHaveBeenCalled();
+  // });
   it('should hide SnackBar when clicked SnackBar_Close', () => {
     const wrapper = mount(<SnackBar {...mockRequiredPropsSnackBar} />);
     wrapper.find('.SnackBar_Close').simulate('click');
     expect(wrapper.state.show).not.toBeTruthy();
+  });
+  it('should handle classess due to type prop', () => {
+    const types = ['success', 'info', 'warn', 'error'];
+    const typedClasses = {
+      success: 'SnackBar__Success',
+      info: 'SnackBar__Info',
+      warn: 'SnackBar__Warn',
+      error: 'SnackBar__Error'
+    };
+    types.forEach(type => {
+      const wrapper = mount(
+        <SnackBar {...mockRequiredPropsSnackBar} type={type} />
+      );
+      expect(
+        wrapper.find('.SnackBar').hasClass(typedClasses[type])
+      ).toBeTruthy();
+    });
   });
 });

@@ -12,7 +12,11 @@
 
 .Button:hover {
     background-color: #013f36;
-    filter: brightness(80%);
+}
+
+.Button:focus {
+    background-color: #013f36;
+    box-shadow: 0 0 15px 5px rgb(0, 128, 96);
 }
 
 .Button:disabled {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './Toolbar.scss';
 import idxStyles from './../../index.scss';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, NavLink, withRouter } from 'react-router-dom';
 import { logout } from '../../store/actions/user';
 
 const Toolbar = props => {
@@ -18,12 +18,16 @@ const Toolbar = props => {
 
   const loginLogout =
     props.user.role === 'Guest' ? (
-      <Link to={`/login`} className={styles.Toolbar__Menu__item}>
+      <NavLink
+        to={`/login`}
+        activeClassName={styles.Toolbar__Menu__item_active}
+        className={styles.Toolbar__Menu__item}
+      >
         <div>
           <i className={classes.login} />
           <span>Login</span>
         </div>
-      </Link>
+      </NavLink>
     ) : (
       <div
         className={styles.Toolbar__Menu__item}
@@ -36,21 +40,29 @@ const Toolbar = props => {
 
   let settings =
     props.user.role === 'Admin' ? (
-      <Link to={`/settings`} className={styles.Toolbar__Menu__item}>
+      <NavLink
+        to={`/settings`}
+        activeClassName={styles.Toolbar__Menu__item_active}
+        className={styles.Toolbar__Menu__item}
+      >
         <div>
           <i className={classes.settings} />
           <span> Settings</span>
         </div>
-      </Link>
+      </NavLink>
     ) : null;
   let protect =
     props.user.role === 'User' || props.user.role === 'Admin' ? (
-      <Link to={`/protected`} className={styles.Toolbar__Menu__item}>
+      <NavLink
+        to={`/protected`}
+        activeClassName={styles.Toolbar__Menu__item_active}
+        className={styles.Toolbar__Menu__item}
+      >
         <div>
           <i className={classes.protected} />
           <span> Protected</span>
         </div>
-      </Link>
+      </NavLink>
     ) : null;
   return (
     <div className={styles.Toolbar}>
@@ -62,12 +74,17 @@ const Toolbar = props => {
       </div>
 
       <div className={styles.Toolbar__Menu}>
-        <Link to={`/`} className={styles.Toolbar__Menu__item}>
+        <NavLink
+          exact
+          to={`/`}
+          activeClassName={styles.Toolbar__Menu__item_active}
+          className={styles.Toolbar__Menu__item}
+        >
           <div>
             <i className={classes.home} />
             <span> Home</span>
           </div>
-        </Link>
+        </NavLink>
         {protect}
         {settings}
         {loginLogout}
@@ -110,7 +127,9 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Toolbar);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Toolbar)
+);

@@ -99,7 +99,6 @@ export class User extends Component {
               <div
                 className={styles.User__content__controls__delete}
                 onClick={() => {
-                  this.props.delete(this.props.user.id);
                   this.toggleModal();
                 }}
               >

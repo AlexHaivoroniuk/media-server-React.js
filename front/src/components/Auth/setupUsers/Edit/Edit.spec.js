@@ -98,28 +98,10 @@ describe('<Edit />', () => {
       expect(wrapper.find('.EditUser').find('form').length).toEqual(1);
     });
 
-    it('form should have a inputs and select', () => {
+    it('form should have a inputs', () => {
       const form = wrapper.find('form');
-      expect(form.find('input').length).toEqual(2);
+      expect(form.find('Input').length).toEqual(3);
       expect(form.find('select').length).toEqual(1);
-      expect(
-        form
-          .find('input')
-          .at(0)
-          .prop('name')
-      ).toEqual('username');
-      expect(
-        form
-          .find('input')
-          .at(1)
-          .prop('name')
-      ).toEqual('password');
-      expect(
-        form
-          .find('select')
-          .at(0)
-          .prop('name')
-      ).toEqual('role');
     });
 
     it('form should have a button Edit and a button Cancel', () => {

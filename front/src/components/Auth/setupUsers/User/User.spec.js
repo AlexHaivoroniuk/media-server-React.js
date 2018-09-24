@@ -171,6 +171,11 @@ describe('<User />', () => {
             );
             const bt = wrapper.find('.User__content__controls__delete');
             bt.simulate('click');
+            wrapper
+              .find('Modal')
+              .find('Button')
+              .at(0)
+              .simulate('click');
             expect(mockFn).toHaveBeenCalled();
           });
         });

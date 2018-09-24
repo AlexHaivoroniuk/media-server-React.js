@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styles from './SideNav.scss';
 import idxStyles from './../../index.scss';
-import { Link } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { logout } from '../../store/actions/user';
 
 const SideNav = props => {
@@ -16,12 +16,14 @@ const SideNav = props => {
   };
   const loginLogout =
     props.user.role === 'Guest' ? (
-      <Link to={`/login`}>
-        <div className={`${styles.SideNav__item} ${idxStyles.taL}`}>
-          <i className={classes.login} />
-          <span>Login</span>
-        </div>
-      </Link>
+      <NavLink
+        to={`/login`}
+        activeClassName={styles.SideNav__item_active}
+        className={`${styles.SideNav__item} ${idxStyles.taL}`}
+      >
+        <i className={classes.login} />
+        <span>Login</span>
+      </NavLink>
     ) : (
       <div
         className={`${styles.SideNav__item} ${idxStyles.taL}`}
@@ -35,21 +37,25 @@ const SideNav = props => {
     );
   let settings =
     props.user.role === 'Admin' ? (
-      <Link to={`/settings`}>
-        <div className={`${styles.SideNav__item} ${idxStyles.taL}`}>
-          <i className={classes.settings} />
-          <span>Settings</span>
-        </div>
-      </Link>
+      <NavLink
+        to={`/settings`}
+        activeClassName={styles.SideNav__item_active}
+        className={`${styles.SideNav__item} ${idxStyles.taL}`}
+      >
+        <i className={classes.settings} />
+        <span>Settings</span>
+      </NavLink>
     ) : null;
   let protect =
     props.user.role === 'User' || props.user.role === 'Admin' ? (
-      <Link to={`/protected`}>
-        <div className={`${styles.SideNav__item} ${idxStyles.taL}`}>
-          <i className={classes.protected} />
-          <span>Protected</span>
-        </div>
-      </Link>
+      <NavLink
+        to={`/protected`}
+        activeClassName={styles.SideNav__item_active}
+        className={`${styles.SideNav__item} ${idxStyles.taL}`}
+      >
+        <i className={classes.protected} />
+        <span>Protected</span>
+      </NavLink>
     ) : null;
   return (
     <Fragment>
@@ -72,12 +78,15 @@ const SideNav = props => {
         <div className={`${styles.SideNav__status} ${idxStyles.taL}`}>
           <span>You are logged as {props.user.name}.</span>
         </div>
-        <Link to={`/`}>
-          <div className={`${styles.SideNav__item} ${idxStyles.taL}`}>
-            <i className={classes.home} />
-            <span>Home</span>
-          </div>
-        </Link>
+        <NavLink
+          exact
+          to={`/`}
+          activeClassName={styles.SideNav__item_active}
+          className={`${styles.SideNav__item} ${idxStyles.taL}`}
+        >
+          <i className={classes.home} />
+          <span>Home</span>
+        </NavLink>
         {protect}
         {settings}
         {loginLogout}
@@ -108,7 +117,9 @@ SideNav.propTypes = {
   show: PropTypes.string
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SideNav);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(SideNav)
+);

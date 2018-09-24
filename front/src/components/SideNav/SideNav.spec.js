@@ -88,14 +88,26 @@ describe('<SideNav />', () => {
 
   it('should have items', () => {
     const items = ['Home', 'Protected', 'Settings', 'Logout'];
-    expect(wrapper.find('.SideNav').find('.SideNav__item').length).toEqual(4);
+    expect(
+      wrapper.find('.SideNav').find('a.SideNav__item').length +
+        wrapper.find('.SideNav').find('div.SideNav__item').length
+    ).toEqual(4);
     items.forEach((el, i) => {
-      expect(
-        wrapper
-          .find('.SideNav__item')
-          .at(i)
-          .text()
-      ).toEqual(el);
+      if (i !== 3) {
+        expect(
+          wrapper
+            .find('a.SideNav__item')
+            .at(i)
+            .text()
+        ).toEqual(el);
+      } else {
+        expect(
+          wrapper
+            .find('.SideNav__item')
+            .last()
+            .text()
+        ).toEqual(el);
+      }
     });
   });
 
@@ -103,36 +115,93 @@ describe('<SideNav />', () => {
     it('in the general case', () => {
       const items = ['Home', 'Login'];
       const { wrapper } = mountComponent(guestState);
-      expect(wrapper.find('.SideNav').find('.SideNav__item').length).toEqual(2);
+      expect(
+        wrapper.find('.SideNav').find('a.SideNav__item').length +
+          wrapper.find('.SideNav').find('div.SideNav__item').length
+      ).toEqual(2);
       items.forEach((el, i) => {
-        expect(
-          wrapper
-            .find('.SideNav__item')
-            .at(i)
-            .text()
-        ).toEqual(el);
+        if (i !== 1) {
+          expect(
+            wrapper
+              .find('a.SideNav__item')
+              .at(i)
+              .text()
+          ).toEqual(el);
+        } else {
+          expect(
+            wrapper
+              .find('.SideNav__item')
+              .last()
+              .text()
+          ).toEqual(el);
+        }
       });
     });
 
     it('when guest user', () => {
+      const items = ['Home', 'Login'];
       const { wrapper } = mountComponent(guestState);
-      const items = wrapper.find('.SideNav').find('.SideNav__item');
-      expect(items.at(0).text()).toEqual('Home');
-      expect(items.at(1).text()).toEqual('Login');
+      items.forEach((el, i) => {
+        if (i !== 1) {
+          expect(
+            wrapper
+              .find('a.SideNav__item')
+              .at(i)
+              .text()
+          ).toEqual(el);
+        } else {
+          expect(
+            wrapper
+              .find('.SideNav__item')
+              .last()
+              .text()
+          ).toEqual(el);
+        }
+      });
     });
 
     it('when user user', () => {
+      const items = ['Home', 'Logout'];
       const { wrapper } = mountComponent(userState);
-      const items = wrapper.find('.SideNav').find('.SideNav__item');
-      expect(items.at(0).text()).toEqual('Home');
-      expect(items.at(2).text()).toEqual('Logout');
+      items.forEach((el, i) => {
+        if (i !== 1) {
+          expect(
+            wrapper
+              .find('a.SideNav__item')
+              .at(i)
+              .text()
+          ).toEqual(el);
+        } else {
+          expect(
+            wrapper
+              .find('.SideNav__item')
+              .last()
+              .text()
+          ).toEqual(el);
+        }
+      });
     });
 
     it('when admin user', () => {
+      const items = ['Home', 'Logout'];
       const { wrapper } = mountComponent(adminState);
-      const items = wrapper.find('.SideNav').find('.SideNav__item');
-      expect(items.at(0).text()).toEqual('Home');
-      expect(items.at(3).text()).toEqual('Logout');
+      items.forEach((el, i) => {
+        if (i !== 1) {
+          expect(
+            wrapper
+              .find('a.SideNav__item')
+              .at(i)
+              .text()
+          ).toEqual(el);
+        } else {
+          expect(
+            wrapper
+              .find('.SideNav__item')
+              .last()
+              .text()
+          ).toEqual(el);
+        }
+      });
     });
   });
 
@@ -161,7 +230,7 @@ describe('<SideNav />', () => {
 
     it('when user user', () => {
       const { wrapper } = mountComponent(userState);
-      expect(wrapper.find('.SideNav').find('.SideNav__item').length).toEqual(3);
+      expect(wrapper.find('.SideNav').find('.SideNav__item').length).toEqual(7);
     });
 
     it('when admin user', () => {
@@ -173,16 +242,16 @@ describe('<SideNav />', () => {
   describe('should do logout', () => {
     it('when user user', () => {
       const { wrapper, store } = mountComponent(userState);
-      const items = wrapper.find('.SideNav').find('.SideNav__item');
-      items.at(2).simulate('click');
+      const items = wrapper.find('.SideNav').find('div.SideNav__item');
+      items.simulate('click');
       let action = store.getActions();
       expect(action).toEqual([{ type: 'USER_LOGGED_OUT' }]);
     });
 
     it('when admin user', () => {
       const { wrapper, store } = mountComponent(adminState);
-      const items = wrapper.find('.SideNav').find('.SideNav__item');
-      items.at(3).simulate('click');
+      const items = wrapper.find('.SideNav').find('div.SideNav__item');
+      items.simulate('click');
       let action = store.getActions();
       expect(action).toEqual([{ type: 'USER_LOGGED_OUT' }]);
     });
@@ -195,12 +264,12 @@ describe('<SideNav />', () => {
   });
   it('should handle logout()', () => {
     wrapper
-      .find('.SideNav__item')
+      .find('div.SideNav__item')
       .last()
       .instance().onClick = logout;
     wrapper.update();
     wrapper
-      .find('.SideNav__item')
+      .find('div.SideNav__item')
       .last()
       .simulate('click');
     logout();

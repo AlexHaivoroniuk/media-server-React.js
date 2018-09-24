@@ -58,25 +58,11 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                margin: 1em 0;
-                & input,
-                select {
-                    flex: 1 1 75%;
-                    box-shadow: 0 0 1px 0 cyan;
-                    outline: none;
-                    border: 1px solid #ccc;
-                    border-radius: 10px;
-                    background-color: white;
-                    font: inherit;
-                    padding: 6px 10px;
-                    display: block;
-                    width: 100%;
-                    box-sizing: border-box;
-                }
                 & input:focus,
                 select:focus {
                     box-shadow: 0 0 10px 2px #5decc5;
                 }
+
                 & label {
                     flex: 1 1 20%;
                 }
@@ -257,6 +243,6 @@
         overflow: hidden;
     }
     &__edit_expand {
-        height: 18em;
+        height: 22em;
     }
 }

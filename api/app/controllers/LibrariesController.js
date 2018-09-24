@@ -44,24 +44,38 @@ class LibrariesController {
             userId: req.body.uId
         });
 
-
-        library.save()
-            .then(data => {
-                logger.front_info({ message: 'Library has been added successfully', type: 'success', label: scriptName,  line: __line})
-                PopulateDB(req, res);
-                let watcher = watcherSync(data.path, data._id)
-               
-                this.watcherInstance[data._id] = watcher;
-                
-                res.send(data);
-               
-            }).catch(err => {
+        Libraries
+            .find()
+            .then(libs => {
+                if (libs !== undefined && libs.length >= 0) {
+                    if (libs.map(lib => lib.path).includes(library.path)) {
+                        logger.info({ message: 'Library with a given path already exists', type: 'error', label: scriptName, line: __line })
+                        res.status(500).send({ msg: 'Library with a given path already exists'})
+                    } else {
+                        library.save()
+                            .then(data => {
+                                logger.front_info({ message: 'Library has been added successfully', type: 'success', label: scriptName,  line: __line})
+                                PopulateDB(req, res);
+                                let watcher = watcherSync(data.path, data._id)
+                               
+                                this.watcherInstance[data._id] = watcher;
+                                
+                                res.send(data);
+                               
+                            }).catch(err => {
+                                res.status(500).send({
+                                    message: err.message || "Some error occurred while creating the Library."
+                                });
+                            });
+                    }
+                }
+            })
+            .catch(err => {
                 res.status(500).send({
                     message: err.message || "Some error occurred while creating the Library."
                 });
-            });
+            })
 
-        /*TODO add check to  prevent duplicate lib paths being added */
     }
     setWatchersForAll() {
       

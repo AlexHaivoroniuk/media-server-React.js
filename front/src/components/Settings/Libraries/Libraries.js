@@ -63,8 +63,8 @@ class Libraries extends Component {
             .toString(36)
             .substring(2, 15);
         let errorMessage = null;
-        if (err.message.data !== undefined) {
-          errorMessage = err.message.data.msg;
+        if (err.response.data.msg !== undefined) {
+          errorMessage = err.response.data.msg;
         } else {
           errorMessage = 'Unknown error occured';
         }

@@ -11,9 +11,6 @@ class SnackBar extends Component {
 
   componentDidMount = () => {
     this.setState({ show: true });
-    setTimeout(() => {
-      this.setState({ show: false });
-    }, 4000);
   };
 
   onClose = () => {
@@ -25,6 +22,9 @@ class SnackBar extends Component {
   };
 
   render() {
+    setTimeout(() => {
+      this.setState({ show: false });
+    }, 4000);
     let classes = [styles.SnackBar, styles.SnackBar__Show];
     switch (this.props.type) {
       case 'success':
