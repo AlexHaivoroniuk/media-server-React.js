@@ -51,6 +51,15 @@ describe('<Settings/>', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  it('should handleTab()', () => {
+    const wrapper = shallow(<Settings />);
+    wrapper
+      .find('.Settings__list__item')
+      .at(0)
+      .simulate('click');
+    expect(wrapper.state('activeIdx')).toEqual('users');
+  });
+
   describe('should have correct structure', () => {
     let store, wrapper;
     beforeEach(() => {

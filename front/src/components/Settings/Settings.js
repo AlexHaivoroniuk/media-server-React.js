@@ -8,7 +8,7 @@ class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      contentIdx: 'libraries'
+      activeIdx: 'libraries'
     };
   }
   settingsList = [
@@ -16,7 +16,7 @@ class Settings extends Component {
     { idx: 'libraries', value: 'Libraries' }
   ];
   handleTab = idx => {
-    this.setState({ contentIdx: idx });
+    this.setState({ activeIdx: idx });
   };
   render() {
     let contentObject = {
@@ -28,7 +28,14 @@ class Settings extends Component {
         <div className={styles.Settings__list}>
           {this.settingsList.map((el, idx) => (
             <div
-              className={styles.Settings__list__item}
+              className={
+                el.idx === this.state.activeIdx
+                  ? [
+                      styles.Settings__list__item,
+                      styles.Settings__list__item_active
+                    ].join(' ')
+                  : styles.Settings__list__item
+              }
               key={idx}
               onClick={() => {
                 this.handleTab(el.idx);
@@ -39,7 +46,7 @@ class Settings extends Component {
           ))}
         </div>
         <div className={styles.Settings__content}>
-          {contentObject[this.state.contentIdx]}
+          {contentObject[this.state.activeIdx]}
         </div>
       </div>
     );

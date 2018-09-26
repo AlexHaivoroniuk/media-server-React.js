@@ -78,6 +78,26 @@ describe('<User />', () => {
       });
     });
   });
+  it('should toggleModal() on click', () => {
+    wrapper = mount(<UserContainer store={store} user={user} />);
+    wrapper
+      .find('.User__content__controls__delete')
+      .last()
+      .simulate('click');
+    const spy = jest.spyOn(wrapper.find('User').instance(), 'toggleModal');
+    expect(wrapper.find('Modal')).toBeDefined();
+    wrapper
+      .find('Modal')
+      .find('button.Button')
+      .at(0)
+      .simulate('click');
+    wrapper
+      .find('Modal')
+      .find('button.Button')
+      .at(1)
+      .simulate('click');
+    expect(spy).toHaveBeenCalledTimes(2);
+  });
 
   it('should render correctly', () => {
     expect(wrapper).toMatchSnapshot();
@@ -171,9 +191,41 @@ describe('<User />', () => {
             );
             const bt = wrapper.find('.User__content__controls__delete');
             bt.simulate('click');
+            wrapper
+              .find('Modal')
+              .find('Button')
+              .at(0)
+              .simulate('click');
             expect(mockFn).toHaveBeenCalled();
           });
         });
+      });
+
+      it('should  dispatch <Edit/> update', () => {
+        const mockFn = jest.fn();
+        store.dispatch = mockFn;
+        wrapper = mount(
+          <UserContainer store={store} user={user} update={mockFn} />
+        );
+        wrapper
+          .find('.EditUser__form__inputGroup__button')
+          .find('button.Button')
+          .at(0)
+          .simulate('click');
+        expect(mockFn).toHaveBeenCalledTimes(1);
+      });
+      it('should  dispatch <Edit/> cancelAction', () => {
+        const mockFn = jest.fn();
+        store.dispatch = mockFn;
+        wrapper = mount(
+          <UserContainer store={store} user={user} update={mockFn} />
+        );
+        wrapper
+          .find('.EditUser__form__inputGroup__button')
+          .find('button.Button')
+          .at(1)
+          .simulate('click');
+        expect(mockFn).toHaveBeenCalledTimes(1);
       });
     });
   });

@@ -3,112 +3,91 @@ import styles from './Input.scss';
 import PropTypes from 'prop-types';
 
 const Input = props => {
-  let inputElement = null;
   const inputStyles = [styles.InputElement];
-  switch (props.type) {
-    case 'text':
-      inputElement = (
-        <input
-          className={inputStyles.join(' ')}
-          value={props.value}
-          {...props.elConfig}
-          placeholder={props.placeholder}
-          autoComplete="on"
-          onChange={props.changed}
-        />
-      );
-      break;
-    case 'password':
-      inputElement = (
+  let inputElements = {
+    text: (
+      <input
+        className={inputStyles.join(' ')}
+        value={props.value}
+        {...props.elConfig}
+        placeholder={props.placeholder}
+        autoComplete="on"
+        onChange={props.changed}
+      />
+    ),
+    password: (
+      <input
+        type={props.type}
+        className={inputStyles.join(' ')}
+        value={props.value}
+        {...props.elConfig}
+        placeholder={props.placeholder}
+        autoComplete="on"
+        onChange={props.changed}
+      />
+    ),
+    textarea: (
+      <textarea
+        className={inputStyles.join(' ')}
+        value={props.value}
+        placeholder={props.placeholder}
+        {...props.elConfig}
+        autoComplete="on"
+        onChange={props.changed}
+      />
+    ),
+    select: (
+      <select
+        className={inputStyles.join(' ')}
+        value={props.value}
+        {...props.elConfig}
+        autoComplete="on"
+        onChange={props.changed}
+      >
+        <option disabled value>
+          {props.placeholder}
+        </option>
+        {props.options !== undefined
+          ? props.options.map((el, idx) => (
+              <option value={el.value} key={idx}>
+                {el.displayValue}
+              </option>
+            ))
+          : null}
+      </select>
+    ),
+    checkbox: (
+      <Fragment>
         <input
           type={props.type}
-          className={inputStyles.join(' ')}
           value={props.value}
-          {...props.elConfig}
-          placeholder={props.placeholder}
-          autoComplete="on"
-          onChange={props.changed}
-        />
-      );
-      break;
-    case 'textarea':
-      inputElement = (
-        <textarea
-          className={inputStyles.join(' ')}
-          value={props.value}
-          placeholder={props.placeholder}
           {...props.elConfig}
           autoComplete="on"
           onChange={props.changed}
         />
-      );
-      break;
-    case 'select':
-      inputElement = (
-        <select
-          className={inputStyles.join(' ')}
-          value={props.value}
-          {...props.elConfig}
-          autoComplete="on"
-          onChange={props.changed}
-        >
-          <option disabled value>
-            {props.placeholder}
-          </option>
-          {props.elConfig.options.map((el, idx) => (
-            <option value={el.value} key={idx}>
-              {el.displayValue}
-            </option>
-          ))}
-        </select>
-      );
-      break;
-    case 'checkbox':
-      inputElement = (
-        <Fragment>
-          <input
-            type={props.type}
-            value={props.value}
-            {...props.elConfig}
-            autoComplete="on"
-            onChange={props.changed}
-          />
-          <span className={styles.Checkmark} />
-        </Fragment>
-      );
-      break;
-    case 'range':
-      inputElement = (
-        <div className={styles.SliderContainer}>
-          <input
-            type={props.type}
-            className={styles.Slider}
-            value={props.value}
-            min={props.min}
-            max={props.max}
-            {...props.elConfig}
-            autoComplete="on"
-            onChange={props.changed}
-          />
-        </div>
-      );
-      break;
-
-    default:
-      inputElement = (
+        <span className={styles.Checkmark} />
+      </Fragment>
+    ),
+    range: (
+      <div className={styles.SliderContainer}>
         <input
-          className={inputStyles.join(' ')}
+          type={props.type}
+          className={styles.Slider}
+          value={props.value}
+          min={props.min}
+          max={props.max}
+          {...props.elConfig}
           autoComplete="on"
           onChange={props.changed}
         />
-      );
-      break;
-  }
+      </div>
+    )
+  };
   return (
     <div className={styles.Input}>
       <label className={styles.Label}>
         {props.label}
-        {inputElement}
+        {inputElements[props.type]}
       </label>
     </div>
   );
@@ -124,5 +103,11 @@ Input.propTypes = {
   min: PropTypes.string,
   max: PropTypes.string,
   label: PropTypes.string,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      displayValue: PropTypes.string.isRequired
+    })
+  ),
   elConfig: PropTypes.object
 };

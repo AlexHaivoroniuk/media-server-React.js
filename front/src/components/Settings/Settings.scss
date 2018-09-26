@@ -28,8 +28,12 @@
                 border-right: 3px solid rgb(19, 161, 138);
             }
         }
+        &__item_active {
+            background-color: #3e3c3c;
+        }
     }
     &__content {
+        overflow: auto;
         flex: 1 1 70%;
         padding: 1em;
         box-shadow: inset 20px 0 20px -10px #000;

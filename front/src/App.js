@@ -7,14 +7,13 @@ import SingleMovie from './containers/SingleMovie/SingleMovie';
 import ContentContainer from './containers/Content/ContentContainer';
 import SideNav from './components/SideNav/SideNav';
 import { connect } from 'react-redux';
-import ErrorBoundary from './components/utils/ErrorBoundary';
 import { notifStreamConnect, removeNotifById } from './store/actions/notify';
 import SnackBar from './components/UI/SnackBar/SnackBar';
 import styles from './App.scss';
 import {
-  userIsAuthenticated,
+  // userIsAuthenticated,
   userIsAuthenticatedRedir,
-  userIsNotAuthenticated,
+  // userIsNotAuthenticated,
   userIsNotAuthenticatedRedir,
   userIsAdminRedir
 } from './auth';
