@@ -44,7 +44,7 @@ class Libraries extends Component {
   };
 
   addLibrary = data => {
-    axios
+    return axios
       .post('http://localhost:4000/libraries', {
         name: data.name,
         path: data.path,
@@ -62,12 +62,9 @@ class Libraries extends Component {
           Math.random()
             .toString(36)
             .substring(2, 15);
-        let errorMessage = null;
-        if (err.response.data.msg !== undefined) {
-          errorMessage = err.response.data.msg;
-        } else {
-          errorMessage = 'Unknown error occured';
-        }
+        let errorMessage =
+          (((err || {}).response || {}).data || {}).msg ||
+          'Unknown error occured';
         this.props.notifyMsg({ message: errorMessage, type: 'error' }, id);
         this.setState(prevState => ({
           addLib: { ...prevState.addLib, path: '' }
@@ -76,7 +73,7 @@ class Libraries extends Component {
   };
 
   deleteLibrary() {
-    axios
+    return axios
       .delete(`http://localhost:4000/libraries/${this.state.libraryToDeleteId}`)
       .then(() => {
         this.props.fetchLib();
@@ -85,10 +82,10 @@ class Libraries extends Component {
   }
 
   render() {
-    let disable =
-      this.state.addLib.name === '' || this.state.addLib.path === ''
-        ? true
-        : false;
+    // let disable =
+    //   this.state.addLib.name === '' || this.state.addLib.path === ''
+    //     ? true
+    //     : false;
     let libList = null;
     if (this.props.libraries.length > 0) {
       libList = this.props.libraries.map((lib, idx) => (
@@ -120,13 +117,7 @@ class Libraries extends Component {
     }
 
     let modal = (
-      <Modal
-        show={this.state.showModal}
-        close={() => {
-          this.toggleModal();
-        }}
-        cancellable={false}
-      >
+      <Modal show={this.state.showModal}>
         <div>
           <h3>
             <span>Are you sure to delete this library?</span>
@@ -198,7 +189,6 @@ class Libraries extends Component {
                 id: this.props.user.id
               });
             }}
-            disabled={disable}
           >
             Add library
           </Button>

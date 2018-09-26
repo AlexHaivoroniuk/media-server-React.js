@@ -70,12 +70,10 @@ export class Edit extends Component {
                 changed={e => {
                   this.handleInput(e.target.value, 'getRole');
                 }}
-                elConfig={{
-                  options: [
-                    { value: 'User', displayValue: 'User' },
-                    { value: 'Admin', displayValue: 'Admin' }
-                  ]
-                }}
+                options={[
+                  { value: 'User', displayValue: 'User' },
+                  { value: 'Admin', displayValue: 'Admin' }
+                ]}
                 placeholder={'Input user Role'}
               />
             </div>

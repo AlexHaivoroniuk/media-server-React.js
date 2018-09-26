@@ -30,9 +30,7 @@ export const notifStreamConnect = data => (dispatch, getState) => {
       console.log('Connection closed');
       eventSource.close();
     }
-    // console.log('message received');
     if (e.lastEventId !== lastMsgId) {
-      // console.log(e);
       dispatch(notifyMessage(JSON.parse(e.data), e.lastEventId));
     }
     lastMsgId = e.lastEventId;

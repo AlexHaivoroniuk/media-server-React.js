@@ -126,12 +126,10 @@ describe('<input />', () => {
 
   describe('select input type', () => {
     const type = 'select';
-    const elConfig = {
-      options: [
-        { value: 'Cmd', displayValue: 'Comodo' },
-        { value: 'sedb', displayValue: 'Sed blandit' }
-      ]
-    };
+    const options = [
+      { value: 'Cmd', displayValue: 'Comodo' },
+      { value: 'sedb', displayValue: 'Sed blandit' }
+    ];
 
     it('should have correct structure', () => {
       const wrapper = shallow(
@@ -140,7 +138,7 @@ describe('<input />', () => {
           value="vestibulum"
           placeholder="faucibus"
           changed={mockRequiredPropsInput.changed}
-          elConfig={elConfig}
+          options={options}
         />
       );
       const ie = wrapper.find('.Input').find('.InputElement');
@@ -172,8 +170,8 @@ describe('<input />', () => {
       const wrapper = shallow(
         <Input
           type={type}
-          elConfig={elConfig}
           changed={mockFn}
+          options={options}
           value={mockRequiredPropsInput}
         />
       );

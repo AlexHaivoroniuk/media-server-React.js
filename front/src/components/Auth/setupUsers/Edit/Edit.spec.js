@@ -91,6 +91,49 @@ describe('<Edit />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  it('should handleInput()', () => {
+    wrapper = mount(<EditContainer store={store} user={user} />);
+    wrapper
+      .find('Edit')
+      .instance()
+      .handleInput('MockName', 'getUserName');
+    wrapper
+      .find('Edit')
+      .instance()
+      .handleInput('MockPass', 'getPassword');
+    wrapper
+      .find('Edit')
+      .instance()
+      .handleInput('MockRole', 'getRole');
+    expect(wrapper.state('getUserName')).toMatch('MockName');
+    expect(wrapper.state('getPassword')).toMatch('MockPass');
+    expect(wrapper.state('getRole')).toMatch('MockRole');
+  });
+  it('should handleInput() on change', () => {
+    wrapper = mount(<EditContainer store={store} user={user} />);
+    const spy = jest.spyOn(wrapper.instance(), 'handleInput');
+    wrapper
+      .find('input.InputElement')
+      .at(0)
+      .simulate('change');
+    wrapper
+      .find('input.InputElement')
+      .at(1)
+      .simulate('change');
+    wrapper.find('select.InputElement').simulate('change');
+    expect(spy).toHaveBeenCalledTimes(3);
+  });
+
+  it('should handleSubmit()', () => {
+    const mockFn = jest.fn();
+    wrapper = mount(
+      <EditContainer store={store} user={user} update={mockFn} />
+    );
+    const bt = wrapper.find('Button').at(0);
+    bt.simulate('click');
+    expect(mockFn).toHaveBeenCalled();
+  });
+
   describe('should have correct structure', () => {
     it('should have div.auth and form with fieldset', () => {
       expect(wrapper.find('Edit').length).toEqual(1);

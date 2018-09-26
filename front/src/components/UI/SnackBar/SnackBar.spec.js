@@ -48,14 +48,6 @@ describe('<SnackBar/>', () => {
       mockRequiredPropsSnackBar.clicked
     );
   });
-  // it('should handleFadeOut()', () => {
-  //   const wrapper = mount(<SnackBar {...mockRequiredPropsSnackBar} />);
-  //   let spy = jest.spyOn(wrapper.instance(), 'handleFadeOut');
-  //   wrapper.update();
-  //   wrapper.find('.SnackBar_Close').simulate('click');
-  //   expect(wrapper.state.show).not.toBeTruthy();
-  //   expect(spy).toHaveBeenCalled();
-  // });
   it('should hide SnackBar when clicked SnackBar_Close', () => {
     const wrapper = mount(<SnackBar {...mockRequiredPropsSnackBar} />);
     wrapper.find('.SnackBar_Close').simulate('click');

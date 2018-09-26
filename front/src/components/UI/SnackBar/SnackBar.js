@@ -18,31 +18,20 @@ class SnackBar extends Component {
   };
   handleFadeOut = () => {
     this.setState({ show: false });
-    this.props.clicked();
+    this.onClose();
   };
 
   render() {
     setTimeout(() => {
       this.setState({ show: false });
     }, 4000);
-    let classes = [styles.SnackBar, styles.SnackBar__Show];
-    switch (this.props.type) {
-      case 'success':
-        classes = [styles.SnackBar, styles.SnackBar__Success];
-        break;
-      case 'info':
-        classes = [styles.SnackBar, styles.SnackBar__Info];
-        break;
-      case 'warn':
-        classes = [styles.SnackBar, styles.SnackBar__Warn];
-        break;
-      case 'error':
-        classes = [styles.SnackBar, styles.SnackBar__Error];
-        break;
-      default:
-        classes = [styles.SnackBar, styles.SnackBar__Info];
-        return;
-    }
+    let typedClasses = [styles.SnackBar, styles.SnackBar__Show];
+    typedClasses = {
+      success: [styles.SnackBar, styles.SnackBar__Success],
+      info: [styles.SnackBar, styles.SnackBar__Info],
+      warn: [styles.SnackBar, styles.SnackBar__Warn],
+      error: [styles.SnackBar, styles.SnackBar__Error]
+    };
 
     return (
       <CSSTransition
@@ -62,7 +51,7 @@ class SnackBar extends Component {
       >
         {() => (
           <div
-            className={classes.join(' ')}
+            className={typedClasses[this.props.type].join(' ')}
             onClick={e => {
               e.stopPropagation();
             }}

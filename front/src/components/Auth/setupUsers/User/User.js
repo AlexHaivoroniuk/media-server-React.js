@@ -36,13 +36,7 @@ export class User extends Component {
   render() {
     let modal = null;
     modal = (
-      <Modal
-        show={this.state.showModal}
-        close={() => {
-          this.toggleModal();
-        }}
-        cancellable={false}
-      >
+      <Modal show={this.state.showModal}>
         <div>
           <h3>
             <span>Are you sure to delete this User?</span>

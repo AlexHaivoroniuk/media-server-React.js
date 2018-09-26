@@ -7,13 +7,11 @@ import { CSSTransition } from 'react-transition-group';
 const Modal = props => {
   let times = null;
   const closeHandler = () => {
-    if (props.cancellable) {
+    if (props.close !== undefined) {
       props.close();
-    } else {
-      return;
     }
   };
-  if (props.cancellable) {
+  if (props.close !== undefined) {
     times = (
       <div
         className={styles.Modal_Close}
@@ -63,6 +61,5 @@ export default Modal;
 Modal.propTypes = {
   show: PropTypes.bool.isRequired,
   close: PropTypes.func,
-  children: PropTypes.any.isRequired,
-  cancellable: PropTypes.bool
+  children: PropTypes.any.isRequired
 };

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { shallow, mount } from 'enzyme';
 
 import Authenticate from './Authenticate';
@@ -46,6 +46,19 @@ describe('<Authenticate/>', () => {
     expect(wrapper.state('username')).toMatch('Username');
     expect(wrapper.state('password')).toMatch('super_strong_pass');
   });
+  it('should handleInput() on change', () => {
+    const wrapper = mount(<Authenticate />);
+    const spy = jest.spyOn(wrapper.instance(), 'handleInput');
+    wrapper
+      .find('input.InputElement')
+      .at(0)
+      .simulate('change');
+    wrapper
+      .find('input.InputElement')
+      .at(1)
+      .simulate('change');
+    expect(spy).toHaveBeenCalledTimes(2);
+  });
   it('should handleToggleSignIn()', () => {
     const wrapper = mount(<Authenticate />);
     wrapper.instance().handleToggleSignIn();
@@ -53,7 +66,6 @@ describe('<Authenticate/>', () => {
   });
   it('should pass Input Username correct props', () => {
     const wrapper = shallow(<Authenticate />);
-    // username Input
     expect(mockInputProps.usernameInput.type).toEqual(
       wrapper
         .find('Input')
@@ -78,7 +90,6 @@ describe('<Authenticate/>', () => {
         .first()
         .props().value
     );
-    // passwordInput
     expect(mockInputProps.passwordInput.type).toEqual(
       wrapper
         .find('Input')
