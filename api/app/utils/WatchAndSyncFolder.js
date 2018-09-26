@@ -11,7 +11,7 @@ module.exports = function (folder, id) {
     
     function AddMoviesOrSingleMovie(filename){
         let movieTitle = filename.substring(0, filename.indexOf('('));
-        let movieYear = filename.substring(filename.indexOf('('), filename.indexOf(')'));
+        let movieYear = filename.substring(filename.indexOf('(') + 1, filename.indexOf(')'));
         Movie.find()
         .then(res => {
             
