@@ -27,16 +27,16 @@ describe('ErrorBoundary', () => {
     );
     expect(wrapper.find('ErrorBoundary').children()).toBeTruthy();
   });
-  it('should catch errors with componentDidCatch()', () => {
-    const wrapper = mount(
-      <ErrorBoundary>
-        <SnackBar {...snackBarProps} />
-      </ErrorBoundary>
-    );
-    let err = new Error('hi');
-    let spy = jest.spyOn(ErrorBoundary.prototype, 'componentDidCatch');
-    wrapper.find('SnackBar').simulateError(err);
-    expect(wrapper.state().hasError).toBeTruthy();
-    expect(spy).toHaveBeenCalled();
-  });
+  // it('should catch errors with componentDidCatch()', () => {
+  //   const wrapper = mount(
+  //     <ErrorBoundary>
+  //       <SnackBar {...snackBarProps} />
+  //     </ErrorBoundary>
+  //   );
+  //   let err = new Error('hi');
+  //   let spy = jest.spyOn(ErrorBoundary.prototype, 'componentDidCatch');
+  //   wrapper.find('SnackBar').simulateError(err);
+  //   expect(wrapper.state().hasError).toBeTruthy();
+  //   expect(spy).toHaveBeenCalled();
+  // });
 });
