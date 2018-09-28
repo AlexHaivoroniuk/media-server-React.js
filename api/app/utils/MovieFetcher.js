@@ -2,13 +2,11 @@
 const axios = require('axios');
 const api = require('./../../config/config');
 const omdb = require('./MovieFetchers/omdb');
-const omdb1 = require('./MovieFetchers/omdb1');
-const omdb2 = require('./MovieFetchers/omdb2');
+const tmdb = require('./MovieFetchers/tmdb');
 
 function MovieFetcher() {
     this.fetchers = [
-        omdb2,
-        omdb1,
+        tmdb,
         omdb
     ];
 }
