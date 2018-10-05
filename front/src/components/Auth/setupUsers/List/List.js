@@ -38,12 +38,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(List);
-
-// {this.props.users.map(
-//   user =>
-//     user.editing ? (
-//       <Edit user={user} key={user.id} />
-//     ) : (
-//       <User user={user} key={user.id} />
-//     )
-// )}

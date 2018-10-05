@@ -22,9 +22,9 @@ class SnackBar extends Component {
   };
 
   render() {
-    setTimeout(() => {
-      this.setState({ show: false });
-    }, 4000);
+    // setTimeout(() => {
+    //   this.setState({ show: false });
+    // }, 4000);
     let typedClasses = [styles.SnackBar, styles.SnackBar__Show];
     typedClasses = {
       success: [styles.SnackBar, styles.SnackBar__Success],

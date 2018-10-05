@@ -49,7 +49,6 @@ class App extends Component {
   };
 
   render() {
-    // Math.round(Math.random() * (100 - 1) + 1)
     let notifications = <div />;
     if (this.props.notif.length > 0) {
       notifications = (
