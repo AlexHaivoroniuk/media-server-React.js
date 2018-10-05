@@ -2,9 +2,12 @@ const axios = require('axios');
 const url = require('url');
 const config = require("./../../../config/config");
 const Movie = require("./../../models/Movie");
+const TV = require("./../../models/TV");
 const logger = require('./../../../config/winston');
 const path = require('path');
 const scriptName = path.basename(__filename);
+
+const tmdbImgURL = 'https://image.tmdb.org/t/p/w260_and_h390_bestv2';
 
 //https://api.themoviedb.org/3/search/movie?query=Lethal%20Weapon&year=1987&language=uk&api_key=9934054407a5293305b01c01afd24ce1
 //https://api.themoviedb.org/3/movie/941?api_key=9934054407a5293305b01c01afd24ce1&language=uk
@@ -119,22 +122,23 @@ module.exports = function(options) {
                     'Country': getCountry(res.data),
                     'Awards': null,
                     //'Poster': 'https://image.tmdb.org/t/p/w260_and_h390_bestv2' + res.data.backdrop_path,
-                    'Poster': 'https://image.tmdb.org/t/p/w260_and_h390_bestv2' + res.data.poster_path,
+                    'Poster': tmdbImgURL + res.data.poster_path,
                     'imdbRating': null,
                     'Type': 'movie',
-                    'Production': getProduction(res.data)
+                    'Production': getProduction(res.data),
+                    'Website': res.data.homepage
                 };
 
                 //console.log('!!!', data);
                 
-                return new Movie({...data, libraryId: options.libraryId});
+                return new Movie(data);
             });
     }
 
     function tv(options, id) {
         const endpoint = `/tv/${id}`;
         const query = {
-            append_to_response: 'credits,releases,images',
+            append_to_response: 'credits',
             language: 'uk',
             api_key: config.tmdb.apiKey
         };
@@ -157,7 +161,45 @@ module.exports = function(options) {
                 //console.log(res.data.images);
                 //if(res.data.total_results > 0){
                 logger.info({ message: `INFO TV "${options.title}" fetch was successful`, label: scriptName, line: __line});
-                
+
+                const dataTV = {
+                    'Title': res.data.name,  // Name ?
+                    'OriginalTitle': res.data.original_name,
+                    'Year': {
+                        'First':  res.data.first_air_date ? res.data.first_air_date.substr(0, 4) : null,
+                        'Last':  res.data.last_air_date ? res.data.last_air_date.substr(0, 4) : null,
+                    },
+                    'Genre': getGenre(res.data),
+                    'Director': getCrew(res.data.credits, 'Director'),
+                    'Writer': getCrew(res.data.credits, 'Screenplay'),
+                    'Actors': getCast(res.data.credits, 9),
+                    'Plot': res.data.overview,
+                    'Language': res.data.original_language,
+                    'Country': res.data.origin_country.join(', '),
+                    'Poster': tmdbImgURL + res.data.poster_path,
+                    'Production': getProduction(res.data),
+                    'InProduction': res.data.in_production,
+                    'NumberOf':{
+                        'Seasons': res.data.number_of_seasons,
+                        'Episodes': res.data.number_of_episodes,
+                    },
+                    'Seasons': res.data.seasons.map(el => {
+                        return {
+                            'Number': el.season_number,
+                            'Name': el.name,
+                            'EpisodeCount': el.episode_count,
+                            'Year': el.air_date ? el.air_date.substr(0, 4) : null,
+                            'Owerview': el.overview,
+                            'Poster': tmdbImgURL + el.poster_path
+                        }
+                    }),
+                    'Status': res.data.status,
+                    'Type': 'tv',
+                    'Website': res.data.homepage
+                };
+                //console.log('!!!', dataTV);
+                return new TV(dataTV);
+                /*
                 const data = {
                     'Title': res.data.name,  // Name ?
                     'Year': res.data.first_air_date.substr(0, 4),
@@ -172,15 +214,15 @@ module.exports = function(options) {
                     'Country': getCountry(res.data),
                     'Awards': null,
                     //'Poster': 'https://image.tmdb.org/t/p/w260_and_h390_bestv2' + res.data.backdrop_path,
-                    'Poster': 'https://image.tmdb.org/t/p/w260_and_h390_bestv2' + res.data.poster_path,
+                    'Poster': tmdbImgURL + res.data.poster_path,
                     'imdbRating': null,
                     'Type': 'tv',
-                    'Production': getProduction(res.data)
+                    'Production': getProduction(res.data),
+                    'Website': res.data.homepage
                 };
-
                 //console.log('!!!', data);
                 
-                return new Movie({...data, libraryId: options.libraryId});
+                return new Movie(data);*/
             });
     }
 

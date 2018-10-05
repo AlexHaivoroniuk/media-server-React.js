@@ -1,4 +1,5 @@
 const Movie = require('../models/Movie');
+const TV = require('../models/TV');
 const logger  = require('../../config/winston');
 const path = require('path');
 const scriptName = path.basename(__filename);
@@ -7,12 +8,15 @@ class MoviesController {
         // doubt creation will be needed
     }
     findAll(req, res) {
-        Movie.find()
-            .then(movie => {
+        //Movie.find()
+        Promise.all([Movie.find(), TV.find()])
+            .then(movies => {
+                console.log(movies);
                 // logger.front_info({ message: 'FRONT Got All Movies', type: 'info', label: scriptName, line: __line})
-                logger.info({ message: 'INFO Movies were found', label: scriptName,  line: __line})
-                res.json(movie);
+                logger.info({ message: 'INFO MoviesTV were found', label: scriptName,  line: __line})
+                res.json([...movies[0], ...movies[1]]);
             }).catch(err => {
+                console.log(err);
                 logger.front_info({ message: 'FRONT DId not Gotcha yall', type: 'error', label: scriptName,  line: __line})
                 logger.warn({ message: 'WARN Movies were not found', label: scriptName,  line: __line})
                 res.status(500).send({

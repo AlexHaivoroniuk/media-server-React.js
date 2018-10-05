@@ -12,13 +12,13 @@ function MovieFetcher() {
 }
 
 MovieFetcher.prototype.get = function get(options) {
-    options.libraryId = options.libraryId || -1;
     return this.fetchSequentially(0, options);
 };
 
 MovieFetcher.prototype.fetchSequentially =  function fetchSequentially(i, options) {
     return this.fetchers[i](options)
-        .catch(() => {
+        .catch((e) => {
+            console.log(e);
             if ((i + 1) >= this.fetchers.length) {
                 return Promise.reject();
             }
