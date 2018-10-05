@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import styles from './MoviesContainer.scss';
-import Card from './../../components/UI/Card/Card';
+import CardMovie from './../../components/UI/Card/Movie/Movie';
+import CardTV from './../../components/UI/Card/TV/TV';
 import Filters from './../../components/Filters/Filters';
 import Controls from './../../components/Controls/Controls';
 import Spinner from './../../components/UI/Spinner/Spinner';
@@ -27,9 +28,14 @@ class MoviesContainer extends Component {
     if (this.props.movies) {
       list = (
         <div className={styles.Movies}>
-          {this.props.movies.map((movie, idx) => (
-            <Card key={idx} movie={movie} />
-          ))}
+          {this.props.movies.map(
+            (movie, idx) =>
+              movie.Type === 'tv' ? (
+                <CardTV key={idx} movie={movie} />
+              ) : (
+                <CardMovie key={idx} movie={movie} />
+              )
+          )}
         </div>
       );
     }

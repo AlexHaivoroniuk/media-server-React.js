@@ -82,7 +82,8 @@ class App extends Component {
             <Route path="/protected" component={Protected} />
             <Route path="/settings" component={Settings} />
             <Route path="/setup" component={Setup} />
-            <Route path="/:id" component={SingleMovie} />
+            <Route path="/movie/:id" component={SingleMovie} />
+            <Route path="/tv/:id" component={SingleMovie} />
           </Switch>
         </ContentContainer>
         {notifications}
