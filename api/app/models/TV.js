@@ -20,7 +20,7 @@ const tvSchema = new mongoose.Schema({
     //Ratings: [{ Source: String, Value: String }] ,
     //Released: String,
     //Response: String,
-    //Runtime: String,
+    Runtime: String,
     Seasons: [{Number: String, Name: String, EpisodeCount: String, Year: String, Owerview: String, Poster: String}],
     Title: String,
     Type: String,

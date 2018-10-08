@@ -7,10 +7,40 @@ const logger = require('./../../../config/winston');
 const path = require('path');
 const scriptName = path.basename(__filename);
 
-const tmdbImgURL = 'https://image.tmdb.org/t/p/w260_and_h390_bestv2';
+//const tmdbImgURL = 'https://image.tmdb.org/t/p/w260_and_h390_bestv2';
+const tmdbImgURL = 'https://image.tmdb.org/t/p/';
 
 //https://api.themoviedb.org/3/search/movie?query=Lethal%20Weapon&year=1987&language=uk&api_key=9934054407a5293305b01c01afd24ce1
 //https://api.themoviedb.org/3/movie/941?api_key=9934054407a5293305b01c01afd24ce1&language=uk
+
+/*
+## Add Supported Image Sizes  
+                                 Min Res      Max Res  
+poster   = Poster ............  500 x 750   2000 x 3000  
+backdrop = Fanart ............ 1280 x 720   3840 x 2160  
+still    = TV Show Episode ... 1280 x 720   3840 x 2160  
+profile  = Actors Actresses ..  300 x 450   2000 x 3000  
+logo     = TMDb Logo  
+
+## API Supported Image Sizes  
+
+|  poster  | backdrop |  still   | profile  |   logo   |
+| :------: | :------: | :------: | :------: | :------: |
+| -------- | -------- | -------- |    w45   |    w45   |
+|    w92   | -------- |    w92   | -------- |    w92   |
+|   w154   | -------- | -------- | -------- |   w154   |
+|   w185   | -------- |   w185   |   w185   |   w185   |
+| -------- |   w300   |   w300   | -------- |   w300   |
+|   w342   | -------- | -------- | -------- | -------- |
+|   w500   | -------- | -------- | -------- |   w500   |
+| -------- | -------- | -------- |   h632   | -------- |
+|   w780   |   w780   | -------- | -------- | -------- |
+| -------- |  w1280   | -------- | -------- | -------- |
+| original | original | original | original | original |  
+
+Original Size is the size of the uploaded image.  
+It can be between Minimum Resolution and Maximum Resolution.  
+*/
 
 module.exports = function(options) {
 
@@ -122,7 +152,7 @@ module.exports = function(options) {
                     'Country': getCountry(res.data),
                     'Awards': null,
                     //'Poster': 'https://image.tmdb.org/t/p/w260_and_h390_bestv2' + res.data.backdrop_path,
-                    'Poster': tmdbImgURL + res.data.poster_path,
+                    'Poster': tmdbImgURL + 'w780/' + res.data.poster_path,
                     'imdbRating': null,
                     'Type': 'movie',
                     'Production': getProduction(res.data),
@@ -176,13 +206,14 @@ module.exports = function(options) {
                     'Plot': res.data.overview,
                     'Language': res.data.original_language,
                     'Country': res.data.origin_country.join(', '),
-                    'Poster': tmdbImgURL + res.data.poster_path,
+                    'Poster': tmdbImgURL + 'w780/' + res.data.poster_path,
                     'Production': getProduction(res.data),
                     'InProduction': res.data.in_production,
                     'NumberOf':{
                         'Seasons': res.data.number_of_seasons,
                         'Episodes': res.data.number_of_episodes,
                     },
+                    'Runtime': res.data.episode_run_time.join(', ') + ' min',
                     'Seasons': res.data.seasons.map(el => {
                         return {
                             'Number': el.season_number,
@@ -190,7 +221,7 @@ module.exports = function(options) {
                             'EpisodeCount': el.episode_count,
                             'Year': el.air_date ? el.air_date.substr(0, 4) : null,
                             'Owerview': el.overview,
-                            'Poster': tmdbImgURL + el.poster_path
+                            'Poster': tmdbImgURL + 'w154/' + el.poster_path
                         }
                     }),
                     'Status': res.data.status,

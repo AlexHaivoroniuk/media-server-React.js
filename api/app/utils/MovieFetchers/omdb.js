@@ -50,6 +50,7 @@ module.exports = function(options) {
                             'Seasons': res.data.totalSeasons,
                             'Episodes': null,
                         },
+                        'Runtime': res.data.Runtime,
                         'Seasons': [],
                         'Status': year.Last ? 'Ended' : 'Returning Series',
                         'Type': 'tv',
