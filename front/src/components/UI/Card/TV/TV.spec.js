@@ -23,7 +23,7 @@ describe('<CardTV />', () => {
       Seasons: '2',
       Episodes: '16'
     },
-    //Seasons: [],
+    Seasons: [],
     _id: '321'
   };
   it('should be defined', () => {

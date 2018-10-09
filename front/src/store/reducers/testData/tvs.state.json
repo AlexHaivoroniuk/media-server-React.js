@@ -1,0 +1,62 @@
+{ 
+  "movies": {
+    "moviesDefault": [
+      {
+        "_id": "5b7582126a59583da21ae120",
+        "Title": "True Detective",
+        "Year": {"First": "2014", "Last": "2018"},
+        "Genre": "Drama",
+        "Country": "USA",
+        "Type": "tv"
+      },
+      {
+        "_id": "5b7d4ec5ee778e259f3d2d6c",
+        "Title": "Midsomer Murders",
+        "Year": {"First": "1997", "Last": "2018"},
+        "Genre": "Crime, Drama, Detective",
+        "Country": "UK",
+        "Type": "tv"
+      },
+      {
+        "_id": "5b7d51e5ec97a229595b464b",
+        "Title": "Endeavour",
+        "Year": {"First": "2012", "Last": "2018"},
+        "Genre": "Crime, Drama, Detective",
+        "Country": "UK",
+        "Type": "tv"
+      },
+      {
+        "_id": "5b7d51e5ec97a229595b464f",
+        "Title": "Ripper Street",
+        "Year": {"First": "2012", "Last": "2016"},
+        "Genre": "Drama, Triller, Crime",
+        "Country": "UK",
+        "Type": "tv"
+      },
+      {
+        "_id": "5b7d5357b38d712add14c71d",
+        "Title": "Jeeves and Wooster",
+        "Year": {"First": "1990", "Last": "1993"},
+        "Genre": "Comedy",
+        "Country": "UK",
+        "Type": "tv"
+      },
+      {
+        "_id": "5b7d5357b38d712add14c721",
+        "Title": "Agatha Christie's Poirot",
+        "Year": {"First": "1989", "Last": "2013"},
+        "Genre": "Detective, Crime",
+        "Country": "UK",
+        "Type": "tv"
+      }
+    ]
+  },
+  "filters": {
+    "genre": [],
+    "country": [],
+    "year": {
+      "minY": 1900,
+      "maxY": 2018
+    }
+  }
+}

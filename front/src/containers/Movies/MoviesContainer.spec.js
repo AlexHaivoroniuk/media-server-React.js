@@ -15,15 +15,58 @@ const movie1 = {
   Genre: 'Action, Adventure, Drama',
   Country: 'USA, UK'
 };
+const movie2 = {
+  _id: '5b7582126a5951ae83d120a2',
+  Title: 'Gladiator',
+  Year: '2000',
+  Genre: 'Action, Adventure, Drama',
+  Country: 'USA, UK',
+  Type: 'movie'
+};
+const tv = {
+  Poster: 'posterTV.img',
+  Title: 'Malesuada pellentesque',
+  OriginalTitle: 'Excepteur sint',
+  Runtime: '50, 60 min',
+  Plot:
+    'Facilisis mauris sit amet massa vitae tortor condimentum. Egestas sed tempus urna et pharetra pharetra.',
+  Year: {
+    First: '2000',
+    Last: '2002'
+  },
+  Genre: 'Lacus, Vestibulum',
+  Director: 'Tincidunt Eget',
+  Country: 'Odio',
+  Actors: 'Ipsum Ullamcorper, Nunc Aliquet, Viverra Tellus',
+  NumberOf: {
+    Seasons: '2',
+    Episodes: '16'
+  },
+  //Seasons: [],
+  Type: 'tv',
+  _id: '5b7582126a5951a3d1e80a22'
+};
 const moviesStateEmpty = {
   movies: {
     movieDefault: []
   }
 };
-const moviesStateNotEmpty = {
+const moviesStateMixed = {
   movies: {
-    movies: [movie1, movie1, movie1],
-    movieDefault: [movie1, movie1, movie1]
+    movies: [movie1, movie2, tv],
+    movieDefault: [movie1, movie2, tv]
+  }
+};
+const moviesStateMovie = {
+  movies: {
+    movies: [movie1, movie2],
+    movieDefault: [movie1, movie2]
+  }
+};
+const moviesStateTV = {
+  movies: {
+    movies: [tv, tv, tv, tv],
+    movieDefault: [tv, tv, tv, tv]
   }
 };
 const filtersState = {
@@ -141,6 +184,43 @@ describe('<MoviesContainer />', () => {
       ).toEqual(1);
     });
 
+    it('when movies have movie type only', () => {
+      const { wrapper } = mountComponent({
+        ...moviesStateMovie,
+        ...filtersState,
+        ...filterDataState
+      });
+
+      expect(wrapper.find('MoviesContainer').find('Spinner').length).toEqual(0);
+      expect(wrapper.find('MoviesContainer').find('.Movies').length).toEqual(1);
+      expect(wrapper.find('.Movies').find('CardMovie').length).toEqual(2);
+    });
+
+    it('when movies have tv type only', () => {
+      const { wrapper } = mountComponent({
+        ...moviesStateTV,
+        ...filtersState,
+        ...filterDataState
+      });
+
+      expect(wrapper.find('MoviesContainer').find('Spinner').length).toEqual(0);
+      expect(wrapper.find('MoviesContainer').find('.Movies').length).toEqual(1);
+      expect(wrapper.find('.Movies').find('CardTV').length).toEqual(4);
+    });
+
+    it('when movies are both movie and tv type', () => {
+      const { wrapper } = mountComponent({
+        ...moviesStateMixed,
+        ...filtersState,
+        ...filterDataState
+      });
+
+      expect(wrapper.find('MoviesContainer').find('Spinner').length).toEqual(0);
+      expect(wrapper.find('MoviesContainer').find('.Movies').length).toEqual(1);
+      expect(wrapper.find('.Movies').find('CardMovie').length).toEqual(2);
+      expect(wrapper.find('.Movies').find('CardTV').length).toEqual(1);
+    });
+
     it('when movies is empty', () => {
       const { wrapper } = mountComponent({
         ...moviesStateEmpty,
@@ -150,19 +230,10 @@ describe('<MoviesContainer />', () => {
 
       expect(wrapper.find('MoviesContainer').find('Spinner').length).toEqual(1);
       expect(wrapper.find('MoviesContainer').find('.Movies').length).toEqual(0);
-      expect(wrapper.find('MoviesContainer').find('Card').length).toEqual(0);
-    });
-
-    it('when movies is not empty', () => {
-      const { wrapper } = mountComponent({
-        ...moviesStateNotEmpty,
-        ...filtersState,
-        ...filterDataState
-      });
-
-      expect(wrapper.find('MoviesContainer').find('Spinner').length).toEqual(0);
-      expect(wrapper.find('MoviesContainer').find('.Movies').length).toEqual(1);
-      expect(wrapper.find('.Movies').find('Card').length).toEqual(3);
+      expect(wrapper.find('MoviesContainer').find('CardMovie').length).toEqual(
+        0
+      );
+      expect(wrapper.find('MoviesContainer').find('CardTV').length).toEqual(0);
     });
   });
 });

@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { fetchMovies } from './../../store/actions/movies';
 import PropTypes from 'prop-types';
 import { MovieTemplate } from './../../Template/movie';
+import { TVTemplate } from './../../Template/tv';
 
 class MoviesContainer extends Component {
   constructor(props) {
@@ -66,5 +67,5 @@ export default connect(
 )(MoviesContainer);
 
 MoviesContainer.propTypes = {
-  movies: PropTypes.arrayOf(MovieTemplate)
+  movies: PropTypes.arrayOf(PropTypes.oneOfType([MovieTemplate, TVTemplate]))
 };

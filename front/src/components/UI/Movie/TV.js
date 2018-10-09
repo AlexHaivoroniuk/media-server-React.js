@@ -127,7 +127,7 @@ const TV = props => {
             </div>
             <div className={styles.SubValue}>
               {props.tv.Seasons.map((season, idx) => (
-                <div className={styles.Subtitle}>
+                <div className={styles.Subtitle} key={idx}>
                   <span>
                     {season.Number}. {season.Name}
                   </span>
