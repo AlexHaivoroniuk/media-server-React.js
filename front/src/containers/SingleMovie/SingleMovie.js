@@ -3,7 +3,7 @@ import Movie from './../../components/UI/Movie/Movie';
 import Spinner from './../../components/UI/Spinner/Spinner';
 import { connect } from 'react-redux';
 import { fetchMovie } from './../../store/actions/currentMovie';
-import { MovieTemplate } from '../../MovieTemplate/movieTemplate';
+import { MovieTemplate } from '../../Template/movie';
 
 class SingleMovie extends Component {
   componentDidMount() {

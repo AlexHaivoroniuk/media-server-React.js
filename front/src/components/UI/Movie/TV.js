@@ -3,9 +3,15 @@ import styles from './Movie.scss';
 import { Link } from 'react-router-dom';
 import Button from './../Button/Button';
 import Icon from './../Icon/Icon';
-import { MovieTemplate } from './../../../Template/movie';
+import { TVTemplate } from './../../../Template/tv';
 
-const Movie = props => {
+const TV = props => {
+  const seasons =
+    props.tv.NumberOf.Seasons +
+    (props.tv.NumberOf.Episodes
+      ? ` (${props.tv.NumberOf.Episodes} episodes)`
+      : '');
+
   return (
     <div className={styles.MovieContainer}>
       <div className={styles.BackLink}>
@@ -23,7 +29,7 @@ const Movie = props => {
         </div>
         <div className={styles.LeftSide}>
           <div className={styles.Poster}>
-            <img src={props.movie.Poster} alt="" />
+            <img src={props.tv.Poster} alt="" />
           </div>
           <div className={styles.WatchButton}>
             <Button>Watch</Button>
@@ -31,14 +37,14 @@ const Movie = props => {
         </div>
         <div className={styles.AllInformation}>
           <div className={styles.Topside}>
-            <h2 className={styles.Title}>{props.movie.Title}</h2>
+            <h2 className={styles.Title}>{props.tv.Title}</h2>
           </div>
           <div className={styles.About}>
             <div className={styles.Subtitle}>
               <label htmlFor="">Description:</label>
             </div>
             <div className={styles.SubValue}>
-              <span>{props.movie.Plot}</span>
+              <span>{props.tv.Plot}</span>
             </div>
           </div>
           <div className={styles.About}>
@@ -46,7 +52,9 @@ const Movie = props => {
               <label htmlFor="">Year:</label>
             </div>
             <div className={styles.SubValue}>
-              <span>{props.movie.Year}</span>
+              <span>
+                {props.tv.Year.First}-{props.tv.Year.Last}
+              </span>
             </div>
           </div>
           <div className={styles.About}>
@@ -54,7 +62,15 @@ const Movie = props => {
               <label htmlFor="">Genre:</label>
             </div>
             <div className={styles.SubValue}>
-              <span>{props.movie.Genre}</span>
+              <span>{props.tv.Genre}</span>
+            </div>
+          </div>
+          <div className={styles.About}>
+            <div className={styles.Subtitle}>
+              <label htmlFor="">Run time:</label>
+            </div>
+            <div className={styles.SubValue}>
+              <span>{props.tv.Runtime}</span>
             </div>
           </div>
           <div className={styles.About}>
@@ -62,7 +78,7 @@ const Movie = props => {
               <label htmlFor="">Director:</label>
             </div>
             <div className={styles.SubValue}>
-              <span>{props.movie.Director}</span>
+              <span>{props.tv.Director}</span>
             </div>
           </div>
           <div className={styles.About}>
@@ -70,7 +86,7 @@ const Movie = props => {
               <label htmlFor="">Country:</label>
             </div>
             <div className={styles.SubValue}>
-              <span>{props.movie.Country}</span>
+              <span>{props.tv.Country}</span>
             </div>
           </div>
           <div className={styles.About}>
@@ -78,15 +94,7 @@ const Movie = props => {
               <label htmlFor="">Actors:</label>
             </div>
             <div className={styles.SubValue}>
-              <span>{props.movie.Actors}</span>
-            </div>
-          </div>
-          <div className={styles.About}>
-            <div className={styles.Subtitle}>
-              <label htmlFor="">Rated:</label>
-            </div>
-            <div className={styles.SubValue}>
-              <span>{props.movie.Rated}</span>
+              <span>{props.tv.Actors}</span>
             </div>
           </div>
           <div className={styles.About}>
@@ -94,7 +102,7 @@ const Movie = props => {
               <label htmlFor="">Writer:</label>
             </div>
             <div className={styles.SubValue}>
-              <span>{props.movie.Writer}</span>
+              <span>{props.tv.Writer}</span>
             </div>
           </div>
           <div className={styles.About}>
@@ -102,23 +110,7 @@ const Movie = props => {
               <label htmlFor="">Language:</label>
             </div>
             <div className={styles.SubValue}>
-              <span>{props.movie.Language}</span>
-            </div>
-          </div>
-          <div className={styles.About}>
-            <div className={styles.Subtitle}>
-              <label htmlFor="">Awards:</label>
-            </div>
-            <div className={styles.SubValue}>
-              <span>{props.movie.Awards}</span>
-            </div>
-          </div>
-          <div className={styles.About}>
-            <div className={styles.Subtitle}>
-              <label htmlFor="">IMDBRating:</label>
-            </div>
-            <div className={styles.SubValue}>
-              <span>{props.movie.imdbRating}</span>
+              <span>{props.tv.Language}</span>
             </div>
           </div>
           <div className={styles.About}>
@@ -126,15 +118,33 @@ const Movie = props => {
               <label htmlFor="">Production:</label>
             </div>
             <div className={styles.SubValue}>
-              <span>{props.movie.Production}</span>
+              <span>{props.tv.Production}</span>
             </div>
           </div>
           <div className={styles.About}>
             <div className={styles.Subtitle}>
-              <label htmlFor="">Released:</label>
+              <label htmlFor="">Seasons: {seasons}</label>
             </div>
             <div className={styles.SubValue}>
-              <span>{props.movie.Released}</span>
+              {props.tv.Seasons.map((season, idx) => (
+                <div className={styles.Subtitle}>
+                  <span>
+                    {season.Number}. {season.Name}
+                  </span>
+                  <div className={styles.Season}>
+                    <div className={styles.PosterSide}>
+                      <div className={styles.Poster}>
+                        <img src={season.Poster} alt="" />
+                      </div>
+                    </div>
+                    <div className={styles.Information}>
+                      <div>Episode count: {season.EpisodeCount}</div>
+                      <div>Year: {season.Year}</div>
+                      <div>Description: {season.Overview}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -143,8 +153,8 @@ const Movie = props => {
   );
 };
 
-export default Movie;
+export default TV;
 
-Movie.propTypes = {
-  movie: MovieTemplate
+TV.propTypes = {
+  tv: TVTemplate
 };

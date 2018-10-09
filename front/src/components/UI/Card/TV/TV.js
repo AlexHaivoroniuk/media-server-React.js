@@ -5,57 +5,64 @@ import { Link } from 'react-router-dom';
 import { TVTemplate } from '../../../../Template/tv';
 
 const CardTV = props => {
-  const originalt =
-    props.movie.OriginalTitle !== props.movie.Title ? (
+  const originalTitle =
+    props.tv.OriginalTitle && props.tv.OriginalTitle !== props.tv.Title ? (
       <div className={styles.About}>
         <label htmlFor="">Original Title:</label>
-        <span>{props.movie.OriginalTitle}</span>
+        <span>{props.tv.OriginalTitle}</span>
       </div>
     ) : null;
+  const seasons =
+    props.tv.NumberOf.Seasons +
+    (props.tv.NumberOf.Episodes
+      ? ` (${props.tv.NumberOf.Episodes} episodes)`
+      : '');
   return (
     <div className={styles.Card}>
       <div className={styles.CardContainer}>
         <div className={styles.Info}>
           <div className={styles.Poster}>
-            <img src={props.movie.Poster} alt="" />
+            <img src={props.tv.Poster} alt="" />
           </div>
           <div className={styles.Topside}>
-            <h2 className={styles.Title}>{props.movie.Title}</h2>
+            <h2 className={styles.Title}>{props.tv.Title}</h2>
           </div>
-          {originalt}
+          {originalTitle}
           <div className={styles.About}>
             <label htmlFor="">Seasons:</label>
-            <span>
-              {props.movie.NumberOf.Seasons} {props.movie.NumberOf.Episodes}
-            </span>
+            <span>{seasons}</span>
+          </div>
+          <div className={styles.About}>
+            <label htmlFor="">Run time:</label>
+            <span>{props.tv.Runtime}</span>
           </div>
           <div className={styles.About}>
             <label htmlFor="">Description:</label>
-            <span>{props.movie.Plot}</span>
+            <span>{props.tv.Plot}</span>
           </div>
           <div className={styles.About}>
             <label htmlFor="">Years:</label>
             <span>
-              {props.movie.Year.First}-{props.movie.Year.Last}
+              {props.tv.Year.First}-{props.tv.Year.Last}
             </span>
           </div>
           <div className={styles.About}>
             <label htmlFor="">Genre:</label>
-            <span>{props.movie.Genre}</span>
+            <span>{props.tv.Genre}</span>
           </div>
           <div className={styles.About}>
             <label htmlFor="">Country:</label>
-            <span>{props.movie.Country}</span>
+            <span>{props.tv.Country}</span>
           </div>
           <div className={styles.About}>
             <label htmlFor="">Actors:</label>
-            <span>{props.movie.Actors}</span>
+            <span>{props.tv.Actors}</span>
           </div>
         </div>
       </div>
       <div className={styles.Options}>
         <button>Watch</button>
-        <Link to={`/tv/${props.movie._id}`}>Read more...</Link>
+        <Link to={`/tv/${props.tv._id}`}>Read more...</Link>
       </div>
     </div>
   );
@@ -64,5 +71,5 @@ const CardTV = props => {
 export default CardTV;
 
 CardTV.propTypes = {
-  movie: TVTemplate
+  tv: TVTemplate
 };

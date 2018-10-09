@@ -8,7 +8,7 @@ import Spinner from './../../components/UI/Spinner/Spinner';
 import { connect } from 'react-redux';
 import { fetchMovies } from './../../store/actions/movies';
 import PropTypes from 'prop-types';
-import { MovieTemplate } from './../../MovieTemplate/movieTemplate';
+import { MovieTemplate } from './../../Template/movie';
 
 class MoviesContainer extends Component {
   constructor(props) {
@@ -31,7 +31,7 @@ class MoviesContainer extends Component {
           {this.props.movies.map(
             (movie, idx) =>
               movie.Type === 'tv' ? (
-                <CardTV key={idx} movie={movie} />
+                <CardTV key={idx} tv={movie} />
               ) : (
                 <CardMovie key={idx} movie={movie} />
               )
