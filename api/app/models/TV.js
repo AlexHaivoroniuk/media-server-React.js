@@ -21,7 +21,7 @@ const tvSchema = new mongoose.Schema({
     //Released: String,
     //Response: String,
     Runtime: String,
-    Seasons: [{Number: String, Name: String, EpisodeCount: String, Year: String, Owerview: String, Poster: String}],
+    Seasons: [{Number: String, Name: String, EpisodeCount: String, Year: String, Overview: String, Poster: String}],
     Title: String,
     Type: String,
     Website: String,

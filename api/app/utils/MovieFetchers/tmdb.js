@@ -152,7 +152,7 @@ module.exports = function(options) {
                     'Country': getCountry(res.data),
                     'Awards': null,
                     //'Poster': 'https://image.tmdb.org/t/p/w260_and_h390_bestv2' + res.data.backdrop_path,
-                    'Poster': tmdbImgURL + 'w780/' + res.data.poster_path,
+                    'Poster': tmdbImgURL + 'w780' + res.data.poster_path,
                     'imdbRating': null,
                     'Type': 'movie',
                     'Production': getProduction(res.data),
@@ -206,7 +206,7 @@ module.exports = function(options) {
                     'Plot': res.data.overview,
                     'Language': res.data.original_language,
                     'Country': res.data.origin_country.join(', '),
-                    'Poster': tmdbImgURL + 'w780/' + res.data.poster_path,
+                    'Poster': tmdbImgURL + 'w780' + res.data.poster_path,
                     'Production': getProduction(res.data),
                     'InProduction': res.data.in_production,
                     'NumberOf':{
@@ -220,8 +220,8 @@ module.exports = function(options) {
                             'Name': el.name,
                             'EpisodeCount': el.episode_count,
                             'Year': el.air_date ? el.air_date.substr(0, 4) : null,
-                            'Owerview': el.overview,
-                            'Poster': tmdbImgURL + 'w154/' + el.poster_path
+                            'Overview': el.overview,
+                            'Poster': tmdbImgURL + 'w154' + el.poster_path
                         }
                     }),
                     'Status': res.data.status,
