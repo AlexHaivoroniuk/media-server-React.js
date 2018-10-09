@@ -4,6 +4,7 @@ import Toolbar from './components/Toolbar/Toolbar';
 import MoviesContainer from './containers/Movies/MoviesContainer';
 import setupUsers from './components/Auth/setupUsers/setupUsers';
 import SingleMovie from './containers/SingleMovie/SingleMovie';
+import SingleTV from './containers/SingleTV/SingleTV';
 import ContentContainer from './containers/Content/ContentContainer';
 import SideNav from './components/SideNav/SideNav';
 import { connect } from 'react-redux';
@@ -82,7 +83,8 @@ class App extends Component {
             <Route path="/protected" component={Protected} />
             <Route path="/settings" component={Settings} />
             <Route path="/setup" component={Setup} />
-            <Route path="/:id" component={SingleMovie} />
+            <Route path="/movie/:id" component={SingleMovie} />
+            <Route path="/tv/:id" component={SingleTV} />
           </Switch>
         </ContentContainer>
         {notifications}

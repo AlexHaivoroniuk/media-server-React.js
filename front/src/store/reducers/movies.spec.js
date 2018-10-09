@@ -1,5 +1,6 @@
 import { movies } from './movies';
 import moviesdata from './testData/movies.state.json';
+import tvsdata from './testData/tvs.state.json';
 
 describe('reducer movies', () => {
   const initialState = {};
@@ -68,12 +69,22 @@ describe('reducer movies', () => {
     expect(
       movies(
         {
-          movies: [{ Title: 'Aaa' }, { Title: 'BBC' }, { Title: 'Abc' }]
+          movies: [
+            { Title: 'Aaa' },
+            { Title: 'BBC' },
+            { Title: 'Abc' },
+            { Title: 'BBC' }
+          ]
         },
         { type: 'SORT_ALPHA_ASC' }
       )
     ).toEqual({
-      movies: [{ Title: 'BBC' }, { Title: 'Abc' }, { Title: 'Aaa' }]
+      movies: [
+        { Title: 'BBC' },
+        { Title: 'BBC' },
+        { Title: 'Abc' },
+        { Title: 'Aaa' }
+      ]
     });
   });
 
@@ -126,6 +137,67 @@ describe('reducer movies', () => {
         ]
       };
       expect(newState).toEqual(expectedState);
+    });
+
+    describe('when there are only minY and maxY', () => {
+      it('when movie.Type is movie', () => {
+        const filters = {
+          ...moviesdata.filters,
+          year: { minY: 2010, maxY: 2016 }
+        };
+        const prevState = moviesdata.movies;
+        const newState = movies(prevState, {
+          type: 'FILTER_MOVIES',
+          filters
+        });
+        const expectedState = {
+          ...prevState,
+          movies: [
+            {
+              _id: '5b7d5357b38d712add14c71d',
+              Title: 'The Lincoln Lawyer',
+              Year: '2011',
+              Genre: 'Crime, Drama, Thriller',
+              Country: 'USA'
+            }
+          ]
+        };
+        expect(newState).toEqual(expectedState);
+      });
+
+      it('when movie.Type is tv', () => {
+        const filters = {
+          ...tvsdata.filters,
+          year: { minY: 1990, maxY: 1991 }
+        };
+        const prevState = tvsdata.movies;
+        const newState = movies(prevState, {
+          type: 'FILTER_MOVIES',
+          filters
+        });
+        const expectedState = {
+          ...prevState,
+          movies: [
+            {
+              _id: '5b7d5357b38d712add14c71d',
+              Title: 'Jeeves and Wooster',
+              Year: { First: '1990', Last: '1993' },
+              Genre: 'Comedy',
+              Country: 'UK',
+              Type: 'tv'
+            },
+            {
+              _id: '5b7d5357b38d712add14c721',
+              Title: "Agatha Christie's Poirot",
+              Year: { First: '1989', Last: '2013' },
+              Genre: 'Detective, Crime',
+              Country: 'UK',
+              Type: 'tv'
+            }
+          ]
+        };
+        expect(newState).toEqual(expectedState);
+      });
     });
 
     it('when there are only minY and maxY', () => {

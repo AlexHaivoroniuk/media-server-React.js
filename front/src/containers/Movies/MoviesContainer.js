@@ -1,13 +1,15 @@
 import React, { Component, Fragment } from 'react';
 import styles from './MoviesContainer.scss';
-import Card from './../../components/UI/Card/Card';
+import CardMovie from './../../components/UI/Card/Movie/Movie';
+import CardTV from './../../components/UI/Card/TV/TV';
 import Filters from './../../components/Filters/Filters';
 import Controls from './../../components/Controls/Controls';
 import Spinner from './../../components/UI/Spinner/Spinner';
 import { connect } from 'react-redux';
 import { fetchMovies } from './../../store/actions/movies';
 import PropTypes from 'prop-types';
-import { MovieTemplate } from './../../MovieTemplate/movieTemplate';
+import { MovieTemplate } from './../../Template/movie';
+import { TVTemplate } from './../../Template/tv';
 
 class MoviesContainer extends Component {
   constructor(props) {
@@ -27,9 +29,14 @@ class MoviesContainer extends Component {
     if (this.props.movies) {
       list = (
         <div className={styles.Movies}>
-          {this.props.movies.map((movie, idx) => (
-            <Card key={idx} movie={movie} />
-          ))}
+          {this.props.movies.map(
+            (movie, idx) =>
+              movie.Type === 'tv' ? (
+                <CardTV key={idx} tv={movie} />
+              ) : (
+                <CardMovie key={idx} movie={movie} />
+              )
+          )}
         </div>
       );
     }
@@ -60,5 +67,5 @@ export default connect(
 )(MoviesContainer);
 
 MoviesContainer.propTypes = {
-  movies: PropTypes.arrayOf(MovieTemplate)
+  movies: PropTypes.arrayOf(PropTypes.oneOfType([MovieTemplate, TVTemplate]))
 };

@@ -1,5 +1,6 @@
 const fs = require('fs');
 const Movie = require('./../models/Movie');
+const TV = require('./../models/TV');
 const Files = require('./../models/Files');
 const mongoose = require('mongoose');
 const MovieFetcher = require('./MovieFetcher');
@@ -7,7 +8,7 @@ const logger       = require('./../../config/winston');
 const path = require('path');
 const scriptName = path.basename(__filename);
 
-module.exports = function (folder, id) {
+module.exports = function (folder, libraryId) {
 
     let moviesBeforeChanges = fs.readdirSync(folder);
     
@@ -19,8 +20,7 @@ module.exports = function (folder, id) {
             if (res === null) {
                 MovieFetcher.get({
                     title: movieTitle,
-                    year: movieYear,
-                    libraryId: id
+                    year: movieYear
                 })
                 .then(res => {
                     let files = new Files({
@@ -29,6 +29,7 @@ module.exports = function (folder, id) {
                     });
                     files.save();
 
+                    res.libraryId = libraryId || -1;
                     res.filename = files._id;
                     res.save();
                 })
@@ -43,12 +44,30 @@ module.exports = function (folder, id) {
     function RemoveMoviesOrSingleMovie(filename){
         return Files.findOneAndRemove({filename: filename})
         .then(file => {
-            return Movie.findOneAndRemove({filename: file._id})
+            Movie.findOneAndRemove({filename: file._id})
             .then( data=> {
-                logger.info({ message: `Movie ${data.Title} was deleted`, label: scriptName, line: __line});
-            });
+                if (data) {
+                    logger.info({ message: `Movie ${data.Title} was deleted`, label: scriptName, line: __line});
+                }
+            })
+            .catch(e => console.log(e));
+
+            return file;
         })
-        .catch(e => console.log(e));
+        .then(file => {
+            TV.findOneAndRemove({filename: file._id})
+            .then( data=> {
+                if (data) {
+                    logger.info({ message: `TV ${data.Title} was deleted`, label: scriptName, line: __line});
+                }
+            })
+            .catch(e => console.log(e));
+
+            return file;
+        })
+        .catch(e => {
+            logger.warn({ message: `WARN Movie "${filename}" doesn't exist in DB`, label: scriptName, line: __line});
+        });
     }
 
     function UpdateDatabase(filename){

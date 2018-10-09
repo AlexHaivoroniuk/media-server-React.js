@@ -38,6 +38,47 @@
             outline: none;
         }
     }
+
+    .Season {
+        display: flex;
+        .PosterSide {
+            flex: 1 1 10%;
+            width: 100px;
+            padding: 16px;
+            position: relative;
+            .Poster {
+                height: 47%;
+                display: contents;
+                img {
+                    width: 100px;
+                    box-shadow: 1px 3px 20px 9px #026455;
+                }
+            }
+        }
+        .Information {
+            flex: 1 1 99%;
+            display: block;
+    
+            padding: 12px;
+            .Title {
+                margin: 0;
+                margin-bottom: 20px;
+                font-size: 50px;
+            }
+            .About {
+                padding: 10px 0px;
+                font-size: 20px;
+                .Subtitle {
+                    width: bold;
+                    font-size: 24px;
+                }
+                .SubValue {
+                    border-bottom: solid 2px;
+                    padding: 10px 0px;
+                }
+            }
+        }
+    }
     .LeftSide {
         flex: 1 1 20%;
         width: 40%;
