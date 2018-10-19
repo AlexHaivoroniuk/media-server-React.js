@@ -1,10 +1,10 @@
 import React from 'react';
-import styles from './Card.scss';
+import styles from '../Card.scss';
 import { Link } from 'react-router-dom';
 // import idxStyles from './../../index.scss'
-import { MovieTemplate } from './../../../MovieTemplate/movieTemplate';
+import { MovieTemplate } from '../../../../Template/movie';
 
-const Card = props => {
+const CardMovie = props => {
   return (
     <div className={styles.Card}>
       <div className={styles.CardContainer}>
@@ -43,14 +43,14 @@ const Card = props => {
       </div>
       <div className={styles.Options}>
         <button>Watch</button>
-        <Link to={`/${props.movie._id}`}>Read more...</Link>
+        <Link to={`/movie/${props.movie._id}`}>Read more...</Link>
       </div>
     </div>
   );
 };
 
-export default Card;
+export default CardMovie;
 
-Card.propTypes = {
+CardMovie.propTypes = {
   movie: MovieTemplate
 };

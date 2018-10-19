@@ -12,12 +12,22 @@ const sortAZ = (sortOrder, movies) => {
 const filterBy = (curMovies, field, filters) => {
   if (field === 'year') {
     return curMovies.filter(elem => {
-      let Year = elem.Year;
-      if (elem.Type === 'series') {
-        Year = elem.Year.slice(0, 4);
+      if (elem.Type === 'tv') {
+        if (
+          elem.Year.First > filters.year.maxY ||
+          elem.Year.Last < filters.year.minY
+        ) {
+          return false;
+        } else {
+          return true;
+        }
+      } else {
+        if (elem.Year <= filters.year.maxY && elem.Year >= filters.year.minY) {
+          return true;
+        } else {
+          return false;
+        }
       }
-      if (Year <= filters.year.maxY && Year >= filters.year.minY) return true;
-      else return false;
     });
   }
   if (filters[field].length === 0) return curMovies;
